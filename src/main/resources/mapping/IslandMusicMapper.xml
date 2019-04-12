@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandMusicMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandMusic">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="music_image_path" property="musicImagePath" jdbcType="VARCHAR"/>
+        <result column="music_path" property="musicPath" jdbcType="VARCHAR"/>
+        <result column="music_name" property="musicName" jdbcType="VARCHAR"/>
+        <result column="music_singer" property="musicSinger" jdbcType="VARCHAR"/>
+        <result column="music_album" property="musicAlbum" jdbcType="VARCHAR"/>
+        <result column="showing_date" property="showingDate" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,music_image_path,music_path,music_name,showing_date,created_time,created_by,is_deleted,uuid,music_singer,music_album
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_music
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_music
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_music
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_music m
+        left join
+        t_visitor_storehouse s
+        on m.pk_id = s.work_id
+        and s.work_type = 'MUSIC'
+        where s.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="nextMusic" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_music
+        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <select id="previousMusic" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_music
+        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id desc
+        limit 1
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandMusic" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_music
+        <where>
+            <if test="musicImagePath != null">and
+                music_image_path = #{musicImagePath,jdbcType=VARCHAR}
+            </if>
+            <if test="musicPath != null">and
+                music_path = #{musicPath,jdbcType=VARCHAR}
+            </if>
+            <if test="musicName != null">and
+                music_name = #{musicName,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">and
+                showing_date = #{showingDate,jdbcType=VARCHAR}
+            </if>
+            <if test="createdTime != null">and
+                created_time = #{createdTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="isDeleted != null">and
+                is_deleted = #{isDeleted,jdbcType=VARCHAR}
+            </if>
+            <if test="musicSinger != null">and
+                music_singer = #{musicSinger,jdbcType=VARCHAR}
+            </if>
+            <if test="musicAlbum != null">and
+                music_album = #{musicAlbum,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandMusic">
+        insert into
+        t_island_music
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="musicImagePath != null">
+                music_image_path,
+            </if>
+            <if test="musicPath != null">
+                music_path,
+            </if>
+            <if test="musicName != null">
+                music_name,
+            </if>
+            <if test="showingDate != null">
+                showing_date,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="musicSinger != null">
+                music_singer,
+            </if>
+            <if test="musicAlbum != null">
+                music_album,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="musicImagePath != null">
+                #{musicImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="musicPath != null">
+                #{musicPath,jdbcType=VARCHAR},
+            </if>
+            <if test="musicName != null">
+                #{musicName,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="musicSinger != null">
+                #{musicSinger,jdbcType=VARCHAR},
+            </if>
+            <if test="musicAlbum != null">
+                #{musicAlbum,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandMusic">
+        update t_island_music
+        <set>
+            <if test="musicImagePath != null">
+                music_image_path = #{musicImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="musicPath != null">
+                music_path = #{musicPath,jdbcType=VARCHAR},
+            </if>
+            <if test="musicName != null">
+                music_name = #{musicName,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                showing_date = #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+            <if test="musicSinger != null">
+                music_singer = #{musicSinger,jdbcType=VARCHAR},
+            </if>
+            <if test="musicAlbum != null">
+                music_album = #{musicAlbum,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from t_island_music
+        where pk_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="setDel" parameterType="java.lang.Integer">
+        update t_island_music
+        set is_deleted = '1'
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

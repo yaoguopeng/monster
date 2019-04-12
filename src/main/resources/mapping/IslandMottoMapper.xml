@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandMottoMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandMotto">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="motto_author" property="author" jdbcType="VARCHAR"/>
+        <result column="motto_content" property="content" jdbcType="VARCHAR"/>
+        <result column="motto_from" property="mottoFrom" jdbcType="VARCHAR"/>
+        <result column="showing_date" property="showingDate" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,motto_author,motto_content,motto_from,showing_date,created_time,created_by,is_deleted
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_motto
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_motto
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_motto
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_motto m
+        left join
+        t_visitor_storehouse s
+        on m.pk_id = s.work_id
+        and s.work_type = 'MOTTO'
+        where s.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="nextMotto" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_motto
+        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <select id="previousMotto" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_motto
+        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id desc
+        limit 1
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandMotto" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_motto
+        <where>
+            <if test="author != null">and
+                motto_author = #{author,jdbcType=VARCHAR}
+            </if>
+            <if test="content != null">and
+                motto_content LIKE CONCAT('%',#{content},'%')
+            </if>
+            <if test="mottoFrom != null">and
+                motto_from = #{mottoFrom,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">and
+                showing_date = #{showingDate,jdbcType=VARCHAR}
+            </if>
+            <if test="createdTime != null">and
+                created_time = #{createdTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="isDeleted != null">and
+                is_deleted = #{isDeleted,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandMotto">
+        insert into
+        t_island_motto
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="author != null">
+                motto_author,
+            </if>
+            <if test="content != null">
+                motto_content,
+            </if>
+            <if test="mottoFrom != null">
+                motto_from,
+            </if>
+            <if test="showingDate != null">
+                showing_date,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="mottoFrom != null">
+                #{mottoFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandMotto">
+        update t_island_motto
+        <set>
+            <if test="author != null">
+                motto_author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                motto_content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="mottoFrom != null">
+                motto_from = #{mottoFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                showing_date = #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </insert>
+
+</mapper>

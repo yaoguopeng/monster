@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandTopicInfoMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandTopicInfo">
+        <id column="topic_id" property="topicId" jdbcType="VARCHAR"/>
+        <result column="topic_visit_times" property="topicVisitTimes" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        topic_id,topic_visit_times
+    </sql>
+
+    <select id="getVisitTimesByTopicId" parameterType="java.lang.String" resultType="java.lang.Long">
+        select
+        topic_visit_times
+        from t_island_topic_info
+        where topic_id = #{topicId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByTopicId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_topic_info
+        where topic_id = #{topicId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandTopicInfo">
+        insert into t_island_topic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="topicId != null">
+                topic_id,
+            </if>
+            <if test="topicVisitTimes != null">
+                topic_visit_times,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="topicId != null">
+                #{topicId,jdbcType=VARCHAR},
+            </if>
+            <if test="topicVisitTimes != null">
+                #{topicVisitTimes,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.island.monster.bean.IslandTopicInfo">
+        update t_island_topic_info
+        <set>
+            <if test="topicVisitTimes != null">
+                topic_visit_times = #{topicVisitTimes,jdbcType=BIGINT},
+            </if>
+        </set>
+        where topic_id = #{topicId,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

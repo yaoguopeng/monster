@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.VisitorStorehouseMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.VisitorStorehouse">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="work_id" property="workId" jdbcType="VARCHAR"/>
+        <result column="work_type" property="workType" jdbcType="VARCHAR"/>
+        <result column="stored_time" property="storedTime" jdbcType="TIMESTAMP"/>
+        <result column="stored_cancel" property="storedCancel" jdbcType="VARCHAR"/>
+        <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        pk_id,union_id,stored_time,work_id,cancel_time,work_type,stored_cancel
+    </sql>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.VisitorStorehouse" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_visitor_storehouse
+        <where>
+            <if test="workId != null">and
+                work_id = #{workId,jdbcType=VARCHAR}
+            </if>
+            <if test="workType != null">and
+                work_type = #{workType,jdbcType=VARCHAR}
+            </if>
+            <if test="storedCancel != null">and
+                stored_cancel = #{storedCancel,jdbcType=VARCHAR}
+            </if>
+            <if test="unionId != null">and
+                union_id = #{unionId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_visitor_storehouse
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandVisitor">
+        insert into t_visitor_storehouse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="unionId != null">
+                union_id,
+            </if>
+            <if test="storedTime != null">
+                stored_time,
+            </if>
+            <if test="workId != null">
+                work_id,
+            </if>
+            <if test="cancelTime != null">
+                cancel_time,
+            </if>
+            <if test="work_type != null">
+                work_type,
+            </if>
+            <if test="stored_cancel != null">
+                stored_cancel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="unionId != null">
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="storedTime != null">
+                #{storedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="workId != null">
+                #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelTime != null">
+                #{cancelTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="work_type != null">
+                #{workType,jdbcType=VARCHAR},
+            </if>
+            <if test="storedCancel != null">
+                #{storedCancel,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandVisitor">
+        update t_visitor_storehouse
+        <set>
+            <if test="workId != null">
+                work_id = #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelTime != null">
+                cancel_time = #{cancelTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="workType != null">
+                work_type = #{workType,jdbcType=VARCHAR},
+            </if>
+            <if test="storedCancel != null">
+                stored_cancel = #{storedCancel,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where union_id = #{unionId,jdbcType=VARCHAR}
+    </update>
+</mapper>

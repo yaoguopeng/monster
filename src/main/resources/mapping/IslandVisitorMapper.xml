@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandVisitorMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandVisitor">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="first_landing_time" property="firstLandingTime" jdbcType="TIMESTAMP"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="last_landing_time" property="lastLandingTime" jdbcType="TIMESTAMP"/>
+        <result column="landing_count" property="landingCount" jdbcType="BIGINT"/>
+        <result column="avatar_path" property="avatarPath" jdbcType="VARCHAR"/>
+
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR"/>
+        <result column="use_language" property="language" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="country" property="country" jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <sql id="BaseColumnList">
+        pk_id,union_id,first_landing_time,nick_name,last_landing_time,landing_count,avatar_path
+    </sql>
+
+    <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_visitor
+        where union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandVisitor">
+        insert into t_island_visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="unionId != null">
+                union_id,
+            </if>
+            <if test="firstLandingTime != null">
+                first_landing_time,
+            </if>
+            <if test="nickName != null">
+                nick_name,
+            </if>
+            <if test="lastLandingTime != null">
+                last_landing_time,
+            </if>
+            <if test="landingCount != null">
+                landing_count,
+            </if>
+            <if test="avatarPath != null">
+                avatar_path,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="language != null">
+                use_language,
+            </if>
+            <if test="city != null">
+                city,
+            </if>
+            <if test="province != null">
+                province,
+            </if>
+            <if test="country != null">
+                country,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="unionId != null">
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="firstLandingTime != null">
+                #{firstLandingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nickName != null">
+                #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLandingTime != null">
+                #{lastLandingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="landingCount != null">
+                #{landingCount,jdbcType=BIGINT},
+            </if>
+            <if test="avatarPath != null">
+                #{avatarPath,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null">
+                #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                #{country,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandVisitor">
+        update t_island_visitor
+        <set>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLandingTime != null">
+                last_landing_time = #{lastLandingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="landingCount != null">
+                landing_count = #{landingCount,jdbcType=BIGINT},
+            </if>
+            <if test="avatarPath != null">
+                avatar_path = #{avatarPath,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="language != null">
+                use_language = #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="province != null">
+                province = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null">
+                country = #{country,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where union_id = #{unionId,jdbcType=VARCHAR}
+    </update>
+</mapper>

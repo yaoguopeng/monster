@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandManagerMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandManager">
+        <id column="pk_id" property="id" jdbcType="VARCHAR" />
+        <result column="real_name" property="realName" jdbcType="VARCHAR" />
+        <result column="registe_name" property="registeName" jdbcType="VARCHAR" />
+        <result column="registe_password" property="registePassword" jdbcType="VARCHAR" />
+        <result column="bind_email" property="bindEmail" jdbcType="VARCHAR" />
+        <result column="registe_time" property="registeTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,real_name,registe_name,registe_password,bind_email,registe_time,update_time
+    </sql>
+
+    <delete id="delete">
+      delete from t_island_manager
+      where pk_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from t_island_manager
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandManager" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from t_island_manager
+       <where>
+           <if test="realName != null">
+               real_name = #{realName,jdbcType=VARCHAR}
+           </if>
+           <if test="registeName != null">
+               registe_name = #{registeName,jdbcType=VARCHAR}
+           </if>
+           <if test="bindEmail != null">
+               bind_email = #{bindEmail,jdbcType=VARCHAR}
+           </if>
+       </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandManager">
+        insert into t_island_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="realName != null">
+                real_name,
+            </if>
+            <if test="registeName != null">
+                registe_name,
+            </if>
+            <if test="registePassword != null">
+                registe_password,
+            </if>
+            <if test="bindEmail != null">
+                bind_email,
+            </if>
+            <if test="registeTime != null">
+                registe_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+               #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null">
+                #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="registeName != null">
+                #{registeName,jdbcType=VARCHAR},
+            </if>
+            <if test="registePassword != null">
+                #{registePassword,jdbcType=VARCHAR},
+            </if>
+            <if test="bindEmail != null">
+                #{bindEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="registeTime != null">
+                #{registeTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandManager">
+        update t_island_manager
+        <set>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="registeName != null">
+                registe_name = #{registeName,jdbcType=VARCHAR},
+            </if>
+            <if test="registePassword != null">
+                registe_password = #{registePassword,jdbcType=VARCHAR},
+            </if>
+            <if test="bindEmail != null">
+                bind_email =  #{bindEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time =  #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pk_id =  #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

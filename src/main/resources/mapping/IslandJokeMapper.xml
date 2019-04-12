@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandJokeMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandJoke">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="joke_content" property="content" jdbcType="VARCHAR"/>
+        <result column="joke_image_path" property="imagePath" jdbcType="VARCHAR"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,joke_content,joke_image_path,uuid,created_time,is_deleted
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_joke
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_joke
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_joke
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_joke j
+        left join
+        t_visitor_storehouse s
+        on j.pk_id = s.work_id
+        and s.work_type = 'JOKE'
+        where s.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="nextJoke" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_joke
+        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <select id="previousJoke" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_joke
+        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id desc
+        limit 1
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandJoke">
+        insert into t_island_joke
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                joke_content,
+            </if>
+              <if test="imagePath != null">
+                  joke_image_path,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="imagePath != null">
+                #{imagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.island.monster.bean.IslandJoke">
+        update t_island_joke
+        <set>
+            <if test="content != null">
+                joke_content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="getByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_joke
+        <where>
+            <if test="content != null">
+                joke_content LIKE CONCAT('%',#{content},'%')
+            </if>
+            <if test="isDeleted != null">and
+                is_deleted = #{isDeleted,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

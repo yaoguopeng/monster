@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandPaintingMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPainting">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="painting_path" property="paintingPath" jdbcType="VARCHAR"/>
+        <result column="painting_author" property="paintingAuthor" jdbcType="VARCHAR"/>
+        <result column="painting_info" property="paintingInfo" jdbcType="VARCHAR"/>
+        <result column="showing_date" property="showingDate" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,painting_path,painting_author,painting_info,showing_date,created_time,created_by,is_deleted,uuid
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_painting
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_painting
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_painting
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_painting p
+        left join
+        t_visitor_storehouse s
+        on p.pk_id = s.work_id
+        and s.work_type = 'PAINTING'
+        where s.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="nextPainting" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_painting
+        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+   <select id="previousPainting" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_painting
+        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id desc
+        limit 1
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandPainting" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_painting
+        <where>
+            <if test="paintingPath != null">and
+                painting_path = #{paintingPath,jdbcType=VARCHAR}
+            </if>
+            <if test="paintingAuthor != null">and
+                painting_author = #{paintingAuthor,jdbcType=VARCHAR}
+            </if>
+            <if test="paintingInfo != null">and
+                painting_info = #{paintingInfo,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">and
+                showing_date = #{showingDate,jdbcType=VARCHAR}
+            </if>
+            <if test="createdTime != null">and
+                created_time = #{createdTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="isDeleted != null">and
+                is_deleted = #{isDeleted,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandPainting">
+        insert into
+        t_island_painting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="paintingPath != null">
+                painting_path,
+            </if>
+            <if test="paintingAuthor != null">
+                painting_author,
+            </if>
+            <if test="paintingInfo != null">
+                painting_info,
+            </if>
+            <if test="showingDate != null">
+                showing_date,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="paintingPath != null">
+                #{paintingPath,jdbcType=VARCHAR},
+            </if>
+            <if test="paintingAuthor != null">
+                #{paintingAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="paintingInfo != null">
+                #{paintingInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandPainting">
+        update t_island_painting
+        <set>
+            <if test="paintingPath != null">
+                painting_path = #{paintingPath,jdbcType=VARCHAR},
+            </if>
+            <if test="paintingAuthor != null">
+                painting_author = #{paintingAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="paintingInfo != null">
+                painting_info = #{paintingInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                showing_date = #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from t_island_painting
+        where pk_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="setDel" parameterType="java.lang.Integer">
+        update t_island_painting
+        set is_deleted = '1'
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

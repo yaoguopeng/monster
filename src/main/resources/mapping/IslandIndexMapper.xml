@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandIndexMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandIndex">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="index_content" property="content" jdbcType="VARCHAR"/>
+        <result column="index_author" property="author" jdbcType="VARCHAR"/>
+        <result column="showing_date_begin" property="showingDateBegin" jdbcType="TIMESTAMP"/>
+        <result column="showing_date_end" property="showingDateEnd" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,index_content,index_author,is_deleted,showing_date_begin,showing_date_end,created_time,created_by
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_index
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_index
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_index
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_index
+        <where>
+            <if test="id != null">and
+                pk_id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="content != null">and
+                index_content = #{content,jdbcType=VARCHAR}
+            </if>
+            <if test="author != null">and
+                index_author = #{author,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">and
+                showing_date_begin &lt;= #{showingDate,jdbcType=TIMESTAMP}
+                and
+                showing_date_end &gt;= #{showingDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="nextIndex" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_index
+        where pk_id > #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandIndex">
+        insert into t_island_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                index_content,
+            </if>
+            <if test="author != null">
+                index_author,
+            </if>
+            <if test="showingDateBegin != null">
+                showing_date_begin,
+            </if>
+            <if test="showingDateEnd != null">
+                showing_date_end,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDateBegin != null">
+                #{showingDateBegin,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDateEnd != null">
+                #{showingDateEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.island.monster.bean.IslandIndex">
+        update t_island_index
+        <set>
+            <if test="content != null ">
+                index_content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null ">
+                index_author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null ">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

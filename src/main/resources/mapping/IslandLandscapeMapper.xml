@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandLandscapeMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandLandscape">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="landscape_image_path" property="landscapeImagePath" jdbcType="VARCHAR"/>
+        <result column="landscape_info" property="landscapeInfo" jdbcType="VARCHAR"/>
+        <result column="showing_date" property="showingDate" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,landscape_image_path,landscape_info,is_deleted,showing_date,uuid,created_time,created_by
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_landscape
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_landscape
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_landscape
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_landscape
+        <where>
+            <if test="id != null">and
+                pk_id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="landscapeImagePath != null">and
+                landscape_image_path = #{landscapeImagePath,jdbcType=VARCHAR}
+            </if>
+            <if test="landscapeInfo != null">and
+                landscape_info = #{landscapeInfo,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">and
+                showing_date = #{showingDate,jdbcType=VARCHAR}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="nextLandscape" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_landscape
+        where pk_id > #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandLandscape">
+        insert into t_island_landscape
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="landscapeImagePath != null">
+                landscape_image_path,
+            </if>
+            <if test="landscapeInfo != null">
+                landscape_info,
+            </if>
+            <if test="showingDate != null">
+                showing_date,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="landscapeImagePath != null">
+                #{landscapeImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="landscapeInfo != null">
+                #{landscapeInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.island.monster.bean.IslandLandscape">
+        update t_island_landscape
+        <set>
+            <if test="landscapeImagePath != null ">
+                landscape_image_path = #{landscapeImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="landscapeInfo != null ">
+                landscape_info = #{landscapeInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null ">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

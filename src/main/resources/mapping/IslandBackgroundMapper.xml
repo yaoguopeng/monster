@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandBackgroundMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandBackground">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="background_image_path" property="backgroundImagePath" jdbcType="VARCHAR"/>
+        <result column="background_type" property="backgroundType" jdbcType="VARCHAR"/>
+        <result column="showing_date_begin" property="showingDateBegin" jdbcType="TIMESTAMP"/>
+        <result column="showing_date_end" property="showingDateEnd" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,background_image_path,background_type,is_deleted,showing_date_begin,showing_date_end,uuid,created_time,created_by
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_background
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_background
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_background
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getByConditions" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_background
+        <where>
+            <if test="id != null">and
+                pk_id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="backgroundImagePath != null">and
+                background_image_path = #{backgroundImagePath,jdbcType=VARCHAR}
+            </if>
+            <if test="backgroundType != null">and
+                background_type = #{backgroundType,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">
+                and
+                showing_date_begin &lt;= #{showingDate,jdbcType=TIMESTAMP}
+                and
+                showing_date_end &gt;= #{showingDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="nextBackground" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_background
+        where pk_id > #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandBackground">
+        insert into t_island_background
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="backgroundImagePath != null">
+                background_image_path,
+            </if>
+            <if test="backgroundType != null">
+                background_type,
+            </if>
+            <if test="showingDateBegin != null">
+                showing_date_begin,
+            </if>
+            <if test="showingDateEnd != null">
+                showing_date_end,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="uuid != null">
+                uuid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="backgroundImagePath != null">
+                #{backgroundImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="backgroundType != null">
+                #{backgroundType,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDateBegin != null">
+                #{showingDateBegin,jdbcType=VARCHAR},
+            </if>
+             <if test="showingDateEnd != null">
+                #{showingDateEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.island.monster.bean.IslandBackground">
+        update t_island_background
+        <set>
+            <if test="backgroundImagePath != null ">
+                background_image_path = #{backgroundImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="backgroundType != null ">
+                background_type = #{backgroundType,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null ">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

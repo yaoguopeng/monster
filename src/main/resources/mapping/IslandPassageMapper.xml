@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandPassageMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPassage">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="passage_title" property="passageTitle" jdbcType="VARCHAR"/>
+        <result column="passage_author" property="passageAuthor" jdbcType="VARCHAR"/>
+        <result column="passage_from" property="passageFrom" jdbcType="VARCHAR"/>
+        <result column="showing_date" property="showingDate" jdbcType="TIMESTAMP"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="passage_content" property="passageContent" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,passage_title,passage_author,passage_from,showing_date,created_time,created_by,is_deleted,passage_content
+    </sql>
+
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select max(pk_id) from t_island_passage
+    </select>
+
+    <select id="getMinId" resultType="java.lang.Integer">
+        select min(pk_id) from t_island_passage
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_passage
+        where pk_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_passage p
+        left join
+        t_visitor_storehouse s
+        on p.pk_id = s.work_id
+        and s.work_type = 'PASSAGE'
+        where s.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="nextPassage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_passage
+        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id asc
+        limit 1
+    </select>
+
+    <select id="previousPassage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_passage
+        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        order by pk_id desc
+        limit 1
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandPassage" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_passage
+        <where>
+            <if test="passageTitle != null">and
+                passage_title = #{passageTitle,jdbcType=VARCHAR}
+            </if>
+            <if test="passageAuthor != null">and
+                passage_author = #{passageAuthor,jdbcType=VARCHAR}
+            </if>
+            <if test="passageFrom != null">and
+                passage_from = #{passageFrom,jdbcType=VARCHAR}
+            </if>
+            <if test="showingDate != null">and
+                showing_date = #{showingDate,jdbcType=VARCHAR}
+            </if>
+            <if test="createdTime != null">and
+                created_time = #{createdTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createdBy != null">and
+                created_by = #{createdBy,jdbcType=VARCHAR}
+            </if>
+            <if test="isDeleted != null">and
+                is_deleted = #{isDeleted,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandPassage">
+        insert into
+        t_island_passage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="passageTitle != null">
+                passage_title,
+            </if>
+            <if test="passageAuthor != null">
+                passage_author,
+            </if>
+            <if test="passageFrom != null">
+                passage_from,
+            </if>
+            <if test="showingDate != null">
+                showing_date,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="passageContent != null">
+                passage_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="passageTitle != null">
+                #{passageTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="passageAuthor != null">
+                #{passageAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="passageFrom != null">
+                #{passageFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="passageContent != null">
+                #{passageContent,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandPassage">
+        update t_island_passage
+        <set>
+            <if test="passageTitle != null">
+                passage_title = #{passageTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="passageAuthor != null">
+                passage_author = #{passageAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="passageFrom != null">
+                passage_from = #{passageFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="showingDate != null">
+                showing_date = #{showingDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createdBy != null">
+                created_by = #{createdBy,jdbcType=VARCHAR},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=INTEGER}
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from t_island_passage
+        where pk_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="setDel" parameterType="java.lang.Integer">
+        update t_island_passage
+        set is_deleted = '1'
+        where pk_id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
