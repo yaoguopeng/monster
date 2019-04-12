@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandVisitorLoginLogMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandVisitorLoginLog">
+        <id column="pk_id" property="id" jdbcType="INTEGER"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="login_time" property="loginTime" jdbcType="TIMESTAMP"/>
+        <result column="login_ordinal" property="loginOrdinal" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        pk_id,union_id,login_time,login_ordinal
+    </sql>
+
+    <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_visitor_login_log
+        where union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandVisitor">
+        insert into t_island_visitor_login_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="unionId != null">
+                union_id,
+            </if>
+            <if test="loginTime != null">
+                login_time,
+            </if>
+            <if test="loginOrdinal != null">
+                login_ordinal,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="unionId != null">
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="loginTime != null">
+                #{loginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loginOrdinal != null">
+                #{loginOrdinal,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>
