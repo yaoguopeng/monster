@@ -22,4 +22,6 @@ public interface IslandLandscapeMapper {
     int getMaxId();
 
     int getMinId();
+
+    List<IslandLandscape> onesFavorite(@Param("unionId")String unionId);
 }

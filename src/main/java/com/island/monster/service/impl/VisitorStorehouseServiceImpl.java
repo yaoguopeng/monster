@@ -40,6 +40,9 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
     @Autowired
     private IslandJokeMapper islandJokeMapper;
 
+    @Autowired
+    private IslandLandscapeMapper islandLandscapeMapper;
+
 
     @Override
     public VisitorStorehouse add(VisitorStorehouse visitorStorehouse) {
@@ -67,6 +70,68 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
             return null;
         }
         return target;
+    }
+
+    @Override
+    public List<?> onesFavorite(String unionId, IslandCommon.WorkType workType) {
+        switch (workType) {
+            case PAINTING: {
+                return onesFavoritePainting(unionId);
+            }
+            case PASSAGE: {
+                return onesFavoritePassage(unionId);
+            }
+            case MUSIC: {
+                return onesFavoriteMusic(unionId);
+            }
+            case MOTTO: {
+                return onesFavoriteMotto(unionId);
+            }
+            case POEM: {
+                return onesFavoritePoem(unionId);
+            }
+            case JOKE: {
+                return onesFavoriteJoke(unionId);
+            }
+            case MOVIE: {
+                return onesFavoriteMovie(unionId);
+            }
+            case LANDSCAPE: {
+                return onesFavoriteLandscape(unionId);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public PageInfo<?> onesFavorite(String unionId, IslandCommon.WorkType workType, Integer pageSize, Integer pageNum) {
+        switch (workType) {
+            case PAINTING: {
+                return onesFavoritePainting(unionId, pageSize, pageNum);
+            }
+            case PASSAGE: {
+                return onesFavoritePassage(unionId, pageSize, pageNum);
+            }
+            case MUSIC: {
+                return onesFavoriteMusic(unionId, pageSize, pageNum);
+            }
+            case MOTTO: {
+                return onesFavoriteMotto(unionId, pageSize, pageNum);
+            }
+            case POEM: {
+                return onesFavoritePoem(unionId, pageSize, pageNum);
+            }
+            case JOKE: {
+                return onesFavoriteJoke(unionId, pageSize, pageNum);
+            }
+            case MOVIE: {
+                return onesFavoriteMovie(unionId, pageSize, pageNum);
+            }
+            case LANDSCAPE: {
+                return onesFavoriteLandscape(unionId, pageSize, pageNum);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -118,6 +183,11 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
     @Override
     public List<IslandPoem> onesFavoritePoem(String unionId) {
         return islandPoemMapper.onesFavorite(unionId);
+    }
+
+    @Override
+    public List<IslandLandscape> onesFavoriteLandscape(String unionId) {
+        return islandLandscapeMapper.onesFavorite(unionId);
     }
 
     @Override
@@ -192,6 +262,17 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
             @Override
             public void doSelect() {
                 islandPoemMapper.onesFavorite(unionId);
+            }
+        });
+        return page;
+    }
+
+    @Override
+    public PageInfo<IslandLandscape> onesFavoriteLandscape(String unionId, Integer pageSize, Integer pageNum) {
+        PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
+            @Override
+            public void doSelect() {
+                islandLandscapeMapper.onesFavorite(unionId);
             }
         });
         return page;

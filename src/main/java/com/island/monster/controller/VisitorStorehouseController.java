@@ -1,6 +1,7 @@
 package com.island.monster.controller;
 
 import com.island.monster.bean.VisitorStorehouse;
+import com.island.monster.common.IslandCommon;
 import com.island.monster.common.Response;
 import com.island.monster.service.VisitorStorehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,15 @@ public class VisitorStorehouseController {
     @RequestMapping(value = "favorite/{id}", method = RequestMethod.DELETE)
     public Response<?> cancel(@PathVariable("id") String id) {
         return Response.success(visitorStorehouseService.cancel(id));
+    }
+
+    @RequestMapping(value = "favorite/{unionId}", method = RequestMethod.GET)
+    public Response<?> favorite(@PathVariable("unionId") String unionId, @RequestParam("workType") IslandCommon.WorkType workType
+            , @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        if (pageSize != null && pageNum != null) {
+            return Response.success(visitorStorehouseService.onesFavorite(unionId, workType, pageSize, pageNum));
+        }
+        return Response.success(visitorStorehouseService.onesFavorite(unionId, workType));
     }
 
     @RequestMapping(value = "favorite", method = RequestMethod.GET)
