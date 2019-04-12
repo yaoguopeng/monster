@@ -8,6 +8,8 @@ import com.island.monster.common.IslandCommon;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.mapper.*;
 import com.island.monster.service.VisitorStorehouseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(VisitorStorehouseServiceImpl.class);
 
     @Autowired
     private VisitorStorehouseMapper visitorStorehouseMapper;
@@ -46,6 +50,10 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
 
     @Override
     public VisitorStorehouse add(VisitorStorehouse visitorStorehouse) {
+        if(!IslandUtil.validWorkType(visitorStorehouse.getWorkType())){ // 枚举类型不匹配
+            LOGGER.info("枚举类型不匹配，所给类型："+visitorStorehouse.getWorkType());
+            return null;
+        }
         List<VisitorStorehouse> list = visitorStorehouseMapper.getByConditions(visitorStorehouse);
         if (list.isEmpty()) {
             visitorStorehouse.setId(IslandUtil.uuid());

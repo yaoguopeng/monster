@@ -13,10 +13,11 @@ public class IslandUtil {
 
     /**
      * 给字符串加书名号
+     *
      * @param name
      * @return
      */
-    public static String coverByQuotes(String name){
+    public static String coverByQuotes(String name) {
         StringBuffer result = new StringBuffer("《");
         result.append(name);
         result.append("》");
@@ -25,11 +26,12 @@ public class IslandUtil {
 
     /**
      * 给字符串加前缀：——
+     *
      * @param name
      * @return
      */
-    public static String addPrefix(String name){
-        return "——"+name;
+    public static String addPrefix(String name) {
+        return "——" + name;
     }
 
     /**
@@ -53,12 +55,13 @@ public class IslandUtil {
 
     /**
      * 时光小岛获取当前日期的统一方式
+     *
      * @return
      */
-    public static Date currentDate(){
+    public static Date currentDate() {
         Date currentDate = null;
         try {
-            currentDate =  getSimpleDateFormat().parse(getSimpleDateFormat().format(now()));
+            currentDate = getSimpleDateFormat().parse(getSimpleDateFormat().format(now()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -83,5 +86,25 @@ public class IslandUtil {
      */
     public static SimpleDateFormat getSimpleDateFormat() {
         return FORMAT;
+    }
+
+    /**
+     * 校验所传字符串是否时光小岛枚举类型
+     *
+     * @param workType
+     * @return
+     */
+    public static Boolean validWorkType(String workType) {
+        Map<String, IslandCommon.WorkType> map = new HashMap<>();
+        map.put("INDEX", IslandCommon.WorkType.INDEX);
+        map.put("MOTTO", IslandCommon.WorkType.MOTTO);
+        map.put("MUSIC", IslandCommon.WorkType.MUSIC);
+        map.put("PAINTING", IslandCommon.WorkType.PAINTING);
+        map.put("PASSAGE", IslandCommon.WorkType.PASSAGE);
+        map.put("POEM", IslandCommon.WorkType.POEM);
+        map.put("JOKE", IslandCommon.WorkType.JOKE);
+        map.put("MOVIE", IslandCommon.WorkType.MOVIE);
+        map.put("LANDSCAPE", IslandCommon.WorkType.LANDSCAPE);
+        return map.get(workType) != null ? true : false;
     }
 }

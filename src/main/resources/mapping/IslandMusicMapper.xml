@@ -29,7 +29,7 @@
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
-        <include refid="BaseColumnList"/>
+        m.*
         from t_island_music
         where pk_id = #{id,jdbcType=INTEGER}
     </select>

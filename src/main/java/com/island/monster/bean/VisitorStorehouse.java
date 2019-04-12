@@ -5,6 +5,7 @@ import java.util.Date;
 import com.island.monster.common.IslandCommon.WorkType;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 时光小岛游客收藏
@@ -15,10 +16,10 @@ public class VisitorStorehouse  implements Serializable {
     private String id;
     @NotEmpty
     private String unionId;
-    @NotEmpty
+    @NotNull
     private Integer workId;
     @NotEmpty
-    private WorkType workType;// 作品类型 IslandCommon.WorkType
+    private String workType;// 作品类型 IslandCommon.WorkType
     private String storedCancel;
     private Date cancelTime;
     private Date storedTime;
@@ -47,11 +48,11 @@ public class VisitorStorehouse  implements Serializable {
         this.workId = workId;
     }
 
-    public WorkType getWorkType() {
+    public String getWorkType() {
         return workType;
     }
 
-    public void setWorkType(WorkType workType) {
+    public void setWorkType(String workType) {
         this.workType = workType;
     }
 

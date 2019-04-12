@@ -124,7 +124,7 @@
 
     <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
-        <include refid="BaseColumnList"/>
+        l.*
         from t_island_landscape l
         left join
         t_visitor_storehouse s

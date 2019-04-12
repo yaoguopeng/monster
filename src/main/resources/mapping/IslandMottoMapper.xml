@@ -33,7 +33,7 @@
 
     <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
-        <include refid="BaseColumnList"/>
+        m.*
         from t_island_motto m
         left join
         t_visitor_storehouse s

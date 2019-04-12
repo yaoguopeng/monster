@@ -62,10 +62,10 @@
             <if test="cancelTime != null">
                 cancel_time,
             </if>
-            <if test="work_type != null">
+            <if test="workType != null">
                 work_type,
             </if>
-            <if test="stored_cancel != null">
+            <if test="storedCancel != null">
                 stored_cancel,
             </if>
         </trim>
@@ -85,7 +85,7 @@
             <if test="cancelTime != null">
                 #{cancelTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="work_type != null">
+            <if test="workType != null">
                 #{workType,jdbcType=VARCHAR},
             </if>
             <if test="storedCancel != null">
