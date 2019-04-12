@@ -45,6 +45,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
     public VisitorStorehouse add(VisitorStorehouse visitorStorehouse) {
         List<VisitorStorehouse> list = visitorStorehouseMapper.getByConditions(visitorStorehouse);
         if (list.isEmpty()) {
+            visitorStorehouse.setId(IslandUtil.uuid());
             visitorStorehouse.setStoredTime(IslandUtil.now());
             visitorStorehouseMapper.insertSelective(visitorStorehouse);
         } else {
@@ -57,7 +58,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
     }
 
     @Override
-    public VisitorStorehouse cancel(Integer id) {
+    public VisitorStorehouse cancel(String id) {
         VisitorStorehouse target = new VisitorStorehouse();
         target.setId(id);
         target.setCancelTime(IslandUtil.now());

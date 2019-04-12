@@ -14,5 +14,5 @@ public interface VisitorStorehouseMapper {
 
     List<VisitorStorehouse> getByConditions(VisitorStorehouse visitorStorehouse);
 
-    VisitorStorehouse selectByPrimaryKey(Integer id);
+    VisitorStorehouse selectByPrimaryKey(String id);
 }

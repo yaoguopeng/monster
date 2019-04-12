@@ -9,7 +9,7 @@ public interface VisitorStorehouseService {
 
     VisitorStorehouse add(VisitorStorehouse visitorStorehouse);
 
-    VisitorStorehouse cancel(Integer id);
+    VisitorStorehouse cancel(String id);
 
     List<VisitorStorehouse> getList(VisitorStorehouse visitorStorehouse);
 

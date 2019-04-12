@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 public class VisitorStorehouse  implements Serializable {
 
     private static final long serialVersionUID = -2909097915507554824L;
-    private Integer id;
+    private String id;
     @NotEmpty
     private String unionId;
     @NotEmpty
@@ -23,11 +23,11 @@ public class VisitorStorehouse  implements Serializable {
     private Date cancelTime;
     private Date storedTime;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
