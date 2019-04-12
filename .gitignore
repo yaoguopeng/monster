@@ -1,5 +1,6 @@
 HELP.md
 /target/
+/main/java/com/island/monster/test/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
