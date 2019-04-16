@@ -21,9 +21,9 @@ public class VisitorStorehouseController {
         return Response.success(visitorStorehouseService.add(visitorStorehouse));
     }
 
-    @RequestMapping(value = "favorite/{id}", method = RequestMethod.DELETE)
-    public Response<?> cancel(@PathVariable("id") String id) {
-        return Response.success(visitorStorehouseService.cancel(id));
+    @RequestMapping(value = "favorite", method = RequestMethod.DELETE)
+    public Response<?> cancel(@Valid VisitorStorehouse visitorStorehouse) {
+        return Response.success(visitorStorehouseService.cancel(visitorStorehouse));
     }
 
     @RequestMapping(value = "favorite/{unionId}", method = RequestMethod.GET)

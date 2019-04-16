@@ -69,15 +69,26 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
     }
 
     @Override
-    public VisitorStorehouse cancel(String id) {
-        VisitorStorehouse target = new VisitorStorehouse();
-        target.setId(id);
-        target.setCancelTime(IslandUtil.now());
-        target.setStoredCancel(IslandCommon.deletedStatus());
-        if (visitorStorehouseMapper.updateByPrimaryKeySelective(target) != 1) {
+    public VisitorStorehouse cancel(VisitorStorehouse visitorStorehouse) {
+        List<VisitorStorehouse> list = getList(visitorStorehouse);
+        if(list.isEmpty()){
+            LOGGER.info("取消收藏失败，未找到对应记录：{}",visitorStorehouse);
+            return null;
+        }else{
+            if(list.size()==1){
+                visitorStorehouse.setId(list.get(0).getId());
+                visitorStorehouse.setCancelTime(IslandUtil.now());
+                visitorStorehouse.setStoredCancel(IslandCommon.deletedStatus());
+                if (visitorStorehouseMapper.updateByPrimaryKeySelective(visitorStorehouse) != 1) {
+                    LOGGER.info("取消收藏失败，sql操作失效：{}",visitorStorehouse);
+                    return null;
+                }
+                LOGGER.info("取消收藏成功：{}",visitorStorehouse);
+                return visitorStorehouse;
+            }
+            LOGGER.info("取消收藏失败，无法获取唯一收藏记录：{}",visitorStorehouse);
             return null;
         }
-        return target;
     }
 
     @Override

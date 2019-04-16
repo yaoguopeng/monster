@@ -10,7 +10,7 @@ public interface VisitorStorehouseService {
 
     VisitorStorehouse add(VisitorStorehouse visitorStorehouse);
 
-    VisitorStorehouse cancel(String id);
+    VisitorStorehouse cancel(VisitorStorehouse visitorStorehouse);
 
     List<?> onesFavorite(String unionId, IslandCommon.WorkType workType);
 
