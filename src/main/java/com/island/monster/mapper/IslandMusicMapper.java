@@ -29,5 +29,5 @@ public interface IslandMusicMapper {
 
     int getMinId();
 
-    List<IslandMusic> onesFavorite(@Param("unionId")String unionId);
+    List<IslandMusic> onesFavorite(@Param("unionId")String unionId, @Param("storedCancel") String storedCancel);
 }

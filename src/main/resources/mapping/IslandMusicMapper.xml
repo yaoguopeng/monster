@@ -34,7 +34,7 @@
         where pk_id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="onesFavorite" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList"/>
         from t_island_music m
@@ -42,7 +42,12 @@
         t_visitor_storehouse s
         on m.pk_id = s.work_id
         and s.work_type = 'MUSIC'
-        where s.union_id = #{unionId,jdbcType=VARCHAR}
+        <where>
+            s.union_id = #{unionId,jdbcType=VARCHAR}
+            <if test="storedCancel != null">
+                and s.stored_cancel = #{storedCancel,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
     <select id="nextMusic" resultMap="BaseResultMap" parameterType="java.lang.Integer">

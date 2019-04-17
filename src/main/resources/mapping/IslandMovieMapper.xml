@@ -32,7 +32,7 @@
         where pk_id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="onesFavorite" resultMap="BaseResultMap">
         select
         m.*
         from t_island_movie m
@@ -40,7 +40,12 @@
         t_visitor_storehouse s
         on m.pk_id = s.work_id
         and s.work_type = 'MOVIE'
-        where s.union_id = #{unionId,jdbcType=VARCHAR}
+        <where>
+            s.union_id = #{unionId,jdbcType=VARCHAR}
+            <if test="storedCancel != null">
+                and s.stored_cancel = #{storedCancel,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
     <select id="nextMovie" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -66,25 +71,25 @@
         <include refid="BaseColumnList"/>
         from t_island_movie
         <where>
-            <if test="movieImagePath != null">  and
+            <if test="movieImagePath != null">and
                 movie_image_path = #{movieImagePath,jdbcType=VARCHAR}
             </if>
-            <if test="movieBeautifulLines != null"> and
+            <if test="movieBeautifulLines != null">and
                 movie_beautiful_lines = #{movieBeautifulLines,jdbcType=VARCHAR}
             </if>
-            <if test="movieName != null"> and
+            <if test="movieName != null">and
                 movie_name = #{movieName,jdbcType=VARCHAR}
             </if>
-            <if test="showingDate != null"> and
+            <if test="showingDate != null">and
                 showing_date = #{showingDate,jdbcType=VARCHAR}
             </if>
-            <if test="createdTime != null"> and
+            <if test="createdTime != null">and
                 created_time = #{createdTime,jdbcType=TIMESTAMP}
             </if>
-            <if test="createdBy != null"> and
+            <if test="createdBy != null">and
                 created_by = #{createdBy,jdbcType=VARCHAR}
             </if>
-            <if test="isDeleted != null"> and
+            <if test="isDeleted != null">and
                 is_deleted = #{isDeleted,jdbcType=VARCHAR}
             </if>
         </where>

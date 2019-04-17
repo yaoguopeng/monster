@@ -15,9 +15,9 @@ public interface IslandJokeMapper {
 
     IslandJoke selectByPrimaryKey(Integer id);
 
-    IslandJoke nextJoke(@Param("currentId")Integer currentId);
+    IslandJoke nextJoke(@Param("currentId") Integer currentId);
 
-    IslandJoke previousJoke(@Param("currentId")Integer currentId);
+    IslandJoke previousJoke(@Param("currentId") Integer currentId);
 
     int insertSelective(IslandJoke islandJoke);
 
@@ -25,5 +25,5 @@ public interface IslandJokeMapper {
 
     List<IslandJoke> getByConditions(IslandJoke islandJoke);
 
-    List<IslandJoke> onesFavorite(@Param("unionId")String unionId);
+    List<IslandJoke> onesFavorite(@Param("unionId") String unionId, @Param("storedCancel") String storedCancel);
 }

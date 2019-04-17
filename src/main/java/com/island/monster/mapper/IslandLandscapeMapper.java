@@ -15,7 +15,7 @@ public interface IslandLandscapeMapper {
 
     IslandLandscape selectByPrimaryKey(Integer id);
 
-    IslandLandscape nextLandscape(@Param("currentId")Integer currentId);
+    IslandLandscape nextLandscape(@Param("currentId") Integer currentId);
 
     List<IslandLandscape> getByConditions(IslandLandscape islandLandscape);
 
@@ -23,5 +23,5 @@ public interface IslandLandscapeMapper {
 
     int getMinId();
 
-    List<IslandLandscape> onesFavorite(@Param("unionId")String unionId);
+    List<IslandLandscape> onesFavorite(@Param("unionId") String unionId, @Param("storedCancel") String storedCancel);
 }

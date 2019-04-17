@@ -50,8 +50,8 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
 
     @Override
     public VisitorStorehouse add(VisitorStorehouse visitorStorehouse) {
-        if(!IslandUtil.validWorkType(visitorStorehouse.getWorkType())){ // 枚举类型不匹配
-            LOGGER.info("枚举类型不匹配，所给类型："+visitorStorehouse.getWorkType());
+        if (!IslandUtil.validWorkType(visitorStorehouse.getWorkType())) { // 枚举类型不匹配
+            LOGGER.info("枚举类型不匹配，所给类型：" + visitorStorehouse.getWorkType());
             return null;
         }
         List<VisitorStorehouse> list = visitorStorehouseMapper.getByConditions(visitorStorehouse);
@@ -71,22 +71,22 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
     @Override
     public VisitorStorehouse cancel(VisitorStorehouse visitorStorehouse) {
         List<VisitorStorehouse> list = getList(visitorStorehouse);
-        if(list.isEmpty()){
-            LOGGER.info("取消收藏失败，未找到对应记录：{}",visitorStorehouse);
+        if (list.isEmpty()) {
+            LOGGER.info("取消收藏失败，未找到对应记录：{}", visitorStorehouse);
             return null;
-        }else{
-            if(list.size()==1){
+        } else {
+            if (list.size() == 1) {
                 visitorStorehouse.setId(list.get(0).getId());
                 visitorStorehouse.setCancelTime(IslandUtil.now());
                 visitorStorehouse.setStoredCancel(IslandCommon.deletedStatus());
                 if (visitorStorehouseMapper.updateByPrimaryKeySelective(visitorStorehouse) != 1) {
-                    LOGGER.info("取消收藏失败，sql操作失效：{}",visitorStorehouse);
+                    LOGGER.info("取消收藏失败，sql操作失效：{}", visitorStorehouse);
                     return null;
                 }
-                LOGGER.info("取消收藏成功：{}",visitorStorehouse);
+                LOGGER.info("取消收藏成功：{}", visitorStorehouse);
                 return visitorStorehouse;
             }
-            LOGGER.info("取消收藏失败，无法获取唯一收藏记录：{}",visitorStorehouse);
+            LOGGER.info("取消收藏失败，无法获取唯一收藏记录：{}", visitorStorehouse);
             return null;
         }
     }
@@ -171,42 +171,42 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
 
     @Override
     public List<IslandJoke> onesFavoriteJoke(String unionId) {
-        return islandJokeMapper.onesFavorite(unionId);
+        return islandJokeMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandMotto> onesFavoriteMotto(String unionId) {
-        return islandMottoMapper.onesFavorite(unionId);
+        return islandMottoMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandMovie> onesFavoriteMovie(String unionId) {
-        return islandMovieMapper.onesFavorite(unionId);
+        return islandMovieMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandMusic> onesFavoriteMusic(String unionId) {
-        return islandMusicMapper.onesFavorite(unionId);
+        return islandMusicMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandPainting> onesFavoritePainting(String unionId) {
-        return islandPaintingMapper.onesFavorite(unionId);
+        return islandPaintingMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandPassage> onesFavoritePassage(String unionId) {
-        return islandPassageMapper.onesFavorite(unionId);
+        return islandPassageMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandPoem> onesFavoritePoem(String unionId) {
-        return islandPoemMapper.onesFavorite(unionId);
+        return islandPoemMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
     public List<IslandLandscape> onesFavoriteLandscape(String unionId) {
-        return islandLandscapeMapper.onesFavorite(unionId);
+        return islandLandscapeMapper.onesFavorite(unionId, IslandCommon.activeStatus());
     }
 
     @Override
@@ -214,7 +214,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandJokeMapper.onesFavorite(unionId);
+                onesFavoriteJoke(unionId);
             }
         });
         return page;
@@ -225,7 +225,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandMottoMapper.onesFavorite(unionId);
+                onesFavoriteMotto(unionId);
             }
         });
         return page;
@@ -236,7 +236,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandMovieMapper.onesFavorite(unionId);
+                onesFavoriteMovie(unionId);
             }
         });
         return page;
@@ -247,7 +247,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandMusicMapper.onesFavorite(unionId);
+                onesFavoriteMusic(unionId);
             }
         });
         return page;
@@ -258,7 +258,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandPaintingMapper.onesFavorite(unionId);
+                onesFavoritePainting(unionId);
             }
         });
         return page;
@@ -269,7 +269,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandPassageMapper.onesFavorite(unionId);
+                onesFavoritePassage(unionId);
             }
         });
         return page;
@@ -280,7 +280,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandPoemMapper.onesFavorite(unionId);
+                onesFavoritePoem(unionId);
             }
         });
         return page;
@@ -291,7 +291,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                islandLandscapeMapper.onesFavorite(unionId);
+                onesFavoriteLandscape(unionId);
             }
         });
         return page;

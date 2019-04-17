@@ -29,7 +29,7 @@
         where pk_id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="onesFavorite" resultMap="BaseResultMap" >
         select
         j.*
         from t_island_joke j
@@ -37,7 +37,12 @@
         t_visitor_storehouse s
         on j.pk_id = s.work_id
         and s.work_type = 'JOKE'
-        where s.union_id = #{unionId,jdbcType=VARCHAR}
+        <where>
+            s.union_id = #{unionId,jdbcType=VARCHAR}
+            <if test="storedCancel != null">
+                and s.stored_cancel = #{storedCancel,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
     <select id="nextJoke" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -64,8 +69,8 @@
             <if test="content != null">
                 joke_content,
             </if>
-              <if test="imagePath != null">
-                  joke_image_path,
+            <if test="imagePath != null">
+                joke_image_path,
             </if>
             <if test="uuid != null">
                 uuid,

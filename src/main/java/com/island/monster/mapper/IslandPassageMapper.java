@@ -29,5 +29,5 @@ public interface IslandPassageMapper {
 
     int getMinId();
 
-    List<IslandPassage> onesFavorite(@Param("unionId")String unionId);
+    List<IslandPassage> onesFavorite(@Param("unionId")String unionId, @Param("storedCancel") String storedCancel);
 }

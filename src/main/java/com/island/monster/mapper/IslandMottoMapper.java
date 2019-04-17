@@ -25,5 +25,5 @@ public interface IslandMottoMapper {
 
     int getMinId();
 
-    List<IslandMotto> onesFavorite(@Param("unionId")String unionId);
+    List<IslandMotto> onesFavorite(@Param("unionId")String unionId, @Param("storedCancel") String storedCancel);
 }

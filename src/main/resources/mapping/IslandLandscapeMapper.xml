@@ -122,7 +122,7 @@
         where pk_id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="onesFavorite" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="onesFavorite" resultMap="BaseResultMap">
         select
         l.*
         from t_island_landscape l
@@ -130,6 +130,11 @@
         t_visitor_storehouse s
         on l.pk_id = s.work_id
         and s.work_type = 'LANDSCAPE'
-        where s.union_id = #{unionId,jdbcType=VARCHAR}
+        <where>
+            s.union_id = #{unionId,jdbcType=VARCHAR}
+            <if test="storedCancel != null">
+                and s.stored_cancel = #{storedCancel,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 </mapper>

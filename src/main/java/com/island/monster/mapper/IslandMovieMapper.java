@@ -29,5 +29,5 @@ public interface IslandMovieMapper {
 
     int getMinId();
 
-    List<IslandMovie> onesFavorite(@Param("unionId")String unionId);
+    List<IslandMovie> onesFavorite(@Param("unionId")String unionId, @Param("storedCancel") String storedCancel);
 }

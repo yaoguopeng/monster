@@ -29,5 +29,5 @@ public interface IslandPoemMapper {
 
     int getMinId();
 
-    List<IslandPoem> onesFavorite(@Param("unionId")String unionId);
+    List<IslandPoem> onesFavorite(@Param("unionId")String unionId, @Param("storedCancel") String storedCancel);
 }

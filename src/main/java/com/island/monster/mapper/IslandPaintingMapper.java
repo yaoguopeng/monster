@@ -29,5 +29,5 @@ public interface IslandPaintingMapper {
 
     int getMinId();
 
-    List<IslandPainting> onesFavorite(@Param("unionId")String unionId);
+    List<IslandPainting> onesFavorite(@Param("unionId")String unionId, @Param("storedCancel") String storedCancel);
 }
