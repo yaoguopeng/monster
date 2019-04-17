@@ -51,8 +51,8 @@
         poemNote：<br>
         <textarea rows="10" class="box" name="poemNote">
         </textarea><br>
-        poemExplaination：<br>
-        <textarea rows="10" class="box" name="poemExplaination">
+        poemExplanation：<br>
+        <textarea rows="10" class="box" name="poemExplanation">
         </textarea><br>
         poemAppreciation：<br>
         <textarea rows="10" class="box" name="poemAppreciation">

@@ -19,7 +19,7 @@ public class IslandPoem implements Serializable {
     private String poemAuthor;
     private String poemContent;
     private String poemNote;
-    private String poemExplaination;
+    private String poemExplanation;
     private String poemAppreciation;
     private String createdBy;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -85,12 +85,12 @@ public class IslandPoem implements Serializable {
         this.poemNote = poemNote;
     }
 
-    public String getPoemExplaination() {
-        return poemExplaination;
+    public String getPoemExplanation() {
+        return poemExplanation;
     }
 
-    public void setPoemExplaination(String poemExplaination) {
-        this.poemExplaination = poemExplaination;
+    public void setPoemExplanation(String poemExplanation) {
+        this.poemExplanation = poemExplanation;
     }
 
     public String getPoemAppreciation() {
@@ -133,7 +133,7 @@ public class IslandPoem implements Serializable {
                 ", poemAuthor='" + poemAuthor + '\'' +
                 ", poemContent='" + poemContent + '\'' +
                 ", poemNote='" + poemNote + '\'' +
-                ", poemExplaination='" + poemExplaination + '\'' +
+                ", poemExplanation='" + poemExplanation + '\'' +
                 ", poemAppreciation='" + poemAppreciation + '\'' +
                 ", createdBy='" + createdBy + '\'' +
                 ", showingDate=" + showingDate +

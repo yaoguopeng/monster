@@ -12,14 +12,14 @@
         <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
         <result column="poem_content" property="poemContent" jdbcType="VARCHAR"/>
         <result column="poem_note" property="poemNote" jdbcType="VARCHAR"/>
-        <result column="poem_explaination" property="poemExplaination" jdbcType="VARCHAR"/>
+        <result column="poem_explanation" property="poemExplanation" jdbcType="VARCHAR"/>
         <result column="poem_appreciation" property="poemAppreciation" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="BaseColumnList">
         pk_id,poem_title,poem_author,poem_type,showing_date,
         created_time,created_by,is_deleted,poem_content,poem_appreciation,
-        poem_explaination,poem_note
+        poem_explanation,poem_note
     </sql>
 
     <select id="getMaxId" resultType="java.lang.Integer">
@@ -131,8 +131,8 @@
             <if test="poemNote != null">
                 poem_note,
             </if>
-            <if test="poemExplaination != null">
-                poem_explaination,
+            <if test="poemExplanation != null">
+                poem_explanation,
             </if>
             <if test="poemAppreciation != null">
                 poem_appreciation,
@@ -166,8 +166,8 @@
             <if test="poemNote != null">
                 #{poemNote,jdbcType=VARCHAR},
             </if>
-            <if test="poemExplaination != null">
-                #{poemExplaination,jdbcType=VARCHAR},
+            <if test="poemExplanation != null">
+                #{poemExplanation,jdbcType=VARCHAR},
             </if>
             <if test="poemAppreciation != null">
                 #{poemAppreciation,jdbcType=VARCHAR},
@@ -202,8 +202,8 @@
             <if test="poemNote != null">
                 poem_note = #{poemNote,jdbcType=VARCHAR},
             </if>
-            <if test="poemExplaination != null">
-                poem_explaination =  #{poemExplaination,jdbcType=VARCHAR},
+            <if test="poemExplanation != null">
+                poem_explanation =  #{poemExplanation,jdbcType=VARCHAR},
             </if>
             <if test="poemAppreciation != null">
                 poem_appreciation = #{poemAppreciation,jdbcType=VARCHAR},

@@ -304,7 +304,7 @@ public class IslandUploadServiceImpl implements IslandUploadService {
         islandPoem.setPoemContent(request.getParameter("poemContent"));
         islandPoem.setPoemType(request.getParameter("poemType"));
         islandPoem.setPoemNote(request.getParameter("poemNote"));
-        islandPoem.setPoemExplaination(request.getParameter("poemExplaination"));
+        islandPoem.setPoemExplanation(request.getParameter("poemExplanation"));
         islandPoem.setPoemAppreciation(request.getParameter("poemAppreciation"));
         islandPoem.setPoemTitle(request.getParameter("poemTitle"));
         LOGGER.info("提取到poem分享信息：" + islandPoem + "，showingDate:" + request.getParameter("showingDate"));
