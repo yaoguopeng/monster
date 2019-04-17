@@ -63,6 +63,16 @@
         where pk_id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="onesFavoriteTopic" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        t.*
+        from t_island_topic t
+        left join
+        t_island_topic_visitor_relation r
+        on r.topic_id = t.pk_id
+        where r.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
     <select id="selectByTopicName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList"/>

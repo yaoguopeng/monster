@@ -35,4 +35,12 @@ public class IslandTopicController {
         }
         return Response.success(islandTopicService.getList(islandTopic));
     }
+
+    @RequestMapping(value = "topics/user", method = RequestMethod.GET)
+    public Response<?> get(@RequestParam("unionId") String unionId, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        if (pageSize != null && pageNum != null) {
+            return Response.success(islandTopicService.onesFavoriteTopic(unionId, pageNum, pageSize));
+        }
+        return Response.success(islandTopicService.onesFavoriteTopic(unionId));
+    }
 }

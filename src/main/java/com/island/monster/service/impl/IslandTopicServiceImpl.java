@@ -83,4 +83,20 @@ public class IslandTopicServiceImpl implements IslandTopicService {
         });
         return page;
     }
+
+    @Override
+    public List<IslandTopic> onesFavoriteTopic(String unionId) {
+        return islandTopicMapper.onesFavoriteTopic(unionId);
+    }
+
+    @Override
+    public PageInfo<IslandTopic> onesFavoriteTopic(String unionId, Integer pageNum, Integer pageSize) {
+        PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
+            @Override
+            public void doSelect() {
+                onesFavoriteTopic(unionId);
+            }
+        });
+        return page;
+    }
 }

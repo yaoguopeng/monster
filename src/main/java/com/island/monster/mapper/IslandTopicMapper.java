@@ -19,5 +19,7 @@ public interface IslandTopicMapper {
 
     int setDeleted(String id);
 
+    List<IslandTopic> onesFavoriteTopic(@Param("unionId") String unionId);
+
 }
 

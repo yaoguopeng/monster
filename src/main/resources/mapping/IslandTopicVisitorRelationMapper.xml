@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandTopicVisitorRelationMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandTopicVisitorRelation">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="topic_id" property="topicId" jdbcType="VARCHAR"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="is_cancel" property="isCancel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,topic_id,updated_time,union_id,created_time,is_cancel
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandTopicVisitorRelation">
+        insert into t_island_topic_visitor_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="topicId != null">
+                topic_id,
+            </if>
+            <if test="unionId != null">
+                union_id,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="topicId != null">
+                #{topicId,jdbcType=VARCHAR},
+            </if>
+            <if test="unionId != null">
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_topic_visitor_relation
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandTopicVisitorRelation"
+            resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_topic_visitor_relation
+        <where>
+            is_cancel = '0'
+            <if test="id != null">and
+                pk_id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="topicId != null">and
+                topic_id like CONCAT('%',#{topicId,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="unionId != null">and
+                union_id = #{unionId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <update id="setDeleted">
+        update t_island_topic_visitor_relation
+        <set>
+            is_cancel = '1',
+            updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+        </set>
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

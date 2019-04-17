@@ -18,4 +18,8 @@ public interface IslandTopicService {
     List<IslandTopic> getList(IslandTopic islandTopic);
 
     PageInfo<IslandTopic> getPage(IslandTopic islandTopic, Integer pageNum, Integer pageSize);
+
+    List<IslandTopic> onesFavoriteTopic(String unionId);
+
+    PageInfo<IslandTopic> onesFavoriteTopic(String unionId, Integer pageNum, Integer pageSize);
 }
