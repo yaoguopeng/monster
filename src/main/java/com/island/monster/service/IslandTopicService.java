@@ -11,6 +11,8 @@ public interface IslandTopicService {
 
     IslandTopic setDeleted(String id);
 
+    IslandTopic getByTopicName(String topicName);
+
     IslandTopic getOne(String id);
 
     List<IslandTopic> getList(IslandTopic islandTopic);

@@ -1,6 +1,7 @@
 package com.island.monster.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.island.monster.common.IslandCommon.TopicType;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +14,7 @@ public class IslandTopic implements Serializable {
     private static final long serialVersionUID = -320982472780968591L;
     private String id;
     private String topicName;
-    private String topicType;
+    private TopicType topicType;
     private String createdBy;
     private Date createdTime;
     @JsonIgnore
@@ -37,11 +38,11 @@ public class IslandTopic implements Serializable {
         this.topicName = topicName;
     }
 
-    public String getTopicType() {
+    public TopicType getTopicType() {
         return topicType;
     }
 
-    public void setTopicType(String topicType) {
+    public void setTopicType(TopicType topicType) {
         this.topicType = topicType;
     }
 

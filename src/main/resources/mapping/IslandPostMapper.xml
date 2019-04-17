@@ -8,11 +8,16 @@
         <result column="post_image_path" property="postImagePath" jdbcType="VARCHAR"/>
         <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
         <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <association property="replyAmounts" javaType="java.lang.Integer" column="pk_id"
+                     select="com.island.monster.mapper.IslandPostReplyMapper.getPostReplyAmountsByPostId"/>
+        <association property="thumbsUpAmounts" javaType="java.lang.Integer" column="pk_id"
+                     select="com.island.monster.mapper.IslandPostThumbsUpMapper.getThumbsUpAmountsByPostId"/>
     </resultMap>
 
     <sql id="BaseColumnList">
-        pk_id,topic_id,post_content,created_by,created_time,is_deleted,post_image_path
+        pk_id,topic_id,post_content,created_by,created_time,is_deleted,post_image_path,updated_time
     </sql>
 
     <insert id="insertSelective" parameterType="com.island.monster.bean.IslandPost">
@@ -64,7 +69,14 @@
         <include refid="BaseColumnList"/>
         from t_island_post
         where pk_id = #{id,jdbcType=VARCHAR}
+        and is_deleted = '0'
     </select>
+
+   <delete id="remove" parameterType="java.lang.String" >
+        delete
+        from t_island_post
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </delete>
 
     <select id="getPostAmountsByTopicId" parameterType="java.lang.String" resultType="java.lang.Long">
         select
@@ -98,6 +110,22 @@
     <update id="setDeleted" parameterType="java.lang.String">
         update t_island_post
         set is_deleted = '1'
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandPost">
+        update t_island_post
+        <set>
+            <if test="postContent != null">
+                post_content = #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="postImagePath != null">
+                post_image_path = #{postImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
         where pk_id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandPostReplyMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPostReply">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="post_id" property="postId" jdbcType="VARCHAR"/>
+        <result column="reply_id" property="replyId" jdbcType="VARCHAR"/>
+        <result column="reply_content" property="replyContent" jdbcType="VARCHAR"/>
+        <result column="reply_from" property="replyFrom" jdbcType="VARCHAR"/>
+        <result column="reply_to" property="replyTo" jdbcType="VARCHAR"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,post_id,reply_id,reply_from,created_time,is_deleted,reply_content,reply_to,updated_time
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandPostReply">
+        insert into t_island_post_reply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="postId != null">
+                post_id,
+            </if>
+            <if test="replyId != null">
+                reply_id,
+            </if>
+            <if test="replyFrom != null">
+                reply_from,
+            </if>
+            <if test="replyTo != null">
+                reply_to,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="replyContent != null">
+                reply_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="postId != null">
+                #{postId,jdbcType=VARCHAR},
+            </if>
+            <if test="replyId != null">
+                #{replyId,jdbcType=VARCHAR},
+            </if>
+            <if test="replyFrom != null">
+                #{replyFrom,jdbcType=VARCHAR},
+            </if>
+            <if test="replyTo != null">
+                #{replyTo,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="replyContent != null">
+                #{replyContent,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_post_reply
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="remove" parameterType="java.lang.String" >
+        delete
+        from t_island_post_reply
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="removeByPostId" parameterType="java.lang.String" >
+        delete
+        from t_island_post_reply
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="getPostReplyAmountsByPostId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+        count(*)
+        from t_island_post_reply
+        where post_id = #{postId,jdbcType=VARCHAR}
+        and is_deleted = '0'
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandPostReply" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_post_reply
+        <where>
+            is_deleted = '0'
+            <if test="id != null">and
+                pk_id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="postId != null">and
+                post_id = #{postId,jdbcType=VARCHAR}
+            </if>
+            <if test="replyId != null">and
+                reply_id = #{replyId,jdbcType=VARCHAR}
+            </if>
+            <if test="replyTo != null">
+                and reply_to #{replyTo,jdbcType=VARCHAR}
+            </if>
+            <if test="replyFrom != null">and
+                reply_from = #{replyFrom,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <update id="setDeleted" parameterType="java.lang.String">
+        update t_island_post_reply
+        set is_deleted = '1'
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandPostReply">
+        update t_island_post_reply
+        <set>
+            <if test="replyContent != null">
+                reply_content = #{replyContent,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -5,6 +5,7 @@ import com.island.monster.bean.IslandPost;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.common.UploadUtil;
 import com.island.monster.mapper.*;
+import com.island.monster.service.IslandPostService;
 import com.island.monster.service.IslandUploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,9 @@ public class IslandUploadServiceImpl implements IslandUploadService {
 
     @Autowired
     private IslandPostMapper islandPostMapper;
+
+    @Autowired
+    private IslandPostService islandPostService;
 
     @Autowired
     private UploadUtil uploadUtil;
@@ -472,40 +476,70 @@ public class IslandUploadServiceImpl implements IslandUploadService {
 
     @Override
     public IslandPost uploadPost(HttpServletRequest request) {
+        // 新增帖子
+        IslandPost islandPost = new IslandPost();
+        islandPost.setId(IslandUtil.uuid());
+        islandPost.setTopicId(request.getParameter("topicId"));
+        islandPost.setCreatedBy(request.getParameter("createdBy"));
+        return updatePost(request, islandPost);
+    }
+
+    /**
+     * 新增或编辑帖子，若包含图片则上传图片
+     *
+     * @param request
+     * @param islandPost
+     * @return
+     */
+    private IslandPost updatePost(HttpServletRequest request, IslandPost islandPost) {
         // 获取帖子上传的图片
         List<MultipartFile> postImages = ((MultipartHttpServletRequest) request).getFiles("postImage");
-        IslandPost islandPost = new IslandPost();
-        String postId = IslandUtil.uuid();
-        islandPost.setId(postId);
         if (!postImages.isEmpty()) {
             MultipartFile postImage = postImages.get(0);
             String originalName = postImage.getOriginalFilename();
             if (originalName != null) {
                 String postSurfix = originalName.substring(originalName.lastIndexOf("."));
                 // 将帖子图片上传
-                String postImageName = postId + postSurfix;
+                String postImageName = islandPost.getId() + postSurfix;
                 if (!uploadUtil.upload(postImage, postImagePath, postImageName)) {
                     islandPost.setPostImagePath(postImageLocation + postImageName);
-                    LOGGER.info("帖子上传图片成功！");
+                    LOGGER.info("{}帖子上传图片成功！", islandPost.getId());
                 } else {
-                    LOGGER.info("帖子上传图片失败！");
+                    LOGGER.info("{}帖子上传图片失败！", islandPost.getId());
                     return null;
                 }
             } else {
-                LOGGER.info("帖子图片上传 originalName is null !");
+                LOGGER.info("{}帖子图片上传 originalName is null !", islandPost.getId());
                 return null;
             }
         } else {
-            LOGGER.info("帖子上传未添加任何图片");
+            LOGGER.info("{}帖子上传未添加任何图片", islandPost.getId());
         }
         // 帖子图片上传成功后将帖子信息入库
-        islandPost.setCreatedTime(IslandUtil.now());
         islandPost.setPostContent(IslandUtil.addPrefix(request.getParameter("postContent")));
-        islandPost.setTopicId(request.getParameter("topicId"));
-        islandPost.setCreatedBy(request.getParameter("createdBy"));
-        if (islandPostMapper.insertSelective(islandPost) == 1) {
-            LOGGER.info("成功上传帖子>>post：" + islandPost);
+        return islandPostService.update(islandPost);
+    }
+
+    @Override
+    public IslandPost editPost(HttpServletRequest request) {
+        String postId = request.getParameter("id");
+        if (postId == null) {
+            LOGGER.info("编辑帖子失败，未获取到该帖子主键信息！");
+            return null;
         }
-        return islandPost;
+        IslandPost target = islandPostService.getOne(postId);
+        if (target == null) {
+            LOGGER.info("编辑帖子失败，无该帖子记录！postId={}", postId);
+            return null;
+        }
+        // 若需要上传新图片，则首先删除旧的帖子图片信息
+        if (((MultipartHttpServletRequest) request).getFiles("postImage") != null && !((MultipartHttpServletRequest) request).getFiles("postImage").isEmpty()) {
+            String targetPostImagePath = target.getPostImagePath();
+            if (uploadUtil.remove(postImagePath + postId + targetPostImagePath.substring(targetPostImagePath.lastIndexOf(".")))) {
+                LOGGER.info("编辑帖子{}旧图删除成功！", postId);
+            }
+        }
+        // 使用原帖子主键将新的帖子记录更新到数据库
+        return updatePost(request, target);
     }
 }

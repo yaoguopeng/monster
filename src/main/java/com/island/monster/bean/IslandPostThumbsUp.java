@@ -1,17 +1,20 @@
 package com.island.monster.bean;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 时光小岛点赞帖子
  */
-public class IslandPostLikes implements Serializable {
+public class IslandPostThumbsUp implements Serializable {
 
     private static final long serialVersionUID = 7859552965820422387L;
     private String id;
+    @NotEmpty(message = "postId can not be empty")
     private String postId; // 被赞帖子id
-    private String likeUserId; //点赞者unionid
+    @NotEmpty(message = "unionId can not be empty")
+    private String thumbsUpBy; //点赞者unionId
     private Date createdTime;
 
     public String getId() {
@@ -30,12 +33,12 @@ public class IslandPostLikes implements Serializable {
         this.postId = postId;
     }
 
-    public String getLikeUserId() {
-        return likeUserId;
+    public String getThumbsUpBy() {
+        return thumbsUpBy;
     }
 
-    public void setLikeUserId(String likeUserId) {
-        this.likeUserId = likeUserId;
+    public void setThumbsUpBy(String thumbsUpBy) {
+        this.thumbsUpBy = thumbsUpBy;
     }
 
     public Date getCreatedTime() {

@@ -23,6 +23,11 @@ public class IslandTopicController {
         return Response.success(islandTopicService.getOne(id));
     }
 
+    @RequestMapping(value = "topic/{topicName}", method = RequestMethod.GET)
+    public Response<IslandTopic> getByTopicName(@PathVariable("topicName") String topicName) {
+        return Response.success(islandTopicService.getByTopicName(topicName));
+    }
+
     @RequestMapping(value = "topics", method = RequestMethod.GET)
     public Response<?> get(IslandTopic islandTopic, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
         if (pageSize != null && pageNum != null) {

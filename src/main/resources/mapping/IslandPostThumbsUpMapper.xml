@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandPostThumbsUpThumbsUpMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPostThumbsUpThumbsUp">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="post_id" property="postId" jdbcType="VARCHAR"/>
+        <result column="thumbs_up_by" property="thumbsUpBy" jdbcType="VARCHAR"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,post_id,thumbs_up_by,created_time
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandPostThumbsUp">
+        insert into t_island_post_thumbs_up
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="postId != null">
+                post_id,
+            </if>
+            <if test="thumbsUpBy != null">
+                thumbs_up_by,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="postId != null">
+                #{postId,jdbcType=VARCHAR},
+            </if>
+            <if test="thumbsUpBy != null">
+                #{thumbsUpBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_post_thumbs_up
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="remove" parameterType="com.island.monster.bean.IslandPostThumbsUp">
+        delete
+        from t_island_post_thumbs_up
+        <where>
+            post_id = #{postId,jdbcType=VARCHAR}
+            and thumbs_up_by = #{thumbsUpBy,jdbcType=VARCHAR}
+        </where>
+    </delete>
+
+    <delete id="removeById" parameterType="java.lang.String">
+        delete
+        from t_island_post_thumbs_up
+          where pk_id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="removeByPostId" parameterType="java.lang.String">
+        delete
+        from t_island_post_thumbs_up
+          where post_id = #{postId,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="getThumbsUpAmountsByPostId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+        count(*)
+        from t_island_post_thumbs_up
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByConditions" parameterType="com.island.monster.bean.IslandPostThumbsUp" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_post_thumbs_up
+        <where>
+            <if test="id != null">and
+                pk_id = #{id,jdbcType=VARCHAR}
+            </if>
+            <if test="postId != null">and
+                post_id = #{postId,jdbcType=VARCHAR}
+            </if>
+            <if test="thumbsUpBy != null">and
+                thumbs_up_by = #{thumbsUpBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

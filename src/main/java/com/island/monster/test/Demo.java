@@ -1,10 +1,15 @@
 package com.island.monster.test;
 
-import com.island.monster.common.IslandUtil;
 
 public class Demo {
 
 //    public static void main(String args []){
-//        System.out.println("currentDate:"+IslandUtil.currentDate());
+//        String s = "cs.jpg";
+//        System.out.println(s.substring(s.lastIndexOf(".")));
 //    }
+
+    public void test(){
+        String s = "cs.jpg";
+        System.out.println(s.substring(s.lastIndexOf(".")));
+    }
 }

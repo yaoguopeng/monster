@@ -3,7 +3,7 @@ package com.island.monster.bean;
 import java.io.Serializable;
 
 /**
- * 主题信息
+ * 主题信息，访问量处理需要支持高并发
  */
 public class IslandTopicInfo implements Serializable {
 

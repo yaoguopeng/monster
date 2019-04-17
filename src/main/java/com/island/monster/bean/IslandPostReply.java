@@ -1,5 +1,8 @@
 package com.island.monster.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,12 +13,20 @@ public class IslandPostReply implements Serializable {
 
     private static final long serialVersionUID = -7243854244778492588L;
     private String id;
+    @NotEmpty(message = "postId can not be empty")
     private String postId;
     private String replyId;
+    @NotEmpty(message = "replyContent can not be empty")
     private String replyContent;
+    @NotEmpty(message = "replyFrom unionId can not be empty")
     private String replyFrom;
+    @NotEmpty(message = "replyTo unionId can not be empty")
     private String replyTo;
     private Date createdTime;
+    private Date updatedTime;
+    @JsonIgnore
+    private String isDeleted;
+
 
     public String getId() {
         return id;
@@ -71,5 +82,21 @@ public class IslandPostReply implements Serializable {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public String getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(String isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

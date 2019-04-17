@@ -28,4 +28,6 @@ public interface IslandUploadService {
     IslandMovie uploadMovie(HttpServletRequest request);
 
     IslandPost uploadPost(HttpServletRequest request);
+
+    IslandPost editPost(HttpServletRequest request);
 }

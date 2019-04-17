@@ -17,6 +17,9 @@ public class IslandPost implements Serializable {
     private String postImagePath;
     private String createdBy;
     private Date createdTime;
+    private Date updatedTime;
+    private Integer replyAmounts; // 回复数量
+    private Integer thumbsUpAmounts; // 点赞数量
     @JsonIgnore
     private String isDeleted;
 
@@ -74,5 +77,29 @@ public class IslandPost implements Serializable {
 
     public void setIsDeleted(String isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public Integer getReplyAmounts() {
+        return replyAmounts;
+    }
+
+    public void setReplyAmounts(Integer replyAmounts) {
+        this.replyAmounts = replyAmounts;
+    }
+
+    public Integer getThumbsUpAmounts() {
+        return thumbsUpAmounts;
+    }
+
+    public void setThumbsUpAmounts(Integer thumbsUpAmounts) {
+        this.thumbsUpAmounts = thumbsUpAmounts;
     }
 }

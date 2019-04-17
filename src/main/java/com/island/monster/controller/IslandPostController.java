@@ -20,8 +20,13 @@ public class IslandPostController {
     private IslandPostService islandPostService;
 
     @RequestMapping(value = "post", method = RequestMethod.POST)
-    public Response<IslandPost> addPost(HttpServletRequest request) {
+    public Response<IslandPost> add(HttpServletRequest request) {
         return Response.success(islandUploadService.uploadPost(request));
+    }
+
+    @RequestMapping(value = "post_edit", method = RequestMethod.POST)
+    public Response<IslandPost> edit(HttpServletRequest request) {
+        return Response.success(islandUploadService.editPost(request));
     }
 
     @RequestMapping(value = "posts", method = RequestMethod.GET)

@@ -63,6 +63,13 @@
         where pk_id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectByTopicName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_topic
+        where topic_name = #{topicName,jdbcType=VARCHAR}
+    </select>
+
     <select id="getByConditions" parameterType="com.island.monster.bean.IslandTopic" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList"/>

@@ -9,7 +9,17 @@ public interface IslandPostService {
 
     IslandPost getOne(String id);
 
+    /**
+     * update: if there is one then edit it, otherwise add one
+     *
+     * @param islandPost
+     * @return
+     */
+    IslandPost update(IslandPost islandPost);
+
     IslandPost setDeleted(String id);
+
+    IslandPost remove(String id);
 
     List<IslandPost> getList(IslandPost islandPost);
 
