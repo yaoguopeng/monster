@@ -38,7 +38,7 @@ public class IslandPoemServiceImpl implements IslandPoemService {
         if (target == null) {
             return null;
         }
-        target.setIsDeleted(IslandCommon.deletedStatus());
+        target.setIsDeleted(IslandCommon.yes());
         islandPoemMapper.updateByPrimaryKeySelective(target);
         return target;
     }

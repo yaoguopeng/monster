@@ -26,11 +26,11 @@ public class IslandCommon {
         COMMENT, REPLY
     }
 
-    public static String deletedStatus() {
+    public static String yes() {
         return "1";
     }
 
-    public static String activeStatus() {
+    public static String no() {
         return "0";
     }
 }

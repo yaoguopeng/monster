@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandVisitorRelationMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandVisitorRelation">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="fans_id" property="fansId" jdbcType="VARCHAR"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="star_id" property="starId" jdbcType="VARCHAR"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="concern_cancel" property="concernCancel" jdbcType="VARCHAR"/>
+        <result column="is_important" property="isImportant" jdbcType="VARCHAR"/>
+        <result column="is_mutual" property="isMutual" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        pk_id,fans_id,updated_time,star_id,created_time,concern_cancel,is_mutual,is_important
+    </sql>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandVisitorRelation">
+        insert into t_island_visitor_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="fansId != null">
+                fans_id,
+            </if>
+            <if test="starId != null">
+                star_id,
+            </if>
+            <if test="isImportant != null">
+                is_important,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="fansId != null">
+                #{fansId,jdbcType=VARCHAR},
+            </if>
+            <if test="starId != null">
+                #{starId,jdbcType=VARCHAR},
+            </if>
+            <if test="isImportant != null">
+                #{isImportant,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getOne" parameterType="com.island.monster.bean.IslandVisitorRelation"
+            resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_visitor_relation
+        <where>
+            <if test="fansId != null">and
+                fans_id = #{fansId,jdbcType=VARCHAR}
+            </if>
+            <if test="concernCancel != null">and
+                concern_cancel = #{concernCancel,jdbcType=VARCHAR}
+            </if>
+            <if test="starId != null">and
+                star_id = #{starId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateByPrimaryKeySelective">
+        update t_island_visitor_relation
+        <set>
+            <if test="concernCancel != null">
+                concern_cancel = #{concernCancel,jdbcType=VARCHAR},
+            </if>
+            <if test="isImportant != null">
+                is_important = #{isImportant,jdbcType=VARCHAR},
+            </if>
+            <if test="isMutual != null">
+                is_mutual = #{isMutual,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where pk_id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

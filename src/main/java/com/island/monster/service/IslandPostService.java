@@ -24,4 +24,12 @@ public interface IslandPostService {
     List<IslandPost> getList(IslandPost islandPost);
 
     PageInfo<IslandPost> getPage(IslandPost islandPost, Integer pageNum, Integer pageSize);
+
+    List<IslandPost> onesStarsPosts(String unionId);
+
+    PageInfo<IslandPost> onesStarsPosts(String unionId, Integer pageNum, Integer pageSize);
+
+    List<IslandPost> onesFavoriteTopicPosts(String unionId);
+
+    PageInfo<IslandPost> onesFavoriteTopicPosts(String unionId, Integer pageNum, Integer pageSize);
 }

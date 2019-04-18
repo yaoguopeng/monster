@@ -62,7 +62,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         } else {
             visitorStorehouse = list.get(0);
             visitorStorehouse.setStoredTime(IslandUtil.now());
-            visitorStorehouse.setStoredCancel(IslandCommon.activeStatus());
+            visitorStorehouse.setStoredCancel(IslandCommon.no());
             visitorStorehouseMapper.updateByPrimaryKeySelective(visitorStorehouse);
         }
         return visitorStorehouse;
@@ -78,7 +78,7 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
             if (list.size() == 1) {
                 visitorStorehouse.setId(list.get(0).getId());
                 visitorStorehouse.setCancelTime(IslandUtil.now());
-                visitorStorehouse.setStoredCancel(IslandCommon.deletedStatus());
+                visitorStorehouse.setStoredCancel(IslandCommon.yes());
                 if (visitorStorehouseMapper.updateByPrimaryKeySelective(visitorStorehouse) != 1) {
                     LOGGER.info("取消收藏失败，sql操作失效：{}", visitorStorehouse);
                     return null;
@@ -171,42 +171,42 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
 
     @Override
     public List<IslandJoke> onesFavoriteJoke(String unionId) {
-        return islandJokeMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandJokeMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandMotto> onesFavoriteMotto(String unionId) {
-        return islandMottoMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandMottoMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandMovie> onesFavoriteMovie(String unionId) {
-        return islandMovieMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandMovieMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandMusic> onesFavoriteMusic(String unionId) {
-        return islandMusicMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandMusicMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandPainting> onesFavoritePainting(String unionId) {
-        return islandPaintingMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandPaintingMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandPassage> onesFavoritePassage(String unionId) {
-        return islandPassageMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandPassageMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandPoem> onesFavoritePoem(String unionId) {
-        return islandPoemMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandPoemMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override
     public List<IslandLandscape> onesFavoriteLandscape(String unionId) {
-        return islandLandscapeMapper.onesFavorite(unionId, IslandCommon.activeStatus());
+        return islandLandscapeMapper.onesFavorite(unionId, IslandCommon.no());
     }
 
     @Override

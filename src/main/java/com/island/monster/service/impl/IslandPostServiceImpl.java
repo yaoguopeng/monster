@@ -76,4 +76,24 @@ public class IslandPostServiceImpl implements IslandPostService {
         });
         return page;
     }
+
+    @Override
+    public List<IslandPost> onesStarsPosts(String unionId) {
+        return null;
+    }
+
+    @Override
+    public PageInfo<IslandPost> onesStarsPosts(String unionId, Integer pageNum, Integer pageSize) {
+        return null;
+    }
+
+    @Override
+    public List<IslandPost> onesFavoriteTopicPosts(String unionId) {
+        return null;
+    }
+
+    @Override
+    public PageInfo<IslandPost> onesFavoriteTopicPosts(String unionId, Integer pageNum, Integer pageSize) {
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.island.monster.bean;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,7 +12,9 @@ public class IslandTopicVisitorRelation implements Serializable {
     private static final long serialVersionUID = 4161418646607340801L;
 
     private String id;
+    @NotEmpty(message = "topicId can not be empty")
     private String topicId;
+    @NotEmpty(message = "unionId can not be empty")
     private String unionId;
     private String isCancel;
     private Date createdTime;

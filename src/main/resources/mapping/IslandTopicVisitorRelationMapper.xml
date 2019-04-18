@@ -53,18 +53,16 @@
         where pk_id = #{id,jdbcType=VARCHAR}
     </select>
 
-    <select id="getByConditions" parameterType="com.island.monster.bean.IslandTopicVisitorRelation"
-            resultMap="BaseResultMap">
+    <select id="getOne" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList"/>
         from t_island_topic_visitor_relation
         <where>
-            is_cancel = '0'
-            <if test="id != null">and
-                pk_id = #{id,jdbcType=VARCHAR}
+            <if test="isCancel != null">and
+                is_cancel = #{isCancel,jdbcType=VARCHAR}
             </if>
             <if test="topicId != null">and
-                topic_id like CONCAT('%',#{topicId,jdbcType=VARCHAR},'%')
+                topic_id = #{topicId,jdbcType=VARCHAR}
             </if>
             <if test="unionId != null">and
                 union_id = #{unionId,jdbcType=VARCHAR}
@@ -77,6 +75,20 @@
         <set>
             is_cancel = '1',
             updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+        </set>
+        where topic_id = #{topicId,jdbcType=VARCHAR}
+        and union_id = #{unionId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.island.monster.bean.IslandTopicVisitorRelation">
+        update t_island_topic_visitor_relation
+        <set>
+            <if test="isCancel != null">
+                is_cancel = #{isCancel,jdbcType=VARCHAR},
+            </if>
+            <if test="updatedTime != null">
+                updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+            </if>
         </set>
         where pk_id = #{id,jdbcType=VARCHAR}
     </update>

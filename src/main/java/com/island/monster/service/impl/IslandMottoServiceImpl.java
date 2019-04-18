@@ -33,7 +33,7 @@ public class IslandMottoServiceImpl implements IslandMottoService {
         if (target == null) {
             return null;
         }
-        target.setIsDeleted(IslandCommon.deletedStatus());
+        target.setIsDeleted(IslandCommon.yes());
         islandMottoMapper.updateByPrimaryKeySelective(target);
         return target;
     }

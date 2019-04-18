@@ -49,6 +49,7 @@ public class IslandTopicServiceImpl implements IslandTopicService {
         islandTopicInfo.setTopicId(topicId);
         islandTopicMapper.insertSelective(islandTopic);
         islandTopicInfoService.add(islandTopicInfo);
+        LOGGER.info("新增主题成功，主题名称：{}，创建人：{}", islandTopic.getTopicName(), islandTopic.getCreatedBy());
         return islandTopic;
     }
 

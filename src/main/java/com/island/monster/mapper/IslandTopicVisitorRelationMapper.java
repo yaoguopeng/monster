@@ -11,5 +11,9 @@ public interface IslandTopicVisitorRelationMapper {
 
     int insertSelective(IslandTopicVisitorRelation islandTopicVisitorRelation);
 
-    int setDeleted(@Param("id") String id,@Param("updatedTime") Date updatedTime);
+    IslandTopicVisitorRelation getOne(@Param("topicId") String topicId, @Param("unionId") String unionId, @Param("isCancel") String isCancel);
+
+    int updateByPrimaryKeySelective(IslandTopicVisitorRelation islandTopicVisitorRelation);
+
+    int setDeleted(@Param("topicId") String topicId, @Param("unionId") String unionId, @Param("updatedTime") Date updatedTime);
 }

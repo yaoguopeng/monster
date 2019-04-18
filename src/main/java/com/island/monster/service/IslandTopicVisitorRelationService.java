@@ -6,5 +6,11 @@ public interface IslandTopicVisitorRelationService {
 
     IslandTopicVisitorRelation add(IslandTopicVisitorRelation islandTopicVisitorRelation);
 
-    int cancel(String id);
+    /**
+     * topicId and unionId can not be empty
+     *
+     * @param islandTopicVisitorRelation
+     * @return
+     */
+    int cancel(IslandTopicVisitorRelation islandTopicVisitorRelation);
 }

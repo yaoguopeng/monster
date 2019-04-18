@@ -77,7 +77,7 @@ public class IslandMusicServiceImpl implements IslandMusicService {
         if (target == null) {
             return null;
         }
-        target.setIsDeleted(IslandCommon.deletedStatus());
+        target.setIsDeleted(IslandCommon.yes());
         return target;
     }
 
