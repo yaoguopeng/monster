@@ -18,6 +18,12 @@ public class IslandManagerDetailsService implements UserDetailsService {
     @Autowired
     private IslandManagerMapper islandManagerMapper;
 
+    /**
+     * 该username 与 表单中的属性名必须一致
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         IslandManager target = islandManagerMapper.getByRegisterName(username);

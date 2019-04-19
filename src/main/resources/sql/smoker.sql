@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-04-17 18:47:47
+Date: 2019-04-19 18:03:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -127,18 +127,19 @@ DROP TABLE IF EXISTS `t_island_manager`;
 CREATE TABLE `t_island_manager` (
   `pk_id` varchar(36) NOT NULL COMMENT '主键',
   `real_name` varchar(255) DEFAULT NULL COMMENT '真实名字',
-  `registe_name` varchar(255) DEFAULT NULL COMMENT '注册名（唯一，用于登录）',
-  `registe_password` varchar(255) DEFAULT NULL COMMENT '密码',
+  `register_name` varchar(255) DEFAULT NULL COMMENT '注册名（唯一，用于登录）',
+  `register_password` varchar(255) DEFAULT NULL COMMENT '被md5加密后的密码',
   `bind_email` varchar(11) DEFAULT NULL COMMENT '绑定邮箱',
-  `registe_time` datetime DEFAULT NULL COMMENT '注册时间',
+  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
   `update_time` datetime DEFAULT NULL COMMENT '更改时间',
+  `role` varchar(255) DEFAULT NULL COMMENT '角色',
   PRIMARY KEY (`pk_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='【时光小岛】管理员';
 
 -- ----------------------------
 -- Records of t_island_manager
 -- ----------------------------
-INSERT INTO `t_island_manager` VALUES ('1', 'RacherGreen', 'Racher', '1123456', '12345678911', '2019-03-13 16:05:34', null);
+INSERT INTO `t_island_manager` VALUES ('1', 'RacherGreen', 'Racher', 'eeafb716f93fa090d7716749a6eefa72', '12345678911', '2019-03-13 16:05:34', null, 'Administrator');
 
 -- ----------------------------
 -- Table structure for t_island_message
@@ -324,7 +325,7 @@ CREATE TABLE `t_island_post` (
   `topic_id` varchar(36) DEFAULT NULL COMMENT '主题',
   `post_content` varchar(500) DEFAULT NULL COMMENT '帖子内容',
   `post_image_path` varchar(255) DEFAULT NULL COMMENT '帖子图片路径',
-  `created_by` varchar(255) DEFAULT NULL COMMENT '发帖人unionid',
+  `created_by` varchar(50) DEFAULT NULL COMMENT '发帖人unionid',
   `created_time` datetime DEFAULT NULL COMMENT '发帖时间',
   `updated_time` datetime DEFAULT NULL COMMENT '修改时间',
   `is_deleted` varchar(10) DEFAULT '0' COMMENT '是否已删除1是0否,默认0',
@@ -447,7 +448,7 @@ CREATE TABLE `t_island_visitor` (
 -- Records of t_island_visitor
 -- ----------------------------
 INSERT INTO `t_island_visitor` VALUES ('1', 'ExpectoPatronum', '2019-03-27 12:43:23', 'Pony', '2019-03-27 12:43:32', '2', 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEJJD64t61NY61UQncHrZts4sc4LZ1QA3jYctktzalBSRD5gcsaQfCh7UO1SgpKicrcuWGWggSdjBCw/132', null, null, null, null, null, null);
-INSERT INTO `t_island_visitor` VALUES ('2', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2019-04-12 16:01:16', '　　　　　　', '2019-04-17 18:07:29', '6', 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKOu2Tc6mQU2G0r4hXDWV78VJ9IicXdAtd9KK2gFOKyHmbNpN2KyrwQsqIALVFaOltUla4NNtibUBicw/132', null, '1', 'zh_CN', 'Hangzhou', 'Zhejiang', 'China');
+INSERT INTO `t_island_visitor` VALUES ('2', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2019-04-12 16:01:16', '　　　　　　', '2019-04-17 19:05:59', '7', 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKOu2Tc6mQU2G0r4hXDWV78VJ9IicXdAtd9KK2gFOKyHmbNpN2KyrwQsqIALVFaOltUla4NNtibUBicw/132', null, '1', 'zh_CN', 'Hangzhou', 'Zhejiang', 'China');
 INSERT INTO `t_island_visitor` VALUES ('3', 'owCIF1cCKYMz24gvPN_zr_Csnnjg', '2019-04-17 18:12:47', 'vacation', '2019-04-17 18:15:18', '2', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJgLcVUbruQGvDFvj6NfJpwd3A5EueKib1mwXVl5LghdINFQYY7PCoFo2jj8iar0kSice2frPNoENmjw/132', null, '1', 'en', '', 'Bolivar', 'Venezuela');
 
 -- ----------------------------
@@ -471,11 +472,11 @@ CREATE TABLE `t_island_visitor_login_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_island_visitor_relation`;
 CREATE TABLE `t_island_visitor_relation` (
-  `pk_id` int(11) NOT NULL COMMENT '主键',
+  `pk_id` varchar(36) NOT NULL COMMENT '主键',
   `fans_id` varchar(50) NOT NULL COMMENT '关注者微信唯一标识',
   `star_id` varchar(50) NOT NULL COMMENT '被关注者微信唯一标识',
   `is_important` varchar(10) DEFAULT '0' COMMENT '是否特别关注1是0否，默认0',
-  `is_mutual` varchar(255) DEFAULT '0' COMMENT '是否相互关注1是0否，默认0',
+  `is_mutual` varchar(10) DEFAULT '0' COMMENT '是否相互关注1是0否，默认0',
   `concern_cancel` varchar(10) DEFAULT '0' COMMENT '是否取消关注1是0否，默认0',
   `created_time` datetime DEFAULT NULL COMMENT '关注时间',
   `updated_time` datetime DEFAULT NULL COMMENT '记录更新时间',
