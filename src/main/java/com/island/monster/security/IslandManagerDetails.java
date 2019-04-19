@@ -22,6 +22,15 @@ public class IslandManagerDetails  implements UserDetails {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "IslandManagerDetails{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
+
     public String getUserName() {
         return userName;
     }

@@ -19,13 +19,13 @@ public class IslandManagerDetailsService implements UserDetailsService {
     private IslandManagerMapper islandManagerMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        IslandManager target = islandManagerMapper.getByRegisterName(userName);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        IslandManager target = islandManagerMapper.getByRegisterName(username);
         if (target == null) {
-            LOGGER.info("failed to login : registerName={} is not really exist",target.getRegisterName());
+            LOGGER.info("failed to login : registerName={} is not really exist", username);
             return null;
         }
-        LOGGER.info("a manager has login : registerName={} and role={}",target.getRegisterName(),target.getRole());
+        LOGGER.info("a manager has login : registerName={} and role={}", target.getRegisterName(), target.getRole());
         return new IslandManagerDetails(target.getRegisterName(), target.getRegisterPassword(), target.getRole());
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-@RequestMapping("/island_redirector/")
+//@RequestMapping("/island_redirector/")
 public class IslandRedirectController {
 
     @RequestMapping("/anyway")

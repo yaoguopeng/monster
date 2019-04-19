@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandManager">
         <id column="pk_id" property="id" jdbcType="VARCHAR" />
         <result column="real_name" property="realName" jdbcType="VARCHAR" />
+        <result column="role" property="role" jdbcType="VARCHAR" />
         <result column="register_name" property="registerName" jdbcType="VARCHAR" />
         <result column="register_password" property="registerPassword" jdbcType="VARCHAR" />
         <result column="bind_email" property="bindEmail" jdbcType="VARCHAR" />
@@ -12,7 +13,7 @@
     </resultMap>
 
     <sql id="BaseColumnList">
-        pk_id,real_name,register_name,register_password,bind_email,register_time,update_time
+        pk_id,real_name,role,register_name,register_password,bind_email,register_time,update_time
     </sql>
 
     <delete id="delete">
@@ -60,6 +61,9 @@
             <if test="realName != null">
                 real_name,
             </if>
+            <if test="role != null">
+                role,
+            </if>
             <if test="registerName != null">
                 register_name,
             </if>
@@ -80,6 +84,9 @@
             <if test="realName != null">
                 #{realName,jdbcType=VARCHAR},
             </if>
+            <if test="role != null">
+                #{role,jdbcType=VARCHAR},
+            </if>
             <if test="registerName != null">
                 #{registerName,jdbcType=VARCHAR},
             </if>
@@ -99,6 +106,9 @@
         <set>
             <if test="realName != null">
                 real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+               role = #{role,jdbcType=VARCHAR},
             </if>
             <if test="registerPassword != null">
                 register_password = #{registerPassword,jdbcType=VARCHAR},

@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,25 +11,32 @@
             margin-right: 10%;
             margin-bottom: 20px;
         }
+
+        .box {
+            width: 70%;
+        }
     </style>
-    <title>login</title>
+    <title>uploadJoke</title>
 </head>
 <body class="all">
-<h1>login!</h1>
-<form method="post" action="/login_success">
+<h1>input joke information please!</h1>
+<form method="post" action="/island_upload/joke" enctype="multipart/form-data">
+    <div>
+        content：<br>
+        <textarea rows="10" class="box" name="content">
+        </textarea><br>
         <table>
             <tr>
-                <td>userName：</td>
                 <td>
-                    <input type="text" name="username">
+                    jokeImage:
                 </td>
-            </tr>
-            <tr>
-                <td> password：</td>
-                <td><input type="password" name="password"></td>
+                <td>
+                    <input type="file" name="jokeImage">
+                </td>
             </tr>
         </table>
         <input type="submit" value="submit">
+    </div>
 </form>
 </body>
 </html>

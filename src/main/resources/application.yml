@@ -33,8 +33,8 @@ spring:
   ## jsp
   mvc:
     view:
-      prefix: /WEB-INF/
-      suffix: .jsp
+#      prefix: /WEB-INF/
+      suffix: .html
 
 mybatis:
   mapper-locations: classpath:mapping/*.xml
