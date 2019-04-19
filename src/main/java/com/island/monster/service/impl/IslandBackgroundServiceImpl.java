@@ -7,6 +7,8 @@ import com.island.monster.bean.IslandBackground;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.mapper.IslandBackgroundMapper;
 import com.island.monster.service.IslandBackgroundService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class IslandBackgroundServiceImpl implements IslandBackgroundService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IslandBackgroundServiceImpl.class);
 
     @Autowired
     private IslandBackgroundMapper islandBackgroundMapper;
@@ -38,6 +42,11 @@ public class IslandBackgroundServiceImpl implements IslandBackgroundService {
         // 先获取指定日期的背景
         if (islandBackground.getShowingDate() == null) {
             islandBackground.setShowingDate(IslandUtil.currentDate());
+        }
+        if (islandBackground.getShowingDate().getTime() > IslandUtil.currentDate().getTime()) {
+            // 日期已经超过了当前日期
+            LOGGER.info("获取background指定日期【{}】超出当前日期，不予理会！", islandBackground.getShowingDate());
+            return null;
         }
         List<IslandBackground> list = getList(islandBackground);
         if (list.isEmpty()) {

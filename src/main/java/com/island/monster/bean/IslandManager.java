@@ -12,12 +12,13 @@ public class IslandManager implements Serializable {
     private static final long serialVersionUID = -7501321651073283412L;
     private String id;
     private String realName;
-    @NotEmpty(message = "registeName can not be empty")
-    private String registeName;
-    @NotEmpty(message = "registePassword can not be empty")
-    private String registePassword;
+    private String role;
+    @NotEmpty(message = "registerName can not be empty")
+    private String registerName;
+    @NotEmpty(message = "registerPassword can not be empty")
+    private String registerPassword;
     private String bindEmail;
-    private Date registeTime;
+    private Date registerTime;
     private Date updateTime;
     private String checkCode; // use when update password is need
 
@@ -53,20 +54,20 @@ public class IslandManager implements Serializable {
         this.realName = realName;
     }
 
-    public String getRegisteName() {
-        return registeName;
+    public String getRegisterName() {
+        return registerName;
     }
 
-    public void setRegisteName(String registeName) {
-        this.registeName = registeName;
+    public void setRegisterName(String registerName) {
+        this.registerName = registerName;
     }
 
-    public String getRegistePassword() {
-        return registePassword;
+    public String getRegisterPassword() {
+        return registerPassword;
     }
 
-    public void setRegistePassword(String registePassword) {
-        this.registePassword = registePassword;
+    public void setRegisterPassword(String registerPassword) {
+        this.registerPassword = registerPassword;
     }
 
     public String getBindEmail() {
@@ -77,11 +78,19 @@ public class IslandManager implements Serializable {
         this.bindEmail = bindEmail;
     }
 
-    public Date getRegisteTime() {
-        return registeTime;
+    public Date getRegisterTime() {
+        return registerTime;
     }
 
-    public void setRegisteTime(Date registeTime) {
-        this.registeTime = registeTime;
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

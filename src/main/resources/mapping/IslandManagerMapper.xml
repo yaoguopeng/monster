@@ -4,15 +4,15 @@
     <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandManager">
         <id column="pk_id" property="id" jdbcType="VARCHAR" />
         <result column="real_name" property="realName" jdbcType="VARCHAR" />
-        <result column="registe_name" property="registeName" jdbcType="VARCHAR" />
-        <result column="registe_password" property="registePassword" jdbcType="VARCHAR" />
+        <result column="register_name" property="registerName" jdbcType="VARCHAR" />
+        <result column="register_password" property="registerPassword" jdbcType="VARCHAR" />
         <result column="bind_email" property="bindEmail" jdbcType="VARCHAR" />
-        <result column="registe_time" property="registeTime" jdbcType="TIMESTAMP" />
+        <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="BaseColumnList">
-        pk_id,real_name,registe_name,registe_password,bind_email,registe_time,update_time
+        pk_id,real_name,register_name,register_password,bind_email,register_time,update_time
     </sql>
 
     <delete id="delete">
@@ -27,6 +27,13 @@
         where pk_id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="getByRegisterName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList" />
+        from t_island_manager
+        where register_name = #{registerName,jdbcType=VARCHAR}
+    </select>
+
     <select id="getByConditions" parameterType="com.island.monster.bean.IslandManager" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList" />
@@ -35,8 +42,8 @@
            <if test="realName != null">
                real_name = #{realName,jdbcType=VARCHAR}
            </if>
-           <if test="registeName != null">
-               registe_name = #{registeName,jdbcType=VARCHAR}
+           <if test="registerName != null">
+               register_name = #{registerName,jdbcType=VARCHAR}
            </if>
            <if test="bindEmail != null">
                bind_email = #{bindEmail,jdbcType=VARCHAR}
@@ -53,17 +60,17 @@
             <if test="realName != null">
                 real_name,
             </if>
-            <if test="registeName != null">
-                registe_name,
+            <if test="registerName != null">
+                register_name,
             </if>
-            <if test="registePassword != null">
-                registe_password,
+            <if test="registerPassword != null">
+                register_password,
             </if>
             <if test="bindEmail != null">
                 bind_email,
             </if>
-            <if test="registeTime != null">
-                registe_time,
+            <if test="registerTime != null">
+                register_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -73,17 +80,17 @@
             <if test="realName != null">
                 #{realName,jdbcType=VARCHAR},
             </if>
-            <if test="registeName != null">
-                #{registeName,jdbcType=VARCHAR},
+            <if test="registerName != null">
+                #{registerName,jdbcType=VARCHAR},
             </if>
-            <if test="registePassword != null">
-                #{registePassword,jdbcType=VARCHAR},
+            <if test="registerPassword != null">
+                #{registerPassword,jdbcType=VARCHAR},
             </if>
             <if test="bindEmail != null">
                 #{bindEmail,jdbcType=VARCHAR},
             </if>
-            <if test="registeTime != null">
-                #{registeTime,jdbcType=TIMESTAMP},
+            <if test="registerTime != null">
+                #{registerTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
@@ -93,11 +100,8 @@
             <if test="realName != null">
                 real_name = #{realName,jdbcType=VARCHAR},
             </if>
-            <if test="registeName != null">
-                registe_name = #{registeName,jdbcType=VARCHAR},
-            </if>
-            <if test="registePassword != null">
-                registe_password = #{registePassword,jdbcType=VARCHAR},
+            <if test="registerPassword != null">
+                register_password = #{registerPassword,jdbcType=VARCHAR},
             </if>
             <if test="bindEmail != null">
                 bind_email =  #{bindEmail,jdbcType=VARCHAR},

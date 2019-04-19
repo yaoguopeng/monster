@@ -1,6 +1,6 @@
 package com.island.monster.service.impl;
 
-import com.island.monster.common.DecodeUtil;
+import com.island.monster.common.WeChatDecodeUtil;
 import com.island.monster.common.WeChatBean;
 import com.island.monster.service.WeChatService;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ public class WeChatServiceImpl implements WeChatService {
 
     @Override
     public String decode(WeChatBean weChatBean) {
-        String sessionKey = DecodeUtil.getSessionKey(weChatBean.getAppid(), weChatBean.getSecret(), weChatBean.getCode());
+        String sessionKey = WeChatDecodeUtil.getSessionKey(weChatBean.getAppid(), weChatBean.getSecret(), weChatBean.getCode());
         String result = null;
         if (sessionKey == null) {
             LOGGER.info("sessionKey is null ");
@@ -25,7 +25,7 @@ public class WeChatServiceImpl implements WeChatService {
         } else {
             //解码
             try {
-                result = DecodeUtil.decoderBase64(weChatBean.getEncryptedData(), sessionKey, weChatBean.getIv());
+                result = WeChatDecodeUtil.decoderBase64(weChatBean.getEncryptedData(), sessionKey, weChatBean.getIv());
                 LOGGER.info("解码成功！>>result=" + result);
             } catch (Exception e) {
                 LOGGER.info("解码失败！>> 解码异常>> " + e);

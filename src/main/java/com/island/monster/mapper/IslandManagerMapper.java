@@ -9,7 +9,7 @@ import java.util.List;
 public interface IslandManagerMapper {
 
     /**
-     * conditions are realName/registeName/bindEmail
+     * conditions are realName/registerName/bindEmail
      *
      * @param islandManager
      * @return
@@ -33,7 +33,7 @@ public interface IslandManagerMapper {
     IslandManager selectByPrimaryKey(String id);
 
     /**
-     * update table t_island_manager selective
+     * update table t_island_manager selective but not registerName
      *
      * @param islandManager
      * @return
@@ -47,4 +47,12 @@ public interface IslandManagerMapper {
      * @return
      */
     int delete(String id);
+
+    /**
+     * get a manager by registerName
+     *
+     * @param registerName
+     * @return
+     */
+    IslandManager getByRegisterName(String registerName);
 }

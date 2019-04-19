@@ -31,7 +31,7 @@ import java.util.HashMap;
 /**
  * 微信数据解码工具类
  */
-public class DecodeUtil {
+public class WeChatDecodeUtil {
 
 
     /**

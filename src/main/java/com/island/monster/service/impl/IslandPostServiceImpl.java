@@ -79,21 +79,33 @@ public class IslandPostServiceImpl implements IslandPostService {
 
     @Override
     public List<IslandPost> onesStarsPosts(String unionId) {
-        return null;
+        return islandPostMapper.onesStarsPosts(unionId);
     }
 
     @Override
     public PageInfo<IslandPost> onesStarsPosts(String unionId, Integer pageNum, Integer pageSize) {
-        return null;
+        PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
+            @Override
+            public void doSelect() {
+                onesStarsPosts(unionId);
+            }
+        });
+        return page;
     }
 
     @Override
     public List<IslandPost> onesFavoriteTopicPosts(String unionId) {
-        return null;
+        return islandPostMapper.onesFavoriteTopicPosts(unionId);
     }
 
     @Override
     public PageInfo<IslandPost> onesFavoriteTopicPosts(String unionId, Integer pageNum, Integer pageSize) {
-        return null;
+        PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
+            @Override
+            public void doSelect() {
+                onesFavoriteTopicPosts(unionId);
+            }
+        });
+        return page;
     }
 }

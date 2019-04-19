@@ -37,6 +37,22 @@ public class IslandPostController {
         return Response.success(islandPostService.getList(islandPost));
     }
 
+    @RequestMapping(value = "posts/topics/{unionId}", method = RequestMethod.GET)
+    public Response<?> onesFavoriteTopicPosts(@PathVariable("unionId") String unionId, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        if (pageSize != null && pageNum != null) {
+            return Response.success(islandPostService.onesFavoriteTopicPosts(unionId, pageNum, pageSize));
+        }
+        return Response.success(islandPostService.onesFavoriteTopicPosts(unionId));
+    }
+
+    @RequestMapping(value = "posts/stars/{unionId}", method = RequestMethod.GET)
+    public Response<?> onesStarsPosts(@PathVariable("unionId") String unionId, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        if (pageSize != null && pageNum != null) {
+            return Response.success(islandPostService.onesStarsPosts(unionId, pageNum, pageSize));
+        }
+        return Response.success(islandPostService.onesStarsPosts(unionId));
+    }
+
     @RequestMapping(value = "post", method = RequestMethod.GET)
     public Response<IslandPost> getOne(@RequestParam("id") String id) {
         return Response.success(islandPostService.getOne(id));

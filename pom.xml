@@ -96,6 +96,11 @@
             <version>1.61</version>
         </dependency>
 
+        <!-- 权限控制 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
         <!-- 引入webmagic爬虫框架 -->
         <dependency>

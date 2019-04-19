@@ -7,6 +7,8 @@ import com.island.monster.bean.IslandLandscape;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.mapper.IslandLandscapeMapper;
 import com.island.monster.service.IslandLandscapeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @Service
 public class IslandLandscapeServiceImpl implements IslandLandscapeService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(IslandLandscapeServiceImpl.class);
 
     @Autowired
     private IslandLandscapeMapper islandLandscapeMapper;
@@ -39,6 +42,11 @@ public class IslandLandscapeServiceImpl implements IslandLandscapeService {
         // 默认获取当前日期下的
         if (islandLandscape.getShowingDate() == null) {
             islandLandscape.setShowingDate(IslandUtil.currentDate());
+        }
+        if (islandLandscape.getShowingDate().getTime() > IslandUtil.currentDate().getTime()) {
+            // 日期已经超过了当前日期
+            LOGGER.info("获取landscape指定日期【{}】超出当前日期，不予理会！", islandLandscape.getShowingDate());
+            return null;
         }
         List<IslandLandscape> list = getList(islandLandscape);
         if (list.isEmpty()) {

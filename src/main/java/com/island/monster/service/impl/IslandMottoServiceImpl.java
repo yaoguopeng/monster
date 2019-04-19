@@ -8,6 +8,8 @@ import com.island.monster.bean.IslandMotto;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.mapper.IslandMottoMapper;
 import com.island.monster.service.IslandMottoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class IslandMottoServiceImpl implements IslandMottoService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IslandMottoServiceImpl.class);
 
     @Autowired
     private IslandMottoMapper islandMottoMapper;
@@ -49,6 +53,11 @@ public class IslandMottoServiceImpl implements IslandMottoService {
         // 默认获取当前日期下的
         if (islandMotto.getShowingDate() == null) {
             islandMotto.setShowingDate(IslandUtil.currentDate());
+        }
+        if (islandMotto.getShowingDate().getTime() > IslandUtil.currentDate().getTime()) {
+            // 日期已经超过了当前日期
+            LOGGER.info("获取motto指定日期【{}】超出当前日期，不予理会！", islandMotto.getShowingDate());
+            return null;
         }
         List<IslandMotto> list = islandMottoMapper.getByConditions(islandMotto);
         if (list.isEmpty()) {

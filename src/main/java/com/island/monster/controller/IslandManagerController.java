@@ -27,22 +27,22 @@ public class IslandManagerController {
 
 
     /**
-     * The manager of Island registe
+     * The manager of Island register
      *
      * @param islandManager
      * @return
      */
-    @RequestMapping(value = "manager/registe", method = RequestMethod.POST)
-    public Response<?> registe(@RequestBody IslandManager islandManager) {
+    @RequestMapping(value = "manager/register", method = RequestMethod.POST)
+    public Response<?> register(@RequestBody IslandManager islandManager) {
         IslandManager result = islandManagerService.add(islandManager);
         if (result == null) {
-            return Response.failed("failed to registe cause by the registName has been occupied", 1);
+            return Response.failed("failed to register cause by the registName has been occupied", 1);
         }
         return Response.success(result);
     }
 
     /**
-     * The manager of Island login with registeName and registePassword
+     * The manager of Island login with registerName and registerPassword
      *
      * @param islandManager
      * @return
@@ -50,7 +50,7 @@ public class IslandManagerController {
     @RequestMapping(value = "manager/login", method = RequestMethod.POST)
     public Response<?> login(@RequestBody IslandManager islandManager) {
         if (!islandManagerService.login(islandManager)) {
-            return Response.failed("with wrong registeName or registePassword", 1);
+            return Response.failed("with wrong registerName or registerPassword", 1);
         }
         return Response.success(true);
     }

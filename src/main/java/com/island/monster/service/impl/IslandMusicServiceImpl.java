@@ -8,6 +8,8 @@ import com.island.monster.bean.IslandMusic;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.mapper.IslandMusicMapper;
 import com.island.monster.service.IslandMusicService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class IslandMusicServiceImpl implements IslandMusicService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IslandMusicServiceImpl.class);
 
     @Autowired
     private IslandMusicMapper islandMusicMapper;
@@ -24,6 +28,11 @@ public class IslandMusicServiceImpl implements IslandMusicService {
         // 默认获取当前日期下的
         if (islandMusic.getShowingDate() == null) {
             islandMusic.setShowingDate(IslandUtil.currentDate());
+        }
+        if (islandMusic.getShowingDate().getTime() > IslandUtil.currentDate().getTime()) {
+            // 日期已经超过了当前日期
+            LOGGER.info("获取music指定日期【{}】超出当前日期，不予理会！", islandMusic.getShowingDate());
+            return null;
         }
         List<IslandMusic> list = islandMusicMapper.getByConditions(islandMusic);
         if (list.isEmpty()) {

@@ -8,6 +8,8 @@ import com.island.monster.bean.IslandPoem;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.mapper.IslandPoemMapper;
 import com.island.monster.service.IslandPoemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class IslandPoemServiceImpl implements IslandPoemService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IslandPoemServiceImpl.class);
 
     @Autowired
     private IslandPoemMapper islandPoemMapper;
@@ -54,6 +58,11 @@ public class IslandPoemServiceImpl implements IslandPoemService {
         // 默认获取当前日期下的
         if (islandPoem.getShowingDate() == null) {
             islandPoem.setShowingDate(IslandUtil.currentDate());
+        }
+        if (islandPoem.getShowingDate().getTime() > IslandUtil.currentDate().getTime()) {
+            // 日期已经超过了当前日期
+            LOGGER.info("获取poem指定日期【{}】超出当前日期，不予理会！", islandPoem.getShowingDate());
+            return null;
         }
         List<IslandPoem> list = islandPoemMapper.getByConditions(islandPoem);
         if (list.isEmpty()) {

@@ -54,6 +54,11 @@ public class IslandPaintingServiceImpl implements IslandPaintingService {
         if (islandPainting.getShowingDate() == null) {
             islandPainting.setShowingDate(IslandUtil.currentDate());
         }
+        if (islandPainting.getShowingDate().getTime() > IslandUtil.currentDate().getTime()) {
+            // 日期已经超过了当前日期
+            LOGGER.info("获取painting指定日期【{}】超出当前日期，不予理会！", islandPainting.getShowingDate());
+            return null;
+        }
         List<IslandPainting> list = islandPaintingMapper.getByConditions(islandPainting);
         if (list.isEmpty()) {
             return randomPainting();

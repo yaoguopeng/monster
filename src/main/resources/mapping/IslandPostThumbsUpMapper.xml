@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.island.monster.mapper.IslandPostThumbsUpThumbsUpMapper">
-    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPostThumbsUpThumbsUp">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPostThumbsUp">
         <id column="pk_id" property="id" jdbcType="VARCHAR"/>
         <result column="post_id" property="postId" jdbcType="VARCHAR"/>
         <result column="thumbs_up_by" property="thumbsUpBy" jdbcType="VARCHAR"/>

@@ -34,4 +34,20 @@ public interface IslandPostMapper {
     List<IslandPost> getByConditions(IslandPost islandPost);
 
     int setDeleted(String id);
+
+    /**
+     * only active posts will be return
+     *
+     * @param unionId
+     * @return
+     */
+    List<IslandPost> onesStarsPosts(@Param("unionId") String unionId);
+
+    /**
+     * only active posts will be return
+     *
+     * @param unionId
+     * @return
+     */
+    List<IslandPost> onesFavoriteTopicPosts(@Param("unionId") String unionId);
 }

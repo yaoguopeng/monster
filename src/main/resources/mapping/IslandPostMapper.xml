@@ -72,7 +72,7 @@
         and is_deleted = '0'
     </select>
 
-   <delete id="remove" parameterType="java.lang.String" >
+    <delete id="remove" parameterType="java.lang.String">
         delete
         from t_island_post
         where pk_id = #{id,jdbcType=VARCHAR}
@@ -128,4 +128,27 @@
         </set>
         where pk_id = #{id,jdbcType=VARCHAR}
     </update>
+
+    <select id="onesStarsPosts" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        p.*
+        from
+        t_island_post p
+        left join
+        t_island_visitor_relation r
+        on p.created_by = r.star_id
+        where r.fans_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="onesFavoriteTopicPosts" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        p.*
+        from
+        t_island_post p
+        left join
+        t_island_topic_visitor_relation r
+        on p.topic_id = r.topic_id
+        where r.union_id = #{unionId,jdbcType=VARCHAR}
+    </select>
+
 </mapper>
