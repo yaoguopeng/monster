@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 放行指定请求，指定登录界面
         http.formLogin().loginPage("/login").loginProcessingUrl("/login_success").and().authorizeRequests()
-                .antMatchers("/island/*", "/login").permitAll().anyRequest().authenticated().and().httpBasic();
+                .antMatchers("/island/*","/island/*/*", "/login").permitAll().anyRequest().authenticated().and().httpBasic();
         http.csrf().disable();
         // 过滤所有请求，使用spring security默认登录界面
         //        http.authorizeRequests().anyRequest().authenticated().and().httpBasic();

@@ -1,0 +1,11 @@
+
+C:\Users\Administrator>netstat -aon|findstr "2013"
+  TCP    0.0.0.0:2013           0.0.0.0:0              LISTENING       8232
+  TCP    [::]:2013              [::]:0                 LISTENING       8232
+  TCP    [::1]:2013             [::1]:60670            TIME_WAIT       0
+  TCP    [::1]:60669            [::1]:2013             TIME_WAIT       0
+
+C:\Users\Administrator>taskkill /pid 8232 -t -f
+成功: 已终止 PID 8232 (属于 PID 9804 子进程)的进程。
+
+语言：en英文； zh_CN简体中文；zh_TW	繁体中文；

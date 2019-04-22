@@ -36,7 +36,7 @@
 
     <select id="onesFavorite" resultMap="BaseResultMap">
         select
-        <include refid="BaseColumnList"/>
+        m.*
         from t_island_music m
         left join
         t_visitor_storehouse s
