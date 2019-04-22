@@ -57,11 +57,12 @@ public class VisitorStorehouseServiceImpl implements VisitorStorehouseService {
         List<VisitorStorehouse> list = visitorStorehouseMapper.getByConditions(visitorStorehouse);
         if (list.isEmpty()) {
             visitorStorehouse.setId(IslandUtil.uuid());
-            visitorStorehouse.setStoredTime(IslandUtil.now());
+            visitorStorehouse.setFirstStoredTime(IslandUtil.now());
+            visitorStorehouse.setLastStoredTime(IslandUtil.now());
             visitorStorehouseMapper.insertSelective(visitorStorehouse);
         } else {
             visitorStorehouse = list.get(0);
-            visitorStorehouse.setStoredTime(IslandUtil.now());
+            visitorStorehouse.setLastStoredTime(IslandUtil.now());
             visitorStorehouse.setStoredCancel(IslandCommon.no());
             visitorStorehouseMapper.updateByPrimaryKeySelective(visitorStorehouse);
         }

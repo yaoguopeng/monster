@@ -6,12 +6,13 @@
         <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
         <result column="work_id" property="workId" jdbcType="VARCHAR"/>
         <result column="work_type" property="workType" jdbcType="VARCHAR"/>
-        <result column="stored_time" property="storedTime" jdbcType="TIMESTAMP"/>
+        <result column="first_stored_time" property="firstStoredTime" jdbcType="TIMESTAMP"/>
+        <result column="last_stored_time" property="lastStoredTime" jdbcType="TIMESTAMP"/>
         <result column="stored_cancel" property="storedCancel" jdbcType="VARCHAR"/>
         <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="BaseColumnList">
-        pk_id,union_id,stored_time,work_id,cancel_time,work_type,stored_cancel
+        pk_id,union_id,first_stored_time,last_stored_time,work_id,cancel_time,work_type,stored_cancel
     </sql>
 
     <select id="getByConditions" parameterType="com.island.monster.bean.VisitorStorehouse" resultMap="BaseResultMap">
@@ -53,8 +54,11 @@
             <if test="unionId != null">
                 union_id,
             </if>
-            <if test="storedTime != null">
-                stored_time,
+            <if test="firstStoredTime != null">
+                first_stored_time,
+            </if>
+            <if test="lastStoredTime != null">
+                last_stored_time,
             </if>
             <if test="workId != null">
                 work_id,
@@ -76,8 +80,11 @@
             <if test="unionId != null">
                 #{unionId,jdbcType=VARCHAR},
             </if>
-            <if test="storedTime != null">
-                #{storedTime,jdbcType=TIMESTAMP},
+            <if test="firstStoredTime != null">
+                #{firstStoredTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastStoredTime != null">
+                #{lastStoredTime,jdbcType=TIMESTAMP},
             </if>
             <if test="workId != null">
                 #{workId,jdbcType=VARCHAR},
@@ -99,6 +106,9 @@
         <set>
             <if test="workId != null">
                 work_id = #{workId,jdbcType=VARCHAR},
+            </if>
+            <if test="lastStoredTime != null">
+                last_stored_time = #{lastStoredTime,jdbcType=TIMESTAMP},
             </if>
             <if test="cancelTime != null">
                 cancel_time = #{cancelTime,jdbcType=TIMESTAMP},

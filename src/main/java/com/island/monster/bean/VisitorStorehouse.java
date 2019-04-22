@@ -22,7 +22,8 @@ public class VisitorStorehouse  implements Serializable {
     private String workType;// 作品类型 IslandCommon.WorkType
     private String storedCancel;
     private Date cancelTime;
-    private Date storedTime;
+    private Date firstStoredTime;
+    private Date lastStoredTime;
 
     public String getId() {
         return id;
@@ -72,11 +73,19 @@ public class VisitorStorehouse  implements Serializable {
         this.cancelTime = cancelTime;
     }
 
-    public Date getStoredTime() {
-        return storedTime;
+    public Date getFirstStoredTime() {
+        return firstStoredTime;
     }
 
-    public void setStoredTime(Date storedTime) {
-        this.storedTime = storedTime;
+    public void setFirstStoredTime(Date firstStoredTime) {
+        this.firstStoredTime = firstStoredTime;
+    }
+
+    public Date getLastStoredTime() {
+        return lastStoredTime;
+    }
+
+    public void setLastStoredTime(Date lastStoredTime) {
+        this.lastStoredTime = lastStoredTime;
     }
 }
