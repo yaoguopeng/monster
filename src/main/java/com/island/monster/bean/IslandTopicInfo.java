@@ -27,4 +27,11 @@ public class IslandTopicInfo implements Serializable {
         this.topicVisitTimes = topicVisitTimes;
     }
 
+    @Override
+    public String toString() {
+        return "IslandTopicInfo{" +
+                "topicId='" + topicId + '\'' +
+                ", topicVisitTimes=" + topicVisitTimes +
+                '}';
+    }
 }
