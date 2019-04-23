@@ -1,5 +1,5 @@
 server:
-  port: 2013
+  port: 1234
 
 spring:
   datasource:
@@ -62,8 +62,9 @@ island:
     post-image-path: E:\island\images\postImage\
     joke-image-path: E:\island\images\jokeImage\
     music-path: E:\island\sound\music\
-
-
+logging:
+  level:
+    root: info
 ---
 #线上环境
 server:

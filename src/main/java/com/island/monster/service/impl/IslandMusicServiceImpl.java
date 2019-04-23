@@ -24,6 +24,11 @@ public class IslandMusicServiceImpl implements IslandMusicService {
     private IslandMusicMapper islandMusicMapper;
 
     @Override
+    public IslandMusic getById(Integer id) {
+        return islandMusicMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandMusic getOne(IslandMusic islandMusic) {
         // 默认获取当前日期下的
         if (islandMusic.getShowingDate() == null) {

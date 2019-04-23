@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface IslandPassageService {
 
+    IslandPassage getById(Integer id);
+
     IslandPassage add(IslandPassage islandPassage);
 
     IslandPassage remove(Integer id);

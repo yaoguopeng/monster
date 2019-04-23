@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IslandBackgroundService {
 
+    IslandBackground getById(Integer id);
+
     IslandBackground randomBackground();
 
     IslandBackground nextBackground(Integer currentId);

@@ -13,6 +13,11 @@ public class IslandMottoController {
     @Autowired
     private IslandMottoService islandMottoService;
 
+    @RequestMapping(value = "motto/id/{id}", method = RequestMethod.GET)
+    public Response<IslandMotto> getById(@PathVariable("id") Integer id) {
+        return Response.success(islandMottoService.getById(id));
+    }
+
     /**
      * island add a new motto
      *
@@ -21,7 +26,7 @@ public class IslandMottoController {
      */
     @RequestMapping(value = "motto", method = RequestMethod.POST)
     public Response<IslandMotto> add(@RequestBody IslandMotto islandMotto) {
-        return Response.success((IslandMotto) islandMottoService.add(islandMotto));
+        return Response.success(islandMottoService.add(islandMotto));
     }
 
     /**

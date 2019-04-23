@@ -4,10 +4,7 @@ import com.island.monster.bean.IslandLandscape;
 import com.island.monster.common.Response;
 import com.island.monster.service.IslandLandscapeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/island/")
@@ -15,6 +12,11 @@ public class IslandLandscapeController {
 
     @Autowired
     private IslandLandscapeService islandLandscapeService;
+
+    @RequestMapping(value = "landscape/id/{id}", method = RequestMethod.GET)
+    public Response<IslandLandscape> getById(@PathVariable("id") Integer id) {
+        return Response.success(islandLandscapeService.getById(id));
+    }
 
     @RequestMapping(value = "landscape", method = RequestMethod.GET)
     public Response<IslandLandscape> getOne(IslandLandscape islandLandscape) {

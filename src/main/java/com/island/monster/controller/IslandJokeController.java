@@ -13,6 +13,11 @@ public class IslandJokeController {
     @Autowired
     private IslandJokeService IslandJokeService;
 
+    @RequestMapping(value = "joke/id/{id}", method = RequestMethod.GET)
+    public Response<IslandJoke> getById(@PathVariable("id") Integer id) {
+        return Response.success(IslandJokeService.getById(id));
+    }
+
     /**
      * get a joke from db randomly
      *

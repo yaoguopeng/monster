@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IslandMottoService {
 
+    IslandMotto getById(Integer id);
+
     /**
      * add one motto
      *

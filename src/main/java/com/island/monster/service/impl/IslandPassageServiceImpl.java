@@ -23,6 +23,11 @@ public class IslandPassageServiceImpl implements IslandPassageService {
     private IslandPassageMapper islandPassageMapper;
 
     @Override
+    public IslandPassage getById(Integer id) {
+        return islandPassageMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandPassage add(IslandPassage islandPassage) {
         islandPassage.setCreatedTime(IslandUtil.now());
         islandPassageMapper.insertSelective(islandPassage);

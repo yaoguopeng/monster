@@ -4,8 +4,10 @@ import com.island.monster.bean.IslandTopicInfo;
 
 public interface IslandTopicInfoService {
 
-    IslandTopicInfo add(IslandTopicInfo islandTopicInfo);
+    IslandTopicInfo add(String topicId);
 
-    IslandTopicInfo update(IslandTopicInfo islandTopicInfo);
+    IslandTopicInfo topicVisitTimesIncrease(String topicId);
+
+    IslandTopicInfo getByTopicId(String topicId);
 
 }

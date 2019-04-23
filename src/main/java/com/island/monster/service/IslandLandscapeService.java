@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IslandLandscapeService {
 
+    IslandLandscape getById(Integer id);
+
     IslandLandscape randomLandscape();
 
     IslandLandscape nextLandscape(Integer currentId);

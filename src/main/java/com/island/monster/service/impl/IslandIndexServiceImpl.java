@@ -28,6 +28,11 @@ public class IslandIndexServiceImpl implements IslandIndexService {
     }
 
     @Override
+    public IslandIndex getById(Integer id) {
+        return islandIndexMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandIndex nextIndex(Integer currentId) {
         IslandIndex result = islandIndexMapper.nextIndex(currentId);
         if (result == null) {

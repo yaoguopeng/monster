@@ -24,6 +24,11 @@ public class IslandPoemServiceImpl implements IslandPoemService {
     private IslandPoemMapper islandPoemMapper;
 
     @Override
+    public IslandPoem getById(Integer id) {
+        return islandPoemMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandPoem add(IslandPoem islandPoem) {
         islandPoem.setCreatedTime(IslandUtil.now());
         islandPoemMapper.insertSelective(islandPoem);

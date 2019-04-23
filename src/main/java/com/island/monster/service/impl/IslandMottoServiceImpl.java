@@ -24,6 +24,11 @@ public class IslandMottoServiceImpl implements IslandMottoService {
     private IslandMottoMapper islandMottoMapper;
 
     @Override
+    public IslandMotto getById(Integer id) {
+        return islandMottoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandMotto add(IslandMotto islandMotto) {
         // use current time as motto created time
         islandMotto.setCreatedTime(IslandUtil.now());

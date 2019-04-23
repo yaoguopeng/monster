@@ -1,12 +1,25 @@
 package com.island.monster.test;
 
 
-import com.island.monster.common.IslandUtil;
+import com.island.monster.bean.IslandTopicInfo;
+import com.island.monster.mapper.IslandTopicInfoMapper;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class Demo {
 
-//    public static void main(String args []){
-//        String s = "1123456";
-//        System.out.println(IslandUtil.MD5Encode(s,"utf-8"));
-//    }
+
+    @Autowired
+    private IslandTopicInfoMapper islandTopicInfoMapper;
+
+    @Test
+    public void test() {
+        System.out.println(islandTopicInfoMapper.getByTopicId("1"));
+
+    }
 }

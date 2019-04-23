@@ -23,6 +23,11 @@ public class IslandMovieServiceImpl implements IslandMovieService {
     private IslandMovieMapper islandMovieMapper;
 
     @Override
+    public IslandMovie getById(Integer id) {
+        return islandMovieMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandMovie add(IslandMovie islandMovie) {
         islandMovie.setCreatedTime(IslandUtil.now());
         islandMovie.setUuid(IslandUtil.uuid());

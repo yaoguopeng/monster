@@ -23,6 +23,11 @@ public class IslandLandscapeServiceImpl implements IslandLandscapeService {
     private IslandLandscapeMapper islandLandscapeMapper;
 
     @Override
+    public IslandLandscape getById(Integer id) {
+        return islandLandscapeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandLandscape randomLandscape() {
         return nextLandscape(IslandUtil.getRandomId(islandLandscapeMapper.getMaxId()));
     }

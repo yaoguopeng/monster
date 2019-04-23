@@ -13,6 +13,11 @@ public class IslandMovieController {
     @Autowired
     private IslandMovieService islandMovieService;
 
+    @RequestMapping(value = "movie/id/{id}" ,method = RequestMethod.GET)
+    public Response<IslandMovie> add(@PathVariable("id") Integer id){
+        return Response.success(islandMovieService.getById(id));
+    }
+
     @RequestMapping(value = "movie" ,method = RequestMethod.POST)
     public Response<IslandMovie> add(@RequestBody IslandMovie islandMovie){
         return Response.success(islandMovieService.add(islandMovie));

@@ -9,6 +9,8 @@ public interface IslandJokeService {
 
     IslandJoke randomJoke();
 
+    IslandJoke getById(Integer id);
+
     IslandJoke nextJoke(Integer currentId);
 
     IslandJoke add(IslandJoke islandJoke);

@@ -23,6 +23,11 @@ public class IslandPaintingServiceImpl implements IslandPaintingService {
     private IslandPaintingMapper islandPaintingMapper;
 
     @Override
+    public IslandPainting getById(Integer id) {
+        return islandPaintingMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandPainting add(IslandPainting islandPainting) {
         islandPainting.setUuid(IslandUtil.uuid());
         islandPainting.setCreatedTime(IslandUtil.now());

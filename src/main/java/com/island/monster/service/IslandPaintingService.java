@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IslandPaintingService {
 
+    IslandPainting getById(Integer id);
+
     IslandPainting add(IslandPainting islandPainting);
 
     IslandPainting remove(Integer id);

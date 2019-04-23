@@ -45,10 +45,8 @@ public class IslandTopicServiceImpl implements IslandTopicService {
             islandTopic.setTopicType(IslandCommon.TopicType.NONE);
         }
         islandTopic.setCreatedTime(IslandUtil.now());
-        IslandTopicInfo islandTopicInfo = new IslandTopicInfo();
-        islandTopicInfo.setTopicId(topicId);
         islandTopicMapper.insertSelective(islandTopic);
-        islandTopicInfoService.add(islandTopicInfo);
+        islandTopicInfoService.add(topicId);
         LOGGER.info("新增主题成功，主题名称：{}，创建人：{}", islandTopic.getTopicName(), islandTopic.getCreatedBy());
         return islandTopic;
     }

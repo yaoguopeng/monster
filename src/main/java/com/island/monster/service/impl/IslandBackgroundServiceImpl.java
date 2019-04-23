@@ -23,6 +23,11 @@ public class IslandBackgroundServiceImpl implements IslandBackgroundService {
     private IslandBackgroundMapper islandBackgroundMapper;
 
     @Override
+    public IslandBackground getById(Integer id) {
+        return islandBackgroundMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandBackground randomBackground() {
         return nextBackground(IslandUtil.getRandomId(islandBackgroundMapper.getMaxId()));
     }

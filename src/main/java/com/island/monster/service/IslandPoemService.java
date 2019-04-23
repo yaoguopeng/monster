@@ -6,6 +6,8 @@ import com.island.monster.bean.IslandPoem;
 import java.util.List;
 
 public interface IslandPoemService {
+
+    IslandPoem getById(Integer id);
     
     IslandPoem add(IslandPoem islandPoem);
 

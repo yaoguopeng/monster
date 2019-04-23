@@ -13,6 +13,11 @@ public class IslandPassageController {
     @Autowired
     private IslandPassageService islandPassageService;
 
+    @RequestMapping(value = "passage/id/{id}", method = RequestMethod.GET)
+    public Response<IslandPassage> getById(@PathVariable("id") Integer id) {
+        return Response.success(islandPassageService.getById(id));
+    }
+
     @RequestMapping(value = "passage", method = RequestMethod.POST)
     public Response<IslandPassage> add(@RequestBody IslandPassage islandPassage) {
         return Response.success(islandPassageService.add(islandPassage));

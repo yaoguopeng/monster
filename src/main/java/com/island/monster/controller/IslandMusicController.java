@@ -13,6 +13,11 @@ public class IslandMusicController {
     @Autowired
     private IslandMusicService islandMusicService;
 
+    @RequestMapping(value = "music/id/{id}", method = RequestMethod.GET)
+    public Response<IslandMusic> getById(@PathVariable("id") Integer id) {
+        return Response.success(islandMusicService.getById(id));
+    }
+
     @RequestMapping(value = "music/remove/{id}", method = RequestMethod.DELETE)
     public Response<IslandMusic> delete(@PathVariable("id") Integer id) {
         return Response.success(islandMusicService.remove(id));

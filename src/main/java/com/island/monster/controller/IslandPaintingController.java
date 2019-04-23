@@ -13,6 +13,11 @@ public class IslandPaintingController {
     @Autowired
     private IslandPaintingService islandPaintingService;
 
+    @RequestMapping(value = "painting/id/{id}", method = RequestMethod.GET)
+    public Response<IslandPainting> getById(@PathVariable("id") Integer id) {
+        return Response.success(islandPaintingService.getById(id));
+    }
+
     @RequestMapping(value = "painting", method = RequestMethod.POST)
     public Response<IslandPainting> add(@RequestBody IslandPainting islandPainting) {
         return Response.success(islandPaintingService.add(islandPainting));

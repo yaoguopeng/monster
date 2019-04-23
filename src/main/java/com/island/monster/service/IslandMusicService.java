@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IslandMusicService {
 
+    IslandMusic getById(Integer id);
+
     IslandMusic getOne(IslandMusic islandMusic);
 
     IslandMusic nextMusic(Integer currentId);

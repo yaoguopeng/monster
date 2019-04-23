@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IslandMovieService {
 
+    IslandMovie getById(Integer id);
+
     IslandMovie add(IslandMovie islandMovie);
 
     IslandMovie setDel(Integer id);

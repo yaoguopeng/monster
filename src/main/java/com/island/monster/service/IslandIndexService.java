@@ -14,6 +14,8 @@ public interface IslandIndexService {
      */
     IslandIndex randomIndex();
 
+    IslandIndex getById(Integer id);
+
     IslandIndex nextIndex(Integer currentId);
 
     IslandIndex getOne(IslandIndex islandIndex);

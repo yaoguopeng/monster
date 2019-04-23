@@ -13,6 +13,11 @@ public class IslandPoemController {
     @Autowired
     private IslandPoemService islandPoemService;
 
+    @RequestMapping(value = "poem/id/{id}", method = RequestMethod.GET)
+    public Response<IslandPoem> getById(@PathVariable("id") Integer id) {
+        return Response.success(islandPoemService.getById(id));
+    }
+
     @RequestMapping(value = "poem", method = RequestMethod.POST)
     public Response<IslandPoem> add(@RequestBody IslandPoem islandPoem) {
         return Response.success(islandPoemService.add(islandPoem));

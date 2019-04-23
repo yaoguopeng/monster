@@ -1,0 +1,17 @@
+
+在项目发布的时候，一般都需要进行依赖冲突检查或者重复类的检查，这个时候我一般会使用下面的两个命令：
+ 
+1
+2
+3
+mvn -U clean package -Dmaven.test.skip=true enforcer:enforce -DcheckDeployRelease_skip=true -Denforcer.skip=false
+ 
+mvn -U dependency:tree -Dverbose
+ 
+dependency： tree是检查版本冲突的
+enforcer:enforce是用来检查重复类的
+ 
+ 
+简单地用 dependency:tree往往并不能查看到所有的传递依赖。不过如果你真的想要看所有的，必须得加一个 -Dverbose参数，这时就必定是最全的了。
+全是全了，但显示出来的东西太多有时候会很烦，加上 Dincludes或者 Dexcludes，就会包含或者排除你指定的依赖了， dependency:tree就会帮你过滤出来：比如：
+mvn dependency:tree -Dverbose -Dincludes=asm:asm 就会出来asm依赖包的分析信息。

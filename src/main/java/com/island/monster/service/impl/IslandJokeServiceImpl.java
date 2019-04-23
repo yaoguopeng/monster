@@ -24,6 +24,11 @@ public class IslandJokeServiceImpl implements IslandJokeService {
     }
 
     @Override
+    public IslandJoke getById(Integer id) {
+        return islandJokeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public IslandJoke nextJoke(Integer currentId) {
         IslandJoke result = islandJokeMapper.nextJoke(currentId);
         if (result == null) {
