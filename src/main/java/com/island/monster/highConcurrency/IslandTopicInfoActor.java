@@ -1,7 +1,7 @@
 package com.island.monster.highConcurrency;
 
 import akka.actor.AbstractActor;
-import com.island.monster.bean.IslandTopicInfo;
+import com.island.monster.bean.IslandTopic;
 import com.island.monster.service.IslandTopicInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("islandTopicInfoActor")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class IslandTopicInfoActor extends AbstractActor {
 
@@ -19,14 +19,16 @@ public class IslandTopicInfoActor extends AbstractActor {
     @Autowired
     private IslandTopicInfoService islandTopicInfoService;
 
-
     @Override
     public Receive createReceive() {
-        return receiveBuilder().matchAny(topicId -> {
-            System.out.println(topicId+"开始");
-            LOGGER.info("id为{}的主题访量+1", topicId);
-            islandTopicInfoService.topicVisitTimesIncrease(topicId.toString());
-            System.out.println("结束"+topicId);
+//        return receiveBuilder().matchEquals("topicVisited", topicId -> {
+//                    LOGGER.info("id为{}的主题访量+1", topicId);
+//                    islandTopicInfoService.topicVisitTimesIncrease(topicId.toString());
+//                }
+//        ).build();
+        return receiveBuilder().matchAny(topic -> {
+            LOGGER.info("{}主题访量+1", topic);
+            islandTopicInfoService.topicVisitTimesIncrease((IslandTopic) topic);
         }).build();
     }
 }

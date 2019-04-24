@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandPostInfoMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandPostInfo">
+        <id column="post_id" property="postId" jdbcType="VARCHAR"/>
+        <result column="post_visit_times" property="postVisitTimes" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        post_id,post_visit_times
+    </sql>
+
+    <select id="getVisitTimesByPostId" parameterType="java.lang.String" resultType="java.lang.Long">
+        select
+        post_visit_times
+        from t_island_post_info
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByPostId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_post_info
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandPostInfo">
+        insert into t_island_post_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                post_id,
+            </if>
+            <if test="postVisitTimes != null">
+                post_visit_times,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                #{postId,jdbcType=VARCHAR},
+            </if>
+            <if test="postVisitTimes != null">
+                #{postVisitTimes,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.island.monster.bean.IslandPostInfo">
+        update t_island_post_info
+        <set>
+            <if test="postVisitTimes != null">
+                post_visit_times = #{postVisitTimes,jdbcType=INTEGER},
+            </if>
+        </set>
+        where post_id = #{postId,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+      delete from t_island_post_info
+      where post_id = #{postId,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

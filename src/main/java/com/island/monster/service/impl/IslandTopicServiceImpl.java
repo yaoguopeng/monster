@@ -7,6 +7,7 @@ import com.island.monster.bean.IslandTopic;
 import com.island.monster.bean.IslandTopicInfo;
 import com.island.monster.common.IslandCommon;
 import com.island.monster.common.IslandUtil;
+import com.island.monster.highConcurrency.IslandActorService;
 import com.island.monster.mapper.IslandTopicMapper;
 import com.island.monster.service.IslandTopicInfoService;
 import com.island.monster.service.IslandTopicService;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class IslandTopicServiceImpl implements IslandTopicService {
@@ -28,6 +32,9 @@ public class IslandTopicServiceImpl implements IslandTopicService {
 
     @Autowired
     private IslandTopicInfoService islandTopicInfoService;
+
+    @Autowired
+    private IslandActorService islandActorService;
 
     @Transactional
     @Override
@@ -57,14 +64,44 @@ public class IslandTopicServiceImpl implements IslandTopicService {
         return islandTopicMapper.selectByPrimaryKey(id);
     }
 
+    private IslandTopic topicVisited(IslandTopic islandTopic) {
+        islandActorService.topicVisited(islandTopic);
+        return islandTopic;
+    }
+
+    private List<IslandTopic> topicVisited(List<IslandTopic> islandTopics) {
+        ExecutorService pool = Executors.newFixedThreadPool(islandTopics.size());
+        CountDownLatch latch = new CountDownLatch(islandTopics.size());
+        for (IslandTopic islandTopic : islandTopics) {
+            pool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    topicVisited(islandTopic);
+                    latch.countDown();
+                }
+            });
+        }
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        pool.shutdown();
+        return islandTopics;
+    }
+
     @Override
     public IslandTopic getByTopicName(String topicName) {
-        return islandTopicMapper.selectByTopicName(topicName);
+        IslandTopic target = islandTopicMapper.selectByTopicName(topicName);
+        // 新增访量
+        islandActorService.topicVisited(target);
+        return target;
     }
 
     @Override
     public IslandTopic getOne(String id) {
-        return islandTopicMapper.selectByPrimaryKey(id);
+        // 新增访量
+        return topicVisited(islandTopicMapper.selectByPrimaryKey(id));
     }
 
     @Override

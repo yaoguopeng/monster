@@ -1,5 +1,6 @@
 package com.island.monster.service.impl;
 
+import com.island.monster.bean.IslandTopic;
 import com.island.monster.bean.IslandTopicInfo;
 import com.island.monster.mapper.IslandTopicInfoMapper;
 import com.island.monster.mapper.IslandTopicMapper;
@@ -38,6 +39,11 @@ public class IslandTopicInfoServiceImpl implements IslandTopicInfoService {
         target.setTopicVisitTimes(target.getTopicVisitTimes() + 1);
         islandTopicInfoMapper.updateSelective(target);
         return target;
+    }
+
+    @Override
+    public IslandTopicInfo topicVisitTimesIncrease(IslandTopic islandTopic) {
+        return topicVisitTimesIncrease(islandTopic.getId());
     }
 
     @Override

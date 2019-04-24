@@ -32,4 +32,6 @@ public interface IslandPostService {
     List<IslandPost> onesFavoriteTopicPosts(String unionId);
 
     PageInfo<IslandPost> onesFavoriteTopicPosts(String unionId, Integer pageNum, Integer pageSize);
+
+    IslandPost postVisitedTimesIncrease(IslandPost islandPost);
 }

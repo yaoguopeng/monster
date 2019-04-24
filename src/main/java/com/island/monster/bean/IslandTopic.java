@@ -85,4 +85,18 @@ public class IslandTopic implements Serializable {
     public void setPostAmounts(Long postAmounts) {
         this.postAmounts = postAmounts;
     }
+
+    @Override
+    public String toString() {
+        return "IslandTopic{" +
+                "id='" + id + '\'' +
+                ", topicName='" + topicName + '\'' +
+                ", topicType=" + topicType +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdTime=" + createdTime +
+                ", isDeleted='" + isDeleted + '\'' +
+                ", topicVisitTimes=" + topicVisitTimes +
+                ", postAmounts=" + postAmounts +
+                '}';
+    }
 }

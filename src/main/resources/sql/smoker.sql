@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2019-04-19 18:03:14
+Date: 2019-04-24 17:13:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -335,6 +335,22 @@ CREATE TABLE `t_island_post` (
 -- ----------------------------
 -- Records of t_island_post
 -- ----------------------------
+INSERT INTO `t_island_post` VALUES ('1', '1', 'I still have a dream', null, '1', '2019-04-24 16:46:12', null, '0');
+
+-- ----------------------------
+-- Table structure for t_island_post_info
+-- ----------------------------
+DROP TABLE IF EXISTS `t_island_post_info`;
+CREATE TABLE `t_island_post_info` (
+  `post_id` varchar(36) NOT NULL,
+  `post_visit_times` int(11) DEFAULT '0',
+  PRIMARY KEY (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_island_post_info
+-- ----------------------------
+INSERT INTO `t_island_post_info` VALUES ('1', '1');
 
 -- ----------------------------
 -- Table structure for t_island_post_reply
@@ -390,6 +406,8 @@ CREATE TABLE `t_island_topic` (
 -- ----------------------------
 -- Records of t_island_topic
 -- ----------------------------
+INSERT INTO `t_island_topic` VALUES ('1', '我的梦想', 'OTHER', '1', '2019-04-23 17:00:14', '0');
+INSERT INTO `t_island_topic` VALUES ('eef56042-061a-43d0-85c9-a998369a5697', '我的消极情绪', 'DAILY', '1', '2019-04-23 17:16:50', '0');
 
 -- ----------------------------
 -- Table structure for t_island_topic_info
@@ -404,6 +422,8 @@ CREATE TABLE `t_island_topic_info` (
 -- ----------------------------
 -- Records of t_island_topic_info
 -- ----------------------------
+INSERT INTO `t_island_topic_info` VALUES ('1', '7');
+INSERT INTO `t_island_topic_info` VALUES ('eef56042-061a-43d0-85c9-a998369a5697', '0');
 
 -- ----------------------------
 -- Table structure for t_island_topic_visitor_relation
@@ -422,6 +442,7 @@ CREATE TABLE `t_island_topic_visitor_relation` (
 -- ----------------------------
 -- Records of t_island_topic_visitor_relation
 -- ----------------------------
+INSERT INTO `t_island_topic_visitor_relation` VALUES ('1', '1', '1', '2019-04-23 17:22:30', '0', null);
 
 -- ----------------------------
 -- Table structure for t_island_visitor
@@ -448,7 +469,7 @@ CREATE TABLE `t_island_visitor` (
 -- Records of t_island_visitor
 -- ----------------------------
 INSERT INTO `t_island_visitor` VALUES ('1', 'ExpectoPatronum', '2019-03-27 12:43:23', 'Pony', '2019-03-27 12:43:32', '2', 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEJJD64t61NY61UQncHrZts4sc4LZ1QA3jYctktzalBSRD5gcsaQfCh7UO1SgpKicrcuWGWggSdjBCw/132', null, null, null, null, null, null);
-INSERT INTO `t_island_visitor` VALUES ('2', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2019-04-12 16:01:16', '　　　　　　', '2019-04-17 19:05:59', '7', 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKOu2Tc6mQU2G0r4hXDWV78VJ9IicXdAtd9KK2gFOKyHmbNpN2KyrwQsqIALVFaOltUla4NNtibUBicw/132', null, '1', 'zh_CN', 'Hangzhou', 'Zhejiang', 'China');
+INSERT INTO `t_island_visitor` VALUES ('2', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2019-04-12 16:01:16', '　　　　　　', '2019-04-22 16:18:16', '8', 'https://wx.qlogo.cn/mmopen/vi_32/PiajxSqBRaEKOu2Tc6mQU2G0r4hXDWV78VJ9IicXdAtd9KK2gFOKyHmbNpN2KyrwQsqIALVFaOltUla4NNtibUBicw/132', null, '1', 'zh_CN', 'Hangzhou', 'Zhejiang', 'China');
 INSERT INTO `t_island_visitor` VALUES ('3', 'owCIF1cCKYMz24gvPN_zr_Csnnjg', '2019-04-17 18:12:47', 'vacation', '2019-04-17 18:15:18', '2', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJgLcVUbruQGvDFvj6NfJpwd3A5EueKib1mwXVl5LghdINFQYY7PCoFo2jj8iar0kSice2frPNoENmjw/132', null, '1', 'en', '', 'Bolivar', 'Venezuela');
 
 -- ----------------------------
@@ -524,20 +545,27 @@ CREATE TABLE `t_visitor_storehouse` (
 -- ----------------------------
 -- Records of t_visitor_storehouse
 -- ----------------------------
-INSERT INTO `t_visitor_storehouse` VALUES ('01efbb3c-4da3-4937-9ad0-42c2878e9716', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '3', 'MOVIE', '2019-04-12 17:52:56', '1', '2019-04-17 09:34:53');
+INSERT INTO `t_visitor_storehouse` VALUES ('01efbb3c-4da3-4937-9ad0-42c2878e9716', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '3', 'MOVIE', '2019-04-12 17:52:56', '1', '2019-04-24 15:13:46');
 INSERT INTO `t_visitor_storehouse` VALUES ('1', '1', '1', 'MOVIE', '2019-04-12 16:59:23', '1', '2019-04-15 09:44:56');
 INSERT INTO `t_visitor_storehouse` VALUES ('2', '1', '1', 'JOKE', null, '0', '2019-04-17 09:34:49');
 INSERT INTO `t_visitor_storehouse` VALUES ('3', '1', '2', 'JOKE', null, '1', null);
 INSERT INTO `t_visitor_storehouse` VALUES ('31e0be11-1c81-4fb7-a161-9b2add786a5d', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2', 'MOVIE', '2019-04-17 09:53:47', '0', null);
-INSERT INTO `t_visitor_storehouse` VALUES ('5c5728e1-a05e-4fb4-b928-e8c0171f8f58', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2', 'JOKE', '2019-04-17 18:03:02', '0', null);
-INSERT INTO `t_visitor_storehouse` VALUES ('5fcb1651-d29d-42dc-b66e-4d8f617871b3', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '7', 'MOVIE', '2019-04-12 17:28:06', '1', '2019-04-17 09:36:19');
+INSERT INTO `t_visitor_storehouse` VALUES ('5c5728e1-a05e-4fb4-b928-e8c0171f8f58', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2', 'JOKE', '2019-04-17 18:03:02', '1', '2019-04-22 16:44:04');
+INSERT INTO `t_visitor_storehouse` VALUES ('5fcb1651-d29d-42dc-b66e-4d8f617871b3', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '7', 'MOVIE', '2019-04-12 17:28:06', '0', '2019-04-22 17:55:11');
+INSERT INTO `t_visitor_storehouse` VALUES ('66fbb655-fa7e-4b80-9d5d-e107a48f30bb', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '4', 'JOKE', '2019-04-22 16:20:41', '1', '2019-04-22 16:20:43');
 INSERT INTO `t_visitor_storehouse` VALUES ('6f216ff4-7017-42ad-9400-dab9fd5278a1', '1', '3', 'MOVIE', '2019-04-12 17:14:56', '0', null);
+INSERT INTO `t_visitor_storehouse` VALUES ('7af0143f-e003-45a3-a00c-f4545ffe3e61', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '3', 'JOKE', '2019-04-22 16:43:57', '1', '2019-04-22 17:09:06');
 INSERT INTO `t_visitor_storehouse` VALUES ('7c5d593e-7670-4f64-a8f8-7d448898c0fe', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '1', 'JOKE', '2019-04-17 18:07:05', '0', null);
+INSERT INTO `t_visitor_storehouse` VALUES ('89f198b0-d991-41f8-9169-2a72d3832d4b', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '5', 'MUSIC', '2019-04-22 16:19:58', '0', '2019-04-22 16:20:07');
 INSERT INTO `t_visitor_storehouse` VALUES ('b6c153e0-d385-4115-909b-0eab6cc3abe5', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '1', 'PAINTING', '2019-04-17 17:27:56', '1', '2019-04-17 17:28:07');
 INSERT INTO `t_visitor_storehouse` VALUES ('b7d1c41e-8dc2-4e6e-befd-6382be5765aa', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '4', 'PAINTING', '2019-04-17 17:26:17', '0', null);
 INSERT INTO `t_visitor_storehouse` VALUES ('c9680b9f-aba2-4bd4-8ca1-164b9479d649', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2', 'PAINTING', '2019-04-17 17:49:23', '1', '2019-04-17 17:49:24');
-INSERT INTO `t_visitor_storehouse` VALUES ('edca60a0-8dce-4a07-8431-81e9e5d49af0', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '1', 'MOVIE', '2019-04-12 17:28:54', '1', '2019-04-17 09:50:47');
+INSERT INTO `t_visitor_storehouse` VALUES ('dd83e78b-19b6-4d78-8635-6aa329557161', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2', 'POEM', '2019-04-22 17:00:43', '0', null);
+INSERT INTO `t_visitor_storehouse` VALUES ('debaf51e-0308-4ece-a5b5-60470e3347fc', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '2', 'MUSIC', '2019-04-24 15:13:50', '1', '2019-04-24 15:13:51');
+INSERT INTO `t_visitor_storehouse` VALUES ('e4a79f62-54d9-4e1c-a2f5-ef24699436de', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '1', 'MUSIC', '2019-04-22 16:19:29', '0', null);
+INSERT INTO `t_visitor_storehouse` VALUES ('edca60a0-8dce-4a07-8431-81e9e5d49af0', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '1', 'MOVIE', '2019-04-12 17:28:54', '1', '2019-04-22 17:55:55');
 INSERT INTO `t_visitor_storehouse` VALUES ('fad35e67-e544-479d-a8f3-b92dcce6729d', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '6', 'JOKE', '2019-04-17 18:04:01', '0', '2019-04-17 18:04:03');
+INSERT INTO `t_visitor_storehouse` VALUES ('fe42337d-158e-4cfd-95bf-fbd273edb579', 'owCIF1YaOmfvlodwsNh0Ex5L6Ne8', '1', 'PASSAGE', '2019-04-22 17:05:34', '1', '2019-04-24 15:13:43');
 
 -- ----------------------------
 -- Table structure for t_visitor_words

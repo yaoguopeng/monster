@@ -4,7 +4,10 @@ import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.island.monster.bean.IslandPost;
+import com.island.monster.bean.IslandPostInfo;
 import com.island.monster.common.IslandUtil;
+import com.island.monster.highConcurrency.IslandActorService;
+import com.island.monster.mapper.IslandPostInfoMapper;
 import com.island.monster.mapper.IslandPostMapper;
 import com.island.monster.mapper.IslandPostReplyMapper;
 import com.island.monster.mapper.IslandPostThumbsUpMapper;
@@ -14,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class IslandPostServiceImpl implements IslandPostService {
@@ -27,9 +33,27 @@ public class IslandPostServiceImpl implements IslandPostService {
     @Autowired
     private IslandPostThumbsUpMapper islandPostThumbsUpMapper;
 
+    @Autowired
+    private IslandPostInfoMapper islandPostInfoMapper;
+
+    @Autowired
+    private IslandActorService islandActorService;
+
     @Override
     public IslandPost getOne(String id) {
-        return islandPostMapper.selectByPrimaryKey(id);
+        // 访量增加
+        return postVisited(islandPostMapper.selectByPrimaryKey(id));
+    }
+
+    /**
+     * 访量增加
+     *
+     * @param islandPost
+     * @return
+     */
+    private IslandPost postVisited(IslandPost islandPost) {
+        islandActorService.postVisited(islandPost);
+        return islandPost;
     }
 
     @Override
@@ -58,12 +82,13 @@ public class IslandPostServiceImpl implements IslandPostService {
         islandPostMapper.remove(id);
         islandPostReplyMapper.removeByPostId(id);
         islandPostThumbsUpMapper.removeByPostId(id);
+        islandPostInfoMapper.delete(id);
         return target;
     }
 
     @Override
     public List<IslandPost> getList(IslandPost islandPost) {
-        return islandPostMapper.getByConditions(islandPost);
+        return postsVisitTimesIncrease(islandPostMapper.getByConditions(islandPost));
     }
 
     @Override
@@ -79,7 +104,7 @@ public class IslandPostServiceImpl implements IslandPostService {
 
     @Override
     public List<IslandPost> onesStarsPosts(String unionId) {
-        return islandPostMapper.onesStarsPosts(unionId);
+        return postsVisitTimesIncrease(islandPostMapper.onesStarsPosts(unionId));
     }
 
     @Override
@@ -95,7 +120,7 @@ public class IslandPostServiceImpl implements IslandPostService {
 
     @Override
     public List<IslandPost> onesFavoriteTopicPosts(String unionId) {
-        return islandPostMapper.onesFavoriteTopicPosts(unionId);
+        return postsVisitTimesIncrease(islandPostMapper.onesFavoriteTopicPosts(unionId));
     }
 
     @Override
@@ -103,9 +128,52 @@ public class IslandPostServiceImpl implements IslandPostService {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                onesFavoriteTopicPosts(unionId);
+                postsVisitTimesIncrease(onesFavoriteTopicPosts(unionId));
             }
         });
         return page;
+    }
+
+
+    private List<IslandPost> postsVisitTimesIncrease(List<IslandPost> islandPosts) {
+        if (!islandPosts.isEmpty()) {
+            ExecutorService pool = Executors.newFixedThreadPool(islandPosts.size());
+            CountDownLatch latch = new CountDownLatch(islandPosts.size());
+            for (IslandPost islandPost : islandPosts) {
+                pool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        postVisitedTimesIncrease(islandPost);
+                        latch.countDown();
+                    }
+                });
+            }
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            pool.shutdown();
+        }
+        return islandPosts;
+    }
+
+    private void postVisitedTimesIncrease(String postId) {
+        IslandPostInfo target = islandPostInfoMapper.getByPostId(postId);
+        if (target == null) {
+            target = new IslandPostInfo();
+            target.setPostId(postId);
+            target.setPostVisitTimes(0);
+            islandPostInfoMapper.insertSelective(target);
+        } else {
+            target.setPostVisitTimes(target.getPostVisitTimes() + 1);
+            islandPostInfoMapper.updateSelective(target);
+        }
+    }
+
+    @Override
+    public IslandPost postVisitedTimesIncrease(IslandPost islandPost) {
+        postVisitedTimesIncrease(islandPost.getId());
+        return islandPost;
     }
 }
