@@ -23,8 +23,8 @@ public class IslandTopicController {
         return Response.success(islandTopicService.getOne(id));
     }
 
-    @RequestMapping(value = "topic/{topicName}", method = RequestMethod.GET)
-    public Response<IslandTopic> getByTopicName(@PathVariable("topicName") String topicName) {
+    @RequestMapping(value = "topic/topicName", method = RequestMethod.GET)
+    public Response<IslandTopic> getByTopicName(@RequestParam("topicName") String topicName) {
         return Response.success(islandTopicService.getByTopicName(topicName));
     }
 

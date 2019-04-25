@@ -65,6 +65,9 @@ public class IslandTopicServiceImpl implements IslandTopicService {
     }
 
     private IslandTopic topicVisited(IslandTopic islandTopic) {
+        if(islandTopic==null){
+            return null;
+        }
         islandActorService.topicVisited(islandTopic);
         return islandTopic;
     }
@@ -92,10 +95,8 @@ public class IslandTopicServiceImpl implements IslandTopicService {
 
     @Override
     public IslandTopic getByTopicName(String topicName) {
-        IslandTopic target = islandTopicMapper.selectByTopicName(topicName);
         // 新增访量
-        islandActorService.topicVisited(target);
-        return target;
+        return topicVisited(islandTopicMapper.selectByTopicName(topicName));
     }
 
     @Override

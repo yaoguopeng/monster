@@ -29,6 +29,16 @@
         where union_id = #{unionId,jdbcType=VARCHAR}
     </select>
 
+    <select id="getThumbsUpVisitorByPostId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        v.*
+        from t_island_post_thumbs_up t
+        left join
+        t_island_visitor v
+        on t.thumbs_up_by = v.union_id
+        where t.post_id = #{postId,jdbcType=VARCHAR}
+    </select>
+
     <insert id="insertSelective" parameterType="com.island.monster.bean.IslandVisitor">
         insert into t_island_visitor
         <trim prefix="(" suffix=")" suffixOverrides=",">

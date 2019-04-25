@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 时光小岛帖子信息
@@ -21,6 +22,7 @@ public class IslandPost implements Serializable {
     private Integer replyAmounts; // 回复数量
     private Integer thumbsUpAmounts; // 点赞数量
     private Integer postVisitedTimes; // 帖子访客量
+    private List<IslandVisitor> thumbsUpVisitors;
     @JsonIgnore
     private String isDeleted;
 
@@ -110,5 +112,13 @@ public class IslandPost implements Serializable {
 
     public void setPostVisitedTimes(Integer postVisitedTimes) {
         this.postVisitedTimes = postVisitedTimes;
+    }
+
+    public List<IslandVisitor> getThumbsUpVisitors() {
+        return thumbsUpVisitors;
+    }
+
+    public void setThumbsUpVisitors(List<IslandVisitor> thumbsUpVisitors) {
+        this.thumbsUpVisitors = thumbsUpVisitors;
     }
 }
