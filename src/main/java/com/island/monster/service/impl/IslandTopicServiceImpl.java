@@ -65,7 +65,7 @@ public class IslandTopicServiceImpl implements IslandTopicService {
     }
 
     private IslandTopic topicVisited(IslandTopic islandTopic) {
-        if(islandTopic==null){
+        if (islandTopic == null) {
             return null;
         }
         islandActorService.topicVisited(islandTopic);
@@ -106,32 +106,51 @@ public class IslandTopicServiceImpl implements IslandTopicService {
     }
 
     @Override
-    public List<IslandTopic> getList(IslandTopic islandTopic) {
-        return islandTopicMapper.getByConditions(islandTopic);
+    public List<IslandTopic> getList(String sortBy, IslandTopic islandTopic) {
+        return sortIslandTopics(sortBy, islandTopicMapper.getByConditions(islandTopic));
+    }
+
+    /**
+     * 排序
+     *
+     * @param sortBy       排序条件：按帖子数量降序排序postAmounts；按访问量降序排序topicVisitTimes
+     * @param islandTopics
+     * @return
+     */
+    private List<IslandTopic> sortIslandTopics(String sortBy, List<IslandTopic> islandTopics) {
+        if ("postAmounts".equals(sortBy)) {
+            // 按帖子数量降序排序
+            islandTopics.sort((o1, o2) -> (int) (o2.getPostAmounts() - o1.getPostAmounts()));
+        }
+        if ("topicVisitTimes".equals(sortBy)) {
+            // 按访问量降序排序
+            islandTopics.sort((o1, o2) -> (int) (o2.getTopicVisitTimes() - o1.getTopicVisitTimes()));
+        }
+        return islandTopics;
     }
 
     @Override
-    public PageInfo<IslandTopic> getPage(IslandTopic islandTopic, Integer pageNum, Integer pageSize) {
+    public PageInfo<IslandTopic> getPage(IslandTopic islandTopic, String sortBy, Integer pageNum, Integer pageSize) {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                getList(islandTopic);
+                getList(sortBy, islandTopic);
             }
         });
         return page;
     }
 
     @Override
-    public List<IslandTopic> onesFavoriteTopic(String unionId) {
-        return islandTopicMapper.onesFavoriteTopic(unionId);
+    public List<IslandTopic> onesFavoriteTopic(String sortBy, String unionId) {
+        return sortIslandTopics(sortBy, islandTopicMapper.onesFavoriteTopic(unionId));
     }
 
     @Override
-    public PageInfo<IslandTopic> onesFavoriteTopic(String unionId, Integer pageNum, Integer pageSize) {
+    public PageInfo<IslandTopic> onesFavoriteTopic(String unionId, String sortBy, Integer pageNum, Integer pageSize) {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                onesFavoriteTopic(unionId);
+                onesFavoriteTopic(sortBy, unionId);
             }
         });
         return page;

@@ -29,18 +29,18 @@ public class IslandTopicController {
     }
 
     @RequestMapping(value = "topics", method = RequestMethod.GET)
-    public Response<?> get(IslandTopic islandTopic, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+    public Response<?> get(IslandTopic islandTopic, @RequestParam(value = "sortBy", required = false) String sortBy, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
         if (pageSize != null && pageNum != null) {
-            return Response.success(islandTopicService.getPage(islandTopic, pageNum, pageSize));
+            return Response.success(islandTopicService.getPage(islandTopic, sortBy, pageNum, pageSize));
         }
-        return Response.success(islandTopicService.getList(islandTopic));
+        return Response.success(islandTopicService.getList(sortBy, islandTopic));
     }
 
     @RequestMapping(value = "topics/user", method = RequestMethod.GET)
-    public Response<?> get(@RequestParam("unionId") String unionId, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+    public Response<?> onesFavoriteTopic(@RequestParam("unionId") String unionId, @RequestParam(value = "sortBy", required = false) String sortBy, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
         if (pageSize != null && pageNum != null) {
-            return Response.success(islandTopicService.onesFavoriteTopic(unionId, pageNum, pageSize));
+            return Response.success(islandTopicService.onesFavoriteTopic(unionId, sortBy, pageNum, pageSize));
         }
-        return Response.success(islandTopicService.onesFavoriteTopic(unionId));
+        return Response.success(islandTopicService.onesFavoriteTopic(sortBy, unionId));
     }
 }

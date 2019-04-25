@@ -15,11 +15,11 @@ public interface IslandTopicService {
 
     IslandTopic getOne(String id);
 
-    List<IslandTopic> getList(IslandTopic islandTopic);
+    List<IslandTopic> getList(String sortBy, IslandTopic islandTopic);
 
-    PageInfo<IslandTopic> getPage(IslandTopic islandTopic, Integer pageNum, Integer pageSize);
+    PageInfo<IslandTopic> getPage(IslandTopic islandTopic, String sortBy, Integer pageNum, Integer pageSize);
 
-    List<IslandTopic> onesFavoriteTopic(String unionId);
+    List<IslandTopic> onesFavoriteTopic(String sortBy, String unionId);
 
-    PageInfo<IslandTopic> onesFavoriteTopic(String unionId, Integer pageNum, Integer pageSize);
+    PageInfo<IslandTopic> onesFavoriteTopic(String unionId, String sortBy, Integer pageNum, Integer pageSize);
 }

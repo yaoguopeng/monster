@@ -109,6 +109,7 @@
                 created_by = #{createdBy,jdbcType=VARCHAR}
             </if>
         </where>
+        order by created_time desc
     </select>
 
     <update id="setDeleted" parameterType="java.lang.String">
@@ -142,6 +143,7 @@
         t_island_visitor_relation r
         on p.created_by = r.star_id
         where r.fans_id = #{unionId,jdbcType=VARCHAR}
+        order by p.created_time desc
     </select>
 
     <select id="onesFavoriteTopicPosts" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -153,6 +155,7 @@
         t_island_topic_visitor_relation r
         on p.topic_id = r.topic_id
         where r.union_id = #{unionId,jdbcType=VARCHAR}
+        order by p.created_time desc
     </select>
 
 </mapper>
