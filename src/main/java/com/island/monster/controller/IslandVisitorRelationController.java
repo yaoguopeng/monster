@@ -23,8 +23,8 @@ public class IslandVisitorRelationController {
         return Response.success(islandVisitorRelationService.addConcern(islandVisitorRelation));
     }
 
-    @RequestMapping(value = "visitor/relation", method = RequestMethod.DELETE)
-    public Response<IslandVisitorRelation> cancel(@Valid IslandVisitorRelation islandVisitorRelation) {
+    @RequestMapping(value = "visitor/relation", method = RequestMethod.PUT)
+    public Response<IslandVisitorRelation> cancel(@Valid @RequestBody IslandVisitorRelation islandVisitorRelation) {
         return Response.success(islandVisitorRelationService.cancelConcern(islandVisitorRelation));
     }
 

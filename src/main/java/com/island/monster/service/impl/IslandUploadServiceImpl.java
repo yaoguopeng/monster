@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -493,7 +494,13 @@ public class IslandUploadServiceImpl implements IslandUploadService {
      */
     private IslandPost updatePost(HttpServletRequest request, IslandPost islandPost) {
         // 获取帖子上传的图片
-        List<MultipartFile> postImages = ((MultipartHttpServletRequest) request).getFiles("postImage");
+        List<MultipartFile> postImages = null;
+        try {
+            postImages = ((MultipartHttpServletRequest) request).getFiles("postImage");
+        }catch (ClassCastException e){
+            postImages = new ArrayList<>();
+            LOGGER.info("新增帖子出现ClassCastException ！");
+        }
         if (!postImages.isEmpty()) {
             MultipartFile postImage = postImages.get(0);
             String originalName = postImage.getOriginalFilename();

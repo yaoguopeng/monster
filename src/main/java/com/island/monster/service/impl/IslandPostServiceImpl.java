@@ -52,7 +52,9 @@ public class IslandPostServiceImpl implements IslandPostService {
      * @return
      */
     private IslandPost postVisited(IslandPost islandPost) {
-        islandActorService.postVisited(islandPost);
+        if(islandPost != null) {
+            islandActorService.postVisited(islandPost);
+        }
         return islandPost;
     }
 
@@ -143,7 +145,7 @@ public class IslandPostServiceImpl implements IslandPostService {
                 pool.execute(new Runnable() {
                     @Override
                     public void run() {
-                        postVisitedTimesIncrease(islandPost);
+                        postVisited(islandPost);
                         latch.countDown();
                     }
                 });

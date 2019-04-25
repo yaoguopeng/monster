@@ -20,6 +20,7 @@ public class IslandPost implements Serializable {
     private Date updatedTime;
     private Integer replyAmounts; // 回复数量
     private Integer thumbsUpAmounts; // 点赞数量
+    private Integer postVisitedTimes; // 帖子访客量
     @JsonIgnore
     private String isDeleted;
 
@@ -101,5 +102,13 @@ public class IslandPost implements Serializable {
 
     public void setThumbsUpAmounts(Integer thumbsUpAmounts) {
         this.thumbsUpAmounts = thumbsUpAmounts;
+    }
+
+    public Integer getPostVisitedTimes() {
+        return postVisitedTimes;
+    }
+
+    public void setPostVisitedTimes(Integer postVisitedTimes) {
+        this.postVisitedTimes = postVisitedTimes;
     }
 }

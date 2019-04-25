@@ -14,6 +14,8 @@
                      select="com.island.monster.mapper.IslandPostReplyMapper.getPostReplyAmountsByPostId"/>
         <association property="thumbsUpAmounts" javaType="java.lang.Integer" column="pk_id"
                      select="com.island.monster.mapper.IslandPostThumbsUpMapper.getThumbsUpAmountsByPostId"/>
+        <association property="postVisitedTimes" javaType="java.lang.Integer" column="pk_id"
+                     select="com.island.monster.mapper.IslandPostInfoMapper.getVisitTimesByPostId"/>
     </resultMap>
 
     <sql id="BaseColumnList">
