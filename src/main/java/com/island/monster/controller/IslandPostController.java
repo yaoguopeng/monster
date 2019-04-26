@@ -7,6 +7,7 @@ import com.island.monster.service.IslandUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,14 +23,14 @@ public class IslandPostController {
 
     @RequestMapping(value = "post", method = RequestMethod.POST)
     @ResponseBody
-    public Response<IslandPost> add(HttpServletRequest request) {
-        return Response.success(islandUploadService.uploadPost(request));
+    public Response<IslandPost> add(HttpServletRequest request, @RequestParam("postImage") MultipartFile[] postImage) {
+        return Response.success(islandUploadService.uploadPost(request, postImage));
     }
 
     @RequestMapping(value = "post_edit", method = RequestMethod.POST)
     @ResponseBody
-    public Response<IslandPost> edit(HttpServletRequest request) {
-        return Response.success(islandUploadService.editPost(request));
+    public Response<IslandPost> edit(HttpServletRequest request, @RequestParam("postImage") MultipartFile[] postImage) {
+        return Response.success(islandUploadService.editPost(request, postImage));
     }
 
     @RequestMapping(value = "posts", method = RequestMethod.GET)

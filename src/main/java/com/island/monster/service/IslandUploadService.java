@@ -2,6 +2,7 @@ package com.island.monster.service;
 
 import com.island.monster.bean.*;
 import com.island.monster.bean.IslandPost;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +28,7 @@ public interface IslandUploadService {
 
     IslandMovie uploadMovie(HttpServletRequest request);
 
-    IslandPost uploadPost(HttpServletRequest request);
+    IslandPost uploadPost(HttpServletRequest request, MultipartFile[] postImages);
 
-    IslandPost editPost(HttpServletRequest request);
+    IslandPost editPost(HttpServletRequest request, MultipartFile[] postImages);
 }

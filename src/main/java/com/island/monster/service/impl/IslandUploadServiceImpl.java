@@ -478,9 +478,8 @@ public class IslandUploadServiceImpl implements IslandUploadService {
         return islandMovie;
     }
 
-    @Override
-    public IslandPost uploadPost(HttpServletRequest request) {
-        // 新增帖子
+    private IslandPost getPostInfo(HttpServletRequest request) {
+        // 获取发帖信息
         IslandPost islandPost = new IslandPost();
         islandPost.setId(IslandUtil.uuid());
         String topicId = request.getParameter("topicId");
@@ -503,53 +502,53 @@ public class IslandUploadServiceImpl implements IslandUploadService {
             return null;
         }
         islandPost.setCreatedBy(createdBy);
-        return updatePost(request, islandPost);
-    }
-
-    /**
-     * 新增或编辑帖子，若包含图片则上传图片
-     *
-     * @param request
-     * @param islandPost
-     * @return
-     */
-    private IslandPost updatePost(HttpServletRequest request, IslandPost islandPost) {
-        // 获取帖子上传的图片
-        List<MultipartFile> postImages = null;
-        try {
-            postImages = ((MultipartHttpServletRequest) request).getFiles("postImage");
-        } catch (ClassCastException e) {
-            postImages = new ArrayList<>();
-            LOGGER.info("新增帖子出现 ClassCastException ！非MultipartHttpServletRequest");
+        if (request.getParameter("postContent") != null) {
+            islandPost.setPostContent(request.getParameter("postContent"));
         }
-        if (!postImages.isEmpty()) {
-            MultipartFile postImage = postImages.get(0);
-            String originalName = postImage.getOriginalFilename();
-            if (originalName != null) {
-                String postSurfix = originalName.substring(originalName.lastIndexOf("."));
-                // 将帖子图片上传
-                String postImageName = islandPost.getId() + postSurfix;
-                if (!uploadUtil.upload(postImage, postImagePath, postImageName)) {
-                    islandPost.setPostImagePath(postImageLocation + postImageName);
-                    LOGGER.info("{}帖子上传图片成功！", islandPost.getId());
-                } else {
-                    LOGGER.info("{}帖子上传图片失败！", islandPost.getId());
-                    return null;
-                }
-            } else {
-                LOGGER.info("{}帖子图片上传 originalName is null !", islandPost.getId());
-                return null;
-            }
-        } else {
-            LOGGER.info("{}帖子上传未添加任何图片", islandPost.getId());
-        }
-        // 帖子图片上传成功后将帖子信息入库
-        islandPost.setPostContent(request.getParameter("postContent"));
-        return islandPostService.update(islandPost);
+        return islandPost;
     }
 
     @Override
-    public IslandPost editPost(HttpServletRequest request) {
+    public IslandPost uploadPost(HttpServletRequest request, MultipartFile[] postImages) {
+        IslandPost islandPost = getPostInfo(request);
+        if (islandPost == null) {
+            return null;
+        }
+        if (postImages.length > 0) {
+            islandPost = uploadPostImages(postImages[0], islandPost);
+        }
+        return islandPostService.update(islandPost);
+    }
+
+    /**
+     * 上传帖子图片
+     *
+     * @param postImage
+     * @param islandPost
+     * @return
+     */
+    private IslandPost uploadPostImages(MultipartFile postImage, IslandPost islandPost) {
+        String originalName = postImage.getOriginalFilename();
+        if (originalName != null) {
+            String postSurfix = originalName.substring(originalName.lastIndexOf("."));
+            // 将帖子图片上传
+            String postImageName = islandPost.getId() + postSurfix;
+            if (uploadUtil.upload(postImage, postImagePath, postImageName)) {
+                islandPost.setPostImagePath(postImageLocation + postImageName);
+                LOGGER.info("{}帖子上传图片成功！", islandPost.getId());
+            } else {
+                LOGGER.info("{}帖子上传图片失败！", islandPost.getId());
+                return null;
+            }
+        } else {
+            LOGGER.info("{}帖子图片上传 originalName is null !", islandPost.getId());
+            return null;
+        }
+        return islandPost;
+    }
+
+    @Override
+    public IslandPost editPost(HttpServletRequest request, MultipartFile[] postImages) {
         String postId = request.getParameter("id");
         if (postId == null) {
             LOGGER.info("编辑帖子失败，未获取到该帖子主键信息！");
@@ -560,14 +559,16 @@ public class IslandUploadServiceImpl implements IslandUploadService {
             LOGGER.info("编辑帖子失败，无该帖子记录！postId={}", postId);
             return null;
         }
+        target.setPostContent(request.getParameter("postContent"));
         // 若需要上传新图片，则首先删除旧的帖子图片信息
-        if (((MultipartHttpServletRequest) request).getFiles("postImage") != null && !((MultipartHttpServletRequest) request).getFiles("postImage").isEmpty()) {
+        if (postImages.length > 0) {
             String targetPostImagePath = target.getPostImagePath();
             if (uploadUtil.remove(postImagePath + postId + targetPostImagePath.substring(targetPostImagePath.lastIndexOf(".")))) {
                 LOGGER.info("编辑帖子{}旧图删除成功！", postId);
             }
+            target = uploadPostImages(postImages[0], target);
         }
         // 使用原帖子主键将新的帖子记录更新到数据库
-        return updatePost(request, target);
+        return islandPostService.update(target);
     }
 }
