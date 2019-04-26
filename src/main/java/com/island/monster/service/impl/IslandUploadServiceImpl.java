@@ -523,7 +523,7 @@ public class IslandUploadServiceImpl implements IslandUploadService {
             LOGGER.info("{}帖子上传未添加任何图片", islandPost.getId());
         }
         // 帖子图片上传成功后将帖子信息入库
-        islandPost.setPostContent(IslandUtil.addPrefix(request.getParameter("postContent")));
+        islandPost.setPostContent(request.getParameter("postContent"));
         return islandPostService.update(islandPost);
     }
 
