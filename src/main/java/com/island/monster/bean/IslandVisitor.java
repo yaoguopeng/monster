@@ -36,6 +36,10 @@ public class IslandVisitor implements Serializable {
     private String city;
     private String province;
     private String country;
+    /**
+     * 登录设备
+     */
+    private String facility;
 
     public Integer getId() {
         return id;
@@ -139,5 +143,13 @@ public class IslandVisitor implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getFacility() {
+        return facility;
+    }
+
+    public void setFacility(String facility) {
+        this.facility = facility;
     }
 }

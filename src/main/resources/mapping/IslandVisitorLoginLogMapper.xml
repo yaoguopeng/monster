@@ -4,16 +4,25 @@
     <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandVisitorLoginLog">
         <id column="pk_id" property="id" jdbcType="INTEGER"/>
         <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="login_facility" property="loginFacility" jdbcType="VARCHAR"/>
         <result column="login_time" property="loginTime" jdbcType="TIMESTAMP"/>
-        <result column="login_ordinal" property="loginOrdinal" jdbcType="BIGINT"/>
+        <result column="login_ordinal" property="loginOrdinal" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="BaseColumnList">
-        pk_id,union_id,login_time,login_ordinal
+        pk_id,union_id,login_time,login_ordinal,login_facility
     </sql>
 
     <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="BaseColumnList"/>
+        from t_island_visitor_login_log
+        where union_id = #{unionId,jdbcType=VARCHAR}
+        order by login_time desc
+    </select>
+
+    <select id="getMaxOrdinal" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+         ifnull(max(login_ordinal),0)
         from t_island_visitor_login_log
         where union_id = #{unionId,jdbcType=VARCHAR}
     </select>
@@ -26,6 +35,9 @@
             </if>
             <if test="unionId != null">
                 union_id,
+            </if>
+            <if test="loginFacility != null">
+                login_facility,
             </if>
             <if test="loginTime != null">
                 login_time,
@@ -41,11 +53,14 @@
             <if test="unionId != null">
                 #{unionId,jdbcType=VARCHAR},
             </if>
+            <if test="loginFacility != null">
+                #{loginFacility,jdbcType=VARCHAR},
+            </if>
             <if test="loginTime != null">
                 #{loginTime,jdbcType=TIMESTAMP},
             </if>
             <if test="loginOrdinal != null">
-                #{loginOrdinal,jdbcType=BIGINT},
+                #{loginOrdinal,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>

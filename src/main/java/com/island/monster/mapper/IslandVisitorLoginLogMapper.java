@@ -11,4 +11,6 @@ public interface IslandVisitorLoginLogMapper {
     int insertSelective(IslandVisitorLoginLog islandVisitorLoginLog);
 
     List<IslandVisitorLoginLog> selectByUnionId(String unionId);
+
+    Integer getMaxOrdinal(String unionId);
 }

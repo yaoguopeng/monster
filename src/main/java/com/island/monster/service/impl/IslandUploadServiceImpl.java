@@ -56,7 +56,10 @@ public class IslandUploadServiceImpl implements IslandUploadService {
     private IslandLandscapeMapper islandLandscapeMapper;
 
     @Autowired
-    private IslandPostMapper islandPostMapper;
+    private IslandTopicMapper islandTopicMapper;
+
+    @Autowired
+    private IslandVisitorMapper islandVisitorMapper;
 
     @Autowired
     private IslandPostService islandPostService;
@@ -480,8 +483,26 @@ public class IslandUploadServiceImpl implements IslandUploadService {
         // 新增帖子
         IslandPost islandPost = new IslandPost();
         islandPost.setId(IslandUtil.uuid());
-        islandPost.setTopicId(request.getParameter("topicId"));
-        islandPost.setCreatedBy(request.getParameter("createdBy"));
+        String topicId = request.getParameter("topicId");
+        if (topicId == null) {
+            LOGGER.info("新增帖子未指定话题，topicId is null");
+            return null;
+        }
+        if (islandTopicMapper.selectByPrimaryKey(topicId) == null) {
+            LOGGER.info("新增帖子指定话题不存在，topic does not exist");
+            return null;
+        }
+        islandPost.setTopicId(topicId);
+        String createdBy = request.getParameter("createdBy");
+        if (createdBy == null) {
+            LOGGER.info("新增帖子未指定发帖人，createdBy is null");
+            return null;
+        }
+        if (islandVisitorMapper.selectByUnionId(createdBy) == null) {
+            LOGGER.info("新增帖子指定用户不存在，visitor does not exist");
+            return null;
+        }
+        islandPost.setCreatedBy(createdBy);
         return updatePost(request, islandPost);
     }
 
@@ -497,9 +518,9 @@ public class IslandUploadServiceImpl implements IslandUploadService {
         List<MultipartFile> postImages = null;
         try {
             postImages = ((MultipartHttpServletRequest) request).getFiles("postImage");
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             postImages = new ArrayList<>();
-            LOGGER.info("新增帖子出现ClassCastException ！");
+            LOGGER.info("新增帖子出现 ClassCastException ！非MultipartHttpServletRequest");
         }
         if (!postImages.isEmpty()) {
             MultipartFile postImage = postImages.get(0);

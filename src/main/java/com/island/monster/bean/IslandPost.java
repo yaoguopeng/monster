@@ -121,4 +121,22 @@ public class IslandPost implements Serializable {
     public void setThumbsUpVisitors(List<IslandVisitor> thumbsUpVisitors) {
         this.thumbsUpVisitors = thumbsUpVisitors;
     }
+
+    @Override
+    public String toString() {
+        return "IslandPost{" +
+                "id='" + id + '\'' +
+                ", topicId='" + topicId + '\'' +
+                ", postContent='" + postContent + '\'' +
+                ", postImagePath='" + postImagePath + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                ", replyAmounts=" + replyAmounts +
+                ", thumbsUpAmounts=" + thumbsUpAmounts +
+                ", postVisitedTimes=" + postVisitedTimes +
+                ", thumbsUpVisitors=" + thumbsUpVisitors +
+                ", isDeleted='" + isDeleted + '\'' +
+                '}';
+    }
 }

@@ -3,6 +3,7 @@ package com.island.monster.service.impl;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.bean.IslandVisitor;
 import com.island.monster.mapper.IslandVisitorMapper;
+import com.island.monster.service.IslandVisitorLoginLogService;
 import com.island.monster.service.IslandVisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,14 @@ public class IslandVisitorServiceImpl implements IslandVisitorService {
     @Autowired
     private IslandVisitorMapper islandVisitorMapper;
 
+    @Autowired
+    private  IslandVisitorLoginLogService islandVisitorLoginLogService;
+
     @Override
     public IslandVisitor update(IslandVisitor islandVisitor) {
         IslandVisitor target = islandVisitorMapper.selectByUnionId(islandVisitor.getUnionId());
+        // 来访记录
+        islandVisitorLoginLogService.addLoginLog(islandVisitor);
         if (target == null) {
             islandVisitor.setFirstLandingTime(IslandUtil.now());
             islandVisitor.setLandingCount(1);

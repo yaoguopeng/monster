@@ -16,7 +16,8 @@ public class IslandVisitorLoginLog implements Serializable {
     /**
      * 第几次登录
      */
-    private Long loginOrdinal;
+    private Integer loginOrdinal;
+    private String  loginFacility;
 
 
     public String getId() {
@@ -43,11 +44,19 @@ public class IslandVisitorLoginLog implements Serializable {
         this.loginTime = loginTime;
     }
 
-    public Long getLoginOrdinal() {
+    public Integer getLoginOrdinal() {
         return loginOrdinal;
     }
 
-    public void setLoginOrdinal(Long loginOrdinal) {
+    public void setLoginOrdinal(Integer loginOrdinal) {
         this.loginOrdinal = loginOrdinal;
+    }
+
+    public String getLoginFacility() {
+        return loginFacility;
+    }
+
+    public void setLoginFacility(String loginFacility) {
+        this.loginFacility = loginFacility;
     }
 }
