@@ -35,11 +35,12 @@ public class IslandPostController {
 
     @RequestMapping(value = "posts", method = RequestMethod.GET)
     @ResponseBody
-    public Response<?> get(IslandPost islandPost, @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+    public Response<?> get(IslandPost islandPost, @RequestParam(value = "currentUnionId") String currentUnionId,
+                           @RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNum", required = false) Integer pageNum) {
         if (pageSize != null && pageNum != null) {
-            return Response.success(islandPostService.getPage(islandPost, pageNum, pageSize));
+            return Response.success(islandPostService.getPage(islandPost, currentUnionId, pageNum, pageSize));
         }
-        return Response.success(islandPostService.getList(islandPost));
+        return Response.success(islandPostService.getList(islandPost, currentUnionId));
     }
 
     @RequestMapping(value = "posts/topics/{unionId}", method = RequestMethod.GET)

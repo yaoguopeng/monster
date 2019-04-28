@@ -21,9 +21,9 @@ public interface IslandPostService {
 
     IslandPost remove(String id);
 
-    List<IslandPost> getList(IslandPost islandPost);
+    List<IslandPost> getList(IslandPost islandPost, String currentUnionId);
 
-    PageInfo<IslandPost> getPage(IslandPost islandPost, Integer pageNum, Integer pageSize);
+    PageInfo<IslandPost> getPage(IslandPost islandPost, String currentUnionId, Integer pageNum, Integer pageSize);
 
     List<IslandPost> onesStarsPosts(String unionId);
 

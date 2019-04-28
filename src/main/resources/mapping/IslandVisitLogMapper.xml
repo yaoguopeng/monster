@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.island.monster.mapper.IslandVisitLogMapper">
+    <resultMap id="BaseResultMap" type="com.island.monster.bean.IslandVisitLog">
+        <id column="pk_id" property="id" jdbcType="VARCHAR"/>
+        <result column="union_id" property="unionId" jdbcType="VARCHAR"/>
+        <result column="visit_object_id" property="visitObjectId" jdbcType="VARCHAR"/>
+        <result column="visit_time" property="visitTime" jdbcType="TIMESTAMP"/>
+        <result column="visit_object_type" property="visitObjectType" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="BaseColumnList">
+        pk_id,union_id,visit_time,visit_object_type,visit_object_id
+    </sql>
+
+    <select id="selectByUnionId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from t_island_visit_log
+        where union_id = #{unionId,jdbcType=VARCHAR}
+        order by visit_time desc
+    </select>
+
+    <insert id="insertSelective" parameterType="com.island.monster.bean.IslandVisitor">
+        insert into t_island_visit_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                pk_id,
+            </if>
+            <if test="unionId != null">
+                union_id,
+            </if>
+            <if test="visitObjectId != null">
+                visit_object_id,
+            </if>
+            <if test="visitTime != null">
+                visit_time,
+            </if>
+            <if test="visitObjectType != null">
+                visit_object_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="unionId != null">
+                #{unionId,jdbcType=VARCHAR},
+            </if>
+            <if test="visitObjectId != null">
+                #{visitObjectId,jdbcType=VARCHAR},
+            </if>
+            <if test="visitTime != null">
+                #{visitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="visitObjectType != null">
+                #{visitObjectType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

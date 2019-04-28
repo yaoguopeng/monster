@@ -5,13 +5,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.island.monster.bean.IslandPost;
 import com.island.monster.bean.IslandPostInfo;
+import com.island.monster.common.IslandCommon;
 import com.island.monster.common.IslandUtil;
 import com.island.monster.highConcurrency.IslandActorService;
-import com.island.monster.mapper.IslandPostInfoMapper;
-import com.island.monster.mapper.IslandPostMapper;
-import com.island.monster.mapper.IslandPostReplyMapper;
-import com.island.monster.mapper.IslandPostThumbsUpMapper;
+import com.island.monster.mapper.*;
 import com.island.monster.service.IslandPostService;
+import com.island.monster.service.IslandVisitLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +38,12 @@ public class IslandPostServiceImpl implements IslandPostService {
     @Autowired
     private IslandActorService islandActorService;
 
+    @Autowired
+    private IslandVisitLogService islandVisitLogService;
+
+    @Autowired
+    private IslandVisitorMapper islandVisitorMapper;
+
     @Override
     public IslandPost getOne(String id) {
         // 访量增加
@@ -52,7 +57,7 @@ public class IslandPostServiceImpl implements IslandPostService {
      * @return
      */
     private IslandPost postVisited(IslandPost islandPost) {
-        if(islandPost != null) {
+        if (islandPost != null) {
             islandActorService.postVisited(islandPost);
         }
         return islandPost;
@@ -89,16 +94,27 @@ public class IslandPostServiceImpl implements IslandPostService {
     }
 
     @Override
-    public List<IslandPost> getList(IslandPost islandPost) {
+    public List<IslandPost> getList(IslandPost islandPost, String currentUnionId) {
+        if (currentUnionId != null) {
+            // 记录来访信息
+            if (islandPostMapper.selectByPrimaryKey(islandPost.getTopicId()) != null) {
+                // 访客访问主题帖子
+                islandVisitLogService.addOne(currentUnionId, islandPost.getTopicId(), IslandCommon.VisitObjectType.TOPIC);
+            }
+            if (islandVisitorMapper.selectByUnionId(islandPost.getCreatedBy()) != null) {
+                // 访客访问其他访客帖子信息
+                islandVisitLogService.addOne(currentUnionId, islandPost.getCreatedBy(), IslandCommon.VisitObjectType.VISITOR);
+            }
+        }
         return postsVisitTimesIncrease(islandPostMapper.getByConditions(islandPost));
     }
 
     @Override
-    public PageInfo<IslandPost> getPage(IslandPost islandPost, Integer pageNum, Integer pageSize) {
+    public PageInfo<IslandPost> getPage(IslandPost islandPost, String currentUnionId, Integer pageNum, Integer pageSize) {
         PageInfo page = PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(new ISelect() {
             @Override
             public void doSelect() {
-                getList(islandPost);
+                getList(islandPost, currentUnionId);
             }
         });
         return page;

@@ -16,7 +16,15 @@ public class IslandCommon {
      * 主题类型：无主题NONE，心情MOOD，文艺LITERATURE，日常DAILY，其他OTHER
      */
     public enum TopicType {
-        NONE,MOOD,LITERATURE,DAILY,OTHER
+        NONE, MOOD, LITERATURE, DAILY, OTHER
+    }
+
+    /**
+     * 访问对象类型：格言MOTTO/音乐MUSIC/名画PAINTING/美文PASSAGE/诗歌POEM/笑话JOKE/电影MOVIE/风景LANDSCAPE
+     * 主题TOPIC/帖子POST/访客VISITOR
+     */
+    public enum VisitObjectType {
+        MOTTO, MUSIC, PAINTING, PASSAGE, POEM, JOKE, MOVIE, LANDSCAPE, TOPIC, POST, VISITOR
     }
 
     /**
