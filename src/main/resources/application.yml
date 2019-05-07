@@ -12,6 +12,17 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+# 热加载、热部署相关配置
+  devtools:
+    restart:
+      #热部署生效
+      enabled: true
+      #设置重启的检索目录，当main目录下的内容修改时重启
+      additional-path: src/main
+      #classpath目录下的WEB-INF文件夹内容修改不重启
+      exclude: WEB-INF/**
+
+
   redis:
     hostName: 127.0.0.1
     port: 6379

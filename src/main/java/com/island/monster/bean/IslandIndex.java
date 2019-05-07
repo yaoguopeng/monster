@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 时光小岛欢迎页面内容
@@ -100,6 +101,27 @@ public class IslandIndex implements Serializable {
 
     public void setShowingDateEnd(Date showingDateEnd) {
         this.showingDateEnd = showingDateEnd;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IslandIndex that = (IslandIndex) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(content, that.content) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(showingDate, that.showingDate) &&
+                Objects.equals(showingDateBegin, that.showingDateBegin) &&
+                Objects.equals(showingDateEnd, that.showingDateEnd) &&
+                Objects.equals(createdBy, that.createdBy) &&
+                Objects.equals(createdTime, that.createdTime) &&
+                Objects.equals(isDeleted, that.isDeleted);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, author, showingDate, showingDateBegin, showingDateEnd, createdBy, createdTime, isDeleted);
     }
 
     @Override
