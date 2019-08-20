@@ -25,7 +25,7 @@ public class IslandMusic implements Serializable {
     private Date showingDate;
     private Date createdTime;
     @JsonIgnore
-    private String isDeleted;
+    private Integer isDeleted;
     private String uuid;
 
     public String getUuid() {
@@ -36,11 +36,11 @@ public class IslandMusic implements Serializable {
         this.uuid = uuid;
     }
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 

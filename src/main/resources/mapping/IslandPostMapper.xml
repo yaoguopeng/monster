@@ -8,7 +8,7 @@
         <result column="post_image_path" property="postImagePath" jdbcType="VARCHAR"/>
         <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
-        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="BaseColumnList">
@@ -71,7 +71,7 @@
         count(*)
         from t_island_post
         where topic_id = #{topicId,jdbcType=VARCHAR}
-        and is_deleted = '0'
+        and is_deleted = 0
     </select>
 
     <select id="getByConditions" parameterType="com.island.monster.bean.IslandPost" resultMap="BaseResultMap">
@@ -79,7 +79,7 @@
         <include refid="BaseColumnList"/>
         from t_island_post
         <where>
-            is_deleted = '0'
+            is_deleted = 0
             <if test="id != null">and
                 pk_id = #{id,jdbcType=VARCHAR}
             </if>
@@ -97,7 +97,7 @@
 
     <update id="setDeleted" parameterType="java.lang.String">
         update t_island_post
-        set is_deleted = '1'
+        set is_deleted = 1
         where pk_id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

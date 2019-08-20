@@ -9,7 +9,7 @@
         <result column="showing_date" property="showingDate" jdbcType="TIMESTAMP"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
-        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
         <result column="poem_content" property="poemContent" jdbcType="VARCHAR"/>
         <result column="poem_note" property="poemNote" jdbcType="VARCHAR"/>
         <result column="poem_explaination" property="poemExplaination" jdbcType="VARCHAR"/>
@@ -52,7 +52,7 @@
         select
         <include refid="BaseColumnList"/>
         from t_island_poem
-        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        where pk_id &gt; #{currentId,jdbcType=INTEGER} and is_deleted = 0
         order by pk_id asc
         limit 1
     </select>
@@ -61,7 +61,7 @@
         select
         <include refid="BaseColumnList"/>
         from t_island_poem
-        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        where pk_id &lt; #{currentId,jdbcType=INTEGER} and is_deleted = 0
         order by pk_id desc
         limit 1
     </select>
@@ -90,7 +90,7 @@
                 created_by = #{createdBy,jdbcType=VARCHAR}
             </if>
             <if test="isDeleted != null">and
-                is_deleted = #{isDeleted,jdbcType=VARCHAR}
+                is_deleted = #{isDeleted,jdbcType=INTEGER}
             </if>
         </where>
     </select>
@@ -192,7 +192,7 @@
                 created_by = #{createdBy,jdbcType=VARCHAR},
             </if>
             <if test="isDeleted != null">
-                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
             </if>
             <if test="poemNote != null">
                 poem_note = #{poemNote,jdbcType=VARCHAR},
@@ -214,7 +214,7 @@
 
     <update id="setDel" parameterType="java.lang.Integer">
         update t_island_poem
-        set is_deleted = '1'
+        set is_deleted = 1
         where pk_id = #{id,jdbcType=INTEGER}
     </update>
 

@@ -17,7 +17,9 @@ public class IslandTopic implements Serializable {
     private String createdBy;
     private Date createdTime;
     @JsonIgnore
-    private String isDeleted;
+    private Integer isDeleted;
+    private Integer auditStatus;
+
     private Long topicVisitTimes;
     private Long postAmounts;
 
@@ -61,11 +63,11 @@ public class IslandTopic implements Serializable {
         this.createdTime = createdTime;
     }
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 
@@ -83,5 +85,13 @@ public class IslandTopic implements Serializable {
 
     public void setPostAmounts(Long postAmounts) {
         this.postAmounts = postAmounts;
+    }
+
+    public Integer getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Integer auditStatus) {
+        this.auditStatus = auditStatus;
     }
 }

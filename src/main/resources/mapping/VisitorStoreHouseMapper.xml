@@ -7,7 +7,7 @@
         <result column="work_id" property="workId" jdbcType="VARCHAR"/>
         <result column="work_type" property="workType" jdbcType="VARCHAR"/>
         <result column="stored_time" property="storedTime" jdbcType="TIMESTAMP"/>
-        <result column="stored_cancel" property="storedCancel" jdbcType="VARCHAR"/>
+        <result column="stored_cancel" property="storedCancel" jdbcType="INTEGER"/>
         <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="BaseColumnList">
@@ -26,7 +26,7 @@
                 work_type = #{workType,jdbcType=VARCHAR}
             </if>
             <if test="storedCancel != null">and
-                stored_cancel = #{storedCancel,jdbcType=VARCHAR}
+                stored_cancel = #{storedCancel,jdbcType=INTEGER}
             </if>
             <if test="unionId != null">and
                 union_id = #{unionId,jdbcType=VARCHAR}
@@ -86,7 +86,7 @@
                 #{workType,jdbcType=VARCHAR},
             </if>
             <if test="storedCancel != null">
-                #{storedCancel,jdbcType=VARCHAR},
+                #{storedCancel,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -104,7 +104,7 @@
                 work_type = #{workType,jdbcType=VARCHAR},
             </if>
             <if test="storedCancel != null">
-                stored_cancel = #{storedCancel,jdbcType=VARCHAR},
+                stored_cancel = #{storedCancel,jdbcType=INTEGER},
             </if>
         </set>
         where union_id = #{unionId,jdbcType=VARCHAR}

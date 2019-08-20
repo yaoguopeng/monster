@@ -24,13 +24,13 @@ public class IslandPassage implements Serializable {
     private Date showingDate;
     private Date createdTime;
     @JsonIgnore
-    private String isDeleted;
+    private Integer isDeleted;
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 

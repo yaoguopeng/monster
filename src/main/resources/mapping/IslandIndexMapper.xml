@@ -9,7 +9,7 @@
         <result column="showing_date_end" property="showingDateEnd" jdbcType="TIMESTAMP"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
-        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="BaseColumnList">
@@ -59,7 +59,7 @@
         select
         <include refid="BaseColumnList"/>
         from t_island_index
-        where pk_id > #{currentId,jdbcType=INTEGER} and is_deleted = '0'
+        where pk_id > #{currentId,jdbcType=INTEGER} and is_deleted = 0
         order by pk_id asc
         limit 1
     </select>
@@ -118,7 +118,7 @@
                 index_author = #{author,jdbcType=VARCHAR},
             </if>
             <if test="isDeleted != null ">
-                is_deleted = #{isDeleted,jdbcType=VARCHAR},
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
             </if>
         </set>
         where pk_id = #{id,jdbcType=INTEGER}

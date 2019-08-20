@@ -7,7 +7,8 @@
         <result column="topic_type" property="topicType" jdbcType="VARCHAR"/>
         <result column="created_by" property="createdBy" jdbcType="VARCHAR"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
-        <result column="is_deleted" property="isDeleted" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER"/>
+        <result column="audit_status" property="auditStatus" jdbcType="INTEGER"/>
         <association property="topicVisitTimes" javaType="java.lang.Long" column="pk_id"
                      select="com.island.monster.mapper.IslandTopicInfoMapper.getVisitTimesByTopicId"/>
         <association property="postAmounts" javaType="java.lang.Long" column="pk_id"
@@ -86,7 +87,7 @@
 
     <update id="setDeleted" parameterType="java.lang.String">
         update t_island_topic
-        set is_deleted = '1'
+        set is_deleted = 1
         where pk_id = #{id,jdbcType=VARCHAR}
     </update>
 </mapper>

@@ -24,7 +24,7 @@ public class IslandLandscape implements Serializable {
     private Date showingDate;
     private Date createdTime;
     @JsonIgnore
-    private String isDeleted;
+    private Integer isDeleted;
 
     public Integer getId() {
         return id;
@@ -74,11 +74,11 @@ public class IslandLandscape implements Serializable {
         this.createdTime = createdTime;
     }
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 

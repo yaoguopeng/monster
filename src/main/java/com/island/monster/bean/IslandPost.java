@@ -18,7 +18,7 @@ public class IslandPost implements Serializable {
     private String createdBy;
     private Date createdTime;
     @JsonIgnore
-    private String isDeleted;
+    private Integer isDeleted;
 
     public String getId() {
         return id;
@@ -68,11 +68,11 @@ public class IslandPost implements Serializable {
         this.createdTime = createdTime;
     }
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 }

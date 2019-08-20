@@ -19,7 +19,7 @@ public class VisitorStorehouse  implements Serializable {
     private String workId;
     @NotEmpty
     private WorkType workType;// 作品类型 IslandCommon.WorkType
-    private String storedCancel;
+    private Integer storedCancel;
     private Date cancelTime;
     private Date storedTime;
 
@@ -55,11 +55,11 @@ public class VisitorStorehouse  implements Serializable {
         this.workType = workType;
     }
 
-    public String getStoredCancel() {
+    public Integer getStoredCancel() {
         return storedCancel;
     }
 
-    public void setStoredCancel(String storedCancel) {
+    public void setStoredCancel(Integer storedCancel) {
         this.storedCancel = storedCancel;
     }
 

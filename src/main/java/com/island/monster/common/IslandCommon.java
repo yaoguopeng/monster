@@ -19,11 +19,11 @@ public class IslandCommon {
         COMMENT, REPLY
     }
 
-    public static String deletedStatus() {
-        return "1";
+    public static Integer deletedStatus() {
+        return 1;
     }
 
-    public static String activeStatus() {
-        return "0";
+    public static Integer activeStatus() {
+        return 0;
     }
 }

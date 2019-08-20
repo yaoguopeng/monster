@@ -24,13 +24,13 @@ public class IslandMovie implements Serializable {
     private String uuid;
     private String createdBy;
     @JsonIgnore
-    private String isDeleted;
+    private Integer isDeleted;
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 

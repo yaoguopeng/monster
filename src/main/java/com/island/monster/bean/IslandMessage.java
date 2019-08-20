@@ -15,13 +15,13 @@ public class IslandMessage implements Serializable {
     private String messageType;
     private String isRead;
     private Date createdTime;
-    private String isDeleted;
+    private Integer isDeleted;
 
-    public String getIsDeleted() {
+    public Integer getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(String isDeleted) {
+    public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
     }
 
