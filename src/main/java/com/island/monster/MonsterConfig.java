@@ -53,6 +53,12 @@ public class MonsterConfig extends WebMvcConfigurerAdapter {
     @Value("${island.location.post-image}")
     private String postImageLocation;
 
+    @Value("${island.path.joke-image-path}")
+    private String jokeImagePath;
+
+    @Value("${island.location.joke-image}")
+    private String jokeImageLocation;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String suffix = "**";
@@ -64,6 +70,7 @@ public class MonsterConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler(landscapeImageLocation + suffix).addResourceLocations(prefix + landscapeImagePath);
         registry.addResourceHandler(backgroundImageLocation + suffix).addResourceLocations(prefix + backgroundImagePath);
         registry.addResourceHandler(postImageLocation + suffix).addResourceLocations(prefix + postImagePath);
+        registry.addResourceHandler(jokeImageLocation + suffix).addResourceLocations(prefix + jokeImagePath);
         super.addResourceHandlers(registry);
     }
 }

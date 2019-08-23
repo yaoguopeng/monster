@@ -37,7 +37,7 @@ public class IslandBackgroundServiceImpl implements IslandBackgroundService {
     public IslandBackground getOne(IslandBackground islandBackground) {
         // 先获取指定日期的背景
         if (islandBackground.getShowingDate() == null) {
-            islandBackground.setShowingDate(IslandUtil.currentDate());
+                islandBackground.setShowingDate(IslandUtil.currentDate());
         }
         List<IslandBackground> list = getList(islandBackground);
         if (list.isEmpty()) {

@@ -144,7 +144,13 @@ public class IslandUploadServiceImpl implements IslandUploadService {
             LOGGER.info("背景图片上传 originalName is null !");
             return null;
         }
-        String backgroundSurfix = originalName.substring(originalName.lastIndexOf("."));
+        String backgroundSurfix;
+        try {
+            backgroundSurfix  = originalName.substring(originalName.lastIndexOf("."));
+        }catch(Exception e){
+            LOGGER.info("背景图片上传 originalName error !");
+            return null;
+        }
         // 将背景图片上传
         String backgroundType = request.getParameter("backgroundType");
         String backgroundId = backgroundType + IslandUtil.uuid();

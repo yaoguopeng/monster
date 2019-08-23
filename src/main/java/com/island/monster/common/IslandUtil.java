@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class IslandUtil {
 
-    private static SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    private static String  PATTERN = "yyyy-MM-dd";
 
     /**
      * 给字符串加书名号
@@ -82,6 +82,6 @@ public class IslandUtil {
      * @return
      */
     public static SimpleDateFormat getSimpleDateFormat() {
-        return FORMAT;
+        return new SimpleDateFormat(PATTERN);
     }
 }
