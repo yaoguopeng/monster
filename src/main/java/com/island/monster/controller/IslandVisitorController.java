@@ -3,13 +3,13 @@ package com.island.monster.controller;
 import com.island.monster.bean.IslandVisitor;
 import com.island.monster.common.Response;
 import com.island.monster.service.IslandVisitorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/island/")

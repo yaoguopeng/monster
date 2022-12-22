@@ -23,6 +23,11 @@ public class UploadController {
     @Autowired
     private UploadUtil uploadUtil;
 
+    @RequestMapping(value = "jspFile/{jspFileName}")
+    public String jsp(@PathVariable("jspFileName") String jspFileName) {
+        return jspFileName;
+    }
+
     @RequestMapping(value = "/island/upload", method = RequestMethod.POST)
     @ResponseBody
     public Response<?> uploadTest(@RequestBody MultipartFile file) {

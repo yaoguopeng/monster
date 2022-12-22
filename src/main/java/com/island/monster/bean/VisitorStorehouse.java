@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import com.island.monster.common.IslandCommon.WorkType;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 /**
  * 时光小岛游客收藏
