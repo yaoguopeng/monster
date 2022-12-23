@@ -15,7 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 上传文件管理
+ */
 @Controller
+@RequestMapping(value = "/manage")
 public class UploadController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UploadController.class);
@@ -23,7 +27,7 @@ public class UploadController {
     @Autowired
     private UploadUtil uploadUtil;
 
-    @RequestMapping(value = "jspFile/{jspFileName}")
+    @RequestMapping(value = "/jspFile/{jspFileName}")
     public String jsp(@PathVariable("jspFileName") String jspFileName) {
         return jspFileName;
     }

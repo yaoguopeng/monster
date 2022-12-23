@@ -18,7 +18,7 @@ public class MonsterApplication {
     }
 
     @RequestMapping("/")
-    public String hello(){
-        return "Welcome to TIME ISLAND "+envo;
+    public String hello() {
+        return "Welcome to TIME ISLAND " + envo;
     }
 }
